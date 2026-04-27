@@ -1189,8 +1189,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColorPaletteManager
   palettes:
-  - buttonHoverColor: {r: 1, g: 1, b: 1, a: 1}
-    ButtonClickColor: {r: 0.48235294, g: 0.22140107, b: 0.19607845, a: 1}
+  - buttonHoverColor: {r: 0.5849056, g: 0.2896938, b: 0.2896938, a: 1}
+    ButtonClickColor: {r: 0.25943398, g: 0.25943398, b: 0.25943398, a: 1}
   currentPaletteIndex: 0
 --- !u!4 &2127200280
 Transform:
@@ -1251,6 +1251,18 @@ PrefabInstance:
     - target: {fileID: 2153715571979156496, guid: e5fd3b8b18f18574794ff556e4623e10, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242114593406183800, guid: e5fd3b8b18f18574794ff556e4623e10, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242114593406183800, guid: e5fd3b8b18f18574794ff556e4623e10, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242114593406183800, guid: e5fd3b8b18f18574794ff556e4623e10, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3545091270281747761, guid: e5fd3b8b18f18574794ff556e4623e10, type: 3}
       propertyPath: m_Pivot.x
@@ -1463,15 +1475,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7540229534857524773, guid: ba608ad76cdf4064998ec1379f4b39ee, type: 3}
       propertyPath: m_Colors.m_NormalColor.b
-      value: 0.42745098
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7540229534857524773, guid: ba608ad76cdf4064998ec1379f4b39ee, type: 3}
       propertyPath: m_Colors.m_NormalColor.g
-      value: 0.42745098
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7540229534857524773, guid: ba608ad76cdf4064998ec1379f4b39ee, type: 3}
       propertyPath: m_Colors.m_NormalColor.r
-      value: 0.42745098
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1631,15 +1643,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8532317707856816305, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
       propertyPath: m_Colors.m_NormalColor.b
-      value: 0.4292453
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8532317707856816305, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
       propertyPath: m_Colors.m_NormalColor.g
-      value: 0.4292453
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8532317707856816305, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
       propertyPath: m_Colors.m_NormalColor.r
-      value: 0.4292453
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8532317707856816305, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
