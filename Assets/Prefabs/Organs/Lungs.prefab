@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 600283766916161901}
   - component: {fileID: 8265550474340028862}
   m_Layer: 5
-  m_Name: Brain
+  m_Name: Lungs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ RectTransform:
   m_GameObject: {fileID: 8091132100414138715}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 174, y: 169}
+  m_SizeDelta: {x: 342, y: 410}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6256749715601897238
 CanvasRenderer:
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8031273221110208615, guid: f465aca5e4be76b44865a9c3babca19f, type: 3}
+  m_Sprite: {fileID: 6490295061151189282, guid: f465aca5e4be76b44865a9c3babca19f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b82674a2ebc4e344ab7af8e70d9cd09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItemController
-  Type: 1
+  Type: 4
   rectTransform: {fileID: 0}
   canvasGroup: {fileID: 0}
   canvas: {fileID: 0}
@@ -105,4 +105,4 @@ CanvasGroup:
   m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 1
+  m_IgnoreParentGroups: 0

@@ -9,8 +9,6 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
     public CanvasGroup canvasGroup;
     public Canvas canvas;
 
-    [Header("Настройки")]
-    [Tooltip("Минимальное смещение (в пикселях) для начала перетаскивания")]
     public float dragThreshold = 5f;
 
     private SlotController currentSlot;
@@ -72,18 +70,18 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
     public void OnEndDrag(PointerEventData eventData)
     {
         if (!isDragging) return;
-
+        
         canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1f;
 
         GameObject targetGo = eventData.pointerCurrentRaycast.gameObject;
         SlotController targetSlot = targetGo?.GetComponentInParent<SlotController>();
-
         bool handled = false;
         if (targetSlot != null && targetSlot != sourceSlot)
         {
             DropResult result = targetSlot.TryAccept(this, sourceSlot);
             handled = (result == DropResult.Success || result == DropResult.Swap);
+            
         }
 
         if (!handled) ReturnToSource();
