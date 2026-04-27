@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f947933ad2cf21946871e53f9d803f8e, type: 3}
   m_Name: BadHeart
   m_EditorClassIdentifier: Assembly-CSharp::ObjectTypeData
-  obj_type: 0
-  qulity_type: 0
-  mind: 5
+  obj_type: 1
+  qulity_type: 1
+  mind: 6
   soul: -1
   instinct: -2

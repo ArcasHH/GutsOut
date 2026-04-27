@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System;
 
 public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -8,10 +9,12 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public ItemType RequiredType = ItemType.None;
     public Image SlotImage;
 
+    public static event Action OnInventoryChanged;
+
     public DraggableItemController CurrentItem { get; private set; }
     public bool IsEmpty => CurrentItem == null;
 
-    private RectTransform rectTransform;
+    public RectTransform rectTransform;
     private Color baseColor;
 
     private void Awake()
@@ -78,24 +81,18 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         CurrentItem = item;
         item.SetSlot(this);
-        
-        // 1️⃣ Возвращаем в слот
         item.transform.SetParent(rectTransform, false);
-        
-        // 2️⃣ 🔑 ГАРАНТИРОВАННО поднимаем поверх всех элементов слота (фона, рамок и т.д.)
         item.transform.SetAsLastSibling();
-        
-        // 3️⃣ Центрируем
         item.rectTransform.anchoredPosition = Vector2.zero;
-        
-        // 4️⃣ 🔑 Жёсткий сброс состояния на случай, если предмет "застрял" в режиме драга
-        if (item.canvasGroup != null)
-        {
-            item.canvasGroup.blocksRaycasts = true;
-            item.canvasGroup.alpha = 1f;
-            item.canvasGroup.interactable = true;
-        }
+        item.canvasGroup.blocksRaycasts = true;
+        item.canvasGroup.alpha = 1f;
+
+        OnInventoryChanged?.Invoke();
     }
 
-    public void ClearItem() => CurrentItem = null;
+    public void ClearItem()
+    {
+        CurrentItem = null;
+        OnInventoryChanged?.Invoke();
+    }
 }

@@ -18,7 +18,6 @@ public class GameSceneManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        Debug.Log("GameSceneManager Awake");
         EventBus.TriggerMenuOpen(true);
         //GetSceneName();
     }
@@ -61,7 +60,6 @@ public class GameSceneManager : MonoBehaviour
     {
         //GetSceneName();
         Time.timeScale = 1;
-        Debug.Log("StartGame");
         LoadScene("Game");
         EventBus.TriggerMenuOpen(false);
     }
@@ -70,7 +68,6 @@ public class GameSceneManager : MonoBehaviour
     {
         //GetSceneName();
         LoadScene("Menu");
-        Debug.Log("OpenMenu");
         EventBus.TriggerMenuOpen(true);
     }
 
