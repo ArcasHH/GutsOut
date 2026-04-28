@@ -33,7 +33,7 @@ public class DayManager : MonoBehaviour
     private int currentTokenCost;
     private GameObject currentTokenInstance;
     private bool tokenUsedThisDay = false;
-    private bool isBusy = false; // 🔒 Глобальная блокировка во время переходов
+    private bool isBusy = false;
 
     public static DayManager Instance { get; private set; }
 
@@ -57,9 +57,6 @@ public class DayManager : MonoBehaviour
 
     private void Start() => RequestButtonUpdate();
 
-    /// <summary>
-    /// 🔑 Безопасный вызов проверки. Игнорируется во время смены дня.
-    /// </summary>
     public void RequestButtonUpdate()
     {
         if (isBusy) return;
@@ -89,7 +86,7 @@ public class DayManager : MonoBehaviour
 
     public void EndDay()
     {
-        if (isBusy) return; // 🔒 Мгновенная защита от спама
+        if (isBusy) return;
 
         isBusy = true;
         if (endDayButton != null) endDayButton.interactable = false;
@@ -99,7 +96,6 @@ public class DayManager : MonoBehaviour
 
     private IEnumerator ProcessDayCycle()
     {
-        // 1️⃣ Находим готовые контейнеры
         var summarizers = containersParent.GetComponentsInChildren<OrganStatsSummarizer>(true);
         var toReplace = new List<GameObject>();
 
@@ -112,16 +108,13 @@ public class DayManager : MonoBehaviour
 
         int replacedCount = toReplace.Count;
 
-        // 2️⃣ Запускаем асинхронную замену для каждого
         var despawnTasks = new List<Coroutine>();
         foreach (var old in toReplace)
             despawnTasks.Add(StartCoroutine(ReplaceContainerAsync(old)));
 
-        // 3️⃣ Ждём завершения всех анимаций исчезновения
         foreach (var task in despawnTasks)
             yield return task;
 
-        // 4️⃣ Начисление наград и смена дня
         int dailyReward = replacedCount >= 3 ? rewardForThree :
                           replacedCount == 2 ? rewardForTwo :
                           replacedCount == 1 ? rewardForOne : 0;
@@ -130,7 +123,6 @@ public class DayManager : MonoBehaviour
         CurrentDay++;
         UpdateUI();
 
-        // 5️⃣ Логика токена
         if (tokenUsedThisDay)
         {
             currentTokenCost += tokenCostIncrease;
@@ -142,14 +134,11 @@ public class DayManager : MonoBehaviour
         UpdateTokenVisibility();
         EventBus.OnInventoryChanged?.Invoke();
 
-        // 6️⃣ 🔑 КРИТИЧЕСКАЯ СИНХРОНИЗАЦИЯ: Ждём 2 кадра, чтобы Unity полностью проинициализировала новые UI-объекты
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
 
-        // 7️⃣ Обновляем состояние кнопки на готовых данных
         ForceUpdateButtonState();
 
-        // 8️⃣ Разблокировка
         isBusy = false;
         Debug.Log($"[DayManager] День {CurrentDay - 1} завершён. Заменено: {replacedCount}. Награда: +{dailyReward}. Очки: {TotalScore}");
     }
@@ -162,26 +151,21 @@ public class DayManager : MonoBehaviour
         Quaternion rot = oldContainer.transform.rotation;
         int index = oldContainer.transform.GetSiblingIndex();
 
-        // Создаём новый сразу (он запустит Awake/Start/анимацию появления)
         GameObject newContainer = Instantiate(containerPrefab, pos, rot, containersParent);
         newContainer.transform.SetSiblingIndex(index);
 
-        // Ждём анимацию исчезновения старого
         if (oldContainer.TryGetComponent<ContainerAnimationController>(out var anim))
             yield return StartCoroutine(anim.AnimateOut());
 
-        // Удаляем старый
         Destroy(oldContainer);
     }
 
-    // 🔑 ЛОГИКА ТОКЕНА
     public bool HandleTokenDrop(GameObject dropTarget, DraggableItemController token)
     {
-        if (isBusy) return false; // 🔒 Блокируем во время смены дня
+        if (isBusy) return false;
 
         if (dropTarget == null || TotalScore < currentTokenCost || tokenUsedThisDay)
         {
-            Debug.Log(tokenUsedThisDay ? "[Token] Уже использован сегодня!" : "[Token] Недостаточно очков или неверная цель.");
             return false;
         }
 
@@ -240,7 +224,7 @@ public class DayManager : MonoBehaviour
     private void UpdateTokenCostUI()
     {
         if (tokenCostText != null)
-            tokenCostText.text = $"💰 {currentTokenCost}";
+            tokenCostText.text = $"{currentTokenCost}";
     }
 
     private GameObject FindContainerRoot(GameObject obj)
@@ -258,7 +242,7 @@ public class DayManager : MonoBehaviour
 
     private void UpdateUI()
     {
-        if (dayCounterText != null) dayCounterText.text = $"День: {CurrentDay}";
-        if (scoreText != null) scoreText.text = $"💰 Очки: {TotalScore}";
+        if (dayCounterText != null) dayCounterText.text = $"Day: {CurrentDay}";
+        if (scoreText != null) scoreText.text = $"Karma: {TotalScore}";
     }
 }
