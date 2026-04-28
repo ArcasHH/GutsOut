@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.U2D;
 using UnityEngine.UI;
 
 public class OrganObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -11,8 +12,9 @@ public class OrganObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] private TMP_Text statsText;
 
     private GameOrgan data;
+    private Image organImage;
     public GameOrgan Data => data;
-
+    private string spritesPath = "Sprites/GameSprites/Organs";
 
     private void Start()
     {
@@ -26,27 +28,12 @@ public class OrganObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             Debug.LogWarning($"[{name}] No data selected for type {organType}!");
             return;
         }
+        organImage = GetComponent<Image>();
 
         SetColor();
         SetText();
         HideStatsPanel();
-    }
-    private void InitializeWithDelay()
-    {
-        if (OrganRandomizer.Instance != null)
-        {
-            data = OrganRandomizer.Instance.GetRandomOrgan(organType);
-            if (data != null)
-            {
-                SetColor();
-                SetText();
-                HideStatsPanel();
-                return;
-            }
-        }
-
-        Debug.LogWarning($"Retrying to get organ for type {organType}...");
-        Invoke(nameof(InitializeWithDelay), 0.1f);
+        SetImage();
     }
 
     public void OnPointerEnter(PointerEventData eventData) => ShowStatsPanel();
@@ -63,12 +50,34 @@ public class OrganObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (stats_panel != null) stats_panel.SetActive(false);
     }
+    private void SetImage()
+    {
+        if (organImage == null) return;
 
+        Sprite[] allSprites = Resources.LoadAll<Sprite>(spritesPath);
+
+        if (allSprites == null || allSprites.Length == 0)
+        {
+            Debug.LogWarning($"No sprites found at path: {spritesPath}");
+            return;
+        }
+
+        string targetSpriteName = $"{data.category_type}_{organType}";
+
+        Sprite targetSprite = System.Array.Find(allSprites, s => s.name == targetSpriteName);
+
+        if (targetSprite != null)
+        {
+            organImage.sprite = targetSprite;
+        }
+        else
+        {
+            Debug.LogWarning($"Sprite not found: {targetSpriteName} in {spritesPath}");
+        }
+    }
     private void SetColor()
     {
-        
-        Image objImg = GetComponent<Image>();
-        if (objImg == null || !ColorPaletteManager.Instance) return;
+        if (organImage == null || !ColorPaletteManager.Instance) return;
         Color objCol = Color.white;
         switch (data.qulity_type)
         {
@@ -101,7 +110,7 @@ public class OrganObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 break;
         }
 
-        objImg.color = objCol;
+        organImage.color = objCol;
     }
 
     private void SetText()

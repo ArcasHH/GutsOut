@@ -161,7 +161,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: organs_gut
+      name: Organ_Gut
       rect:
         serializedVersion: 2
         x: 12
@@ -183,13 +183,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: organs_brain
+      name: Organ_Brain
       rect:
         serializedVersion: 2
         x: 291
-        y: 615
-        width: 174
-        height: 169
+        y: 616
+        width: 172
+        height: 168
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -205,7 +205,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: organs_heart
+      name: Organ_Heart
       rect:
         serializedVersion: 2
         x: 302
@@ -227,7 +227,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: organs_lungs
+      name: Organ_Lungs
       rect:
         serializedVersion: 2
         x: 464
@@ -248,6 +248,116 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: straw
+      rect:
+        serializedVersion: 2
+        x: 806
+        y: 646
+        width: 215
+        height: 378
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d0d8fc6bab72054dabed8feef9d1be2
+      internalID: -1248857172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mechanic_Gut
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 265
+        width: 278
+        height: 338
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 728136377799b7f4f81662530c941589
+      internalID: 874415799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mechanic_Heart
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 364
+        width: 174
+        height: 243
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a84fb32be0cb8c74895702350772f67f
+      internalID: 870527044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mechanic_Brain
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 198
+        width: 180
+        height: 163
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f5464fbb029e1e4d9310eb6bd7eae3d
+      internalID: -411194677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mechanic_Lungs
+      rect:
+        serializedVersion: 2
+        x: 488
+        y: 176
+        width: 388
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 144200e688088884a9596bfcf458b7d3
+      internalID: 1895746320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -262,10 +372,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      organs_brain: 8031273221110208615
-      organs_gut: 1178249896726043547
-      organs_heart: 7546203303297002096
-      organs_lungs: 6490295061151189282
+      Mechanic_Brain: -411194677
+      Mechanic_Gut: 874415799
+      Mechanic_Heart: 870527044
+      Mechanic_Lungs: 1895746320
+      Organ_Brain: 8031273221110208615
+      Organ_Gut: 1178249896726043547
+      Organ_Heart: 7546203303297002096
+      Organ_Lungs: 6490295061151189282
+      straw: -1248857172
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
