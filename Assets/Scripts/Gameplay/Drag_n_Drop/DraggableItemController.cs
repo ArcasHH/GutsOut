@@ -23,7 +23,10 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
     private void Awake()
     {
         if (rectTransform == null) rectTransform = GetComponent<RectTransform>();
-        if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>();
+        
+        canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
 
         canvas = GetComponentInParent<Canvas>();
         canvasRect = canvas.GetComponent<RectTransform>();
@@ -81,6 +84,17 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
 
         GameObject targetGo = eventData.pointerCurrentRaycast.gameObject;
         SlotController targetSlot = targetGo?.GetComponentInParent<SlotController>();
+
+        if (Type == ItemType.HumanDeleter)
+        {
+            if (DayManager.Instance != null)
+            {
+                bool success = DayManager.Instance.HandleTokenDrop(targetGo, this);
+                if (!success) ReturnToSource();
+            }
+            else ReturnToSource();
+            return;
+        }
 
         if (targetSlot != null && targetSlot != sourceSlot)
         {
