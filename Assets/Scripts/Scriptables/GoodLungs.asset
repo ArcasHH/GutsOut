@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f947933ad2cf21946871e53f9d803f8e, type: 3}
-  m_Name: GoodBrain
+  m_Name: GoodLungs
   m_EditorClassIdentifier: Assembly-CSharp::ObjectTypeData
-  obj_type: 1
+  obj_type: 2
   qulity_type: 2
-  mind: 4
-  soul: 2
-  body: 0
+  mind: 3
+  soul: 3
+  body: 4

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: OrdinaryLungs
   m_EditorClassIdentifier: Assembly-CSharp::ObjectTypeData
   obj_type: 2
-  qulity_type: 0
-  mind: 1
-  soul: 5
-  instinct: -2
+  qulity_type: 1
+  mind: 2
+  soul: 2
+  body: 2
