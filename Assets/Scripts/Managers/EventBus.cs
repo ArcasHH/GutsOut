@@ -12,6 +12,8 @@ public static class EventBus
     public static event Action<bool> OnGamePaused;
     public static event Action<bool> OnMenuOpen;
 
+    public static event Action OnInventoryChanged;
+
     //Common
     public static void TriggerGameStart() => OnGameStart?.Invoke();
     public static void TriggerGameOpen() => OnGameOpen?.Invoke();
@@ -21,7 +23,7 @@ public static class EventBus
     public static void TriggerGamePaused(bool isPaused) => OnGamePaused?.Invoke(isPaused);
     public static void TriggerMenuOpen(bool isMenuOpen) => OnMenuOpen?.Invoke(isMenuOpen);
 
-
+    public static void TriggerInventoryChanged() => OnInventoryChanged?.Invoke();
 
 
     public static void ClearAllSubscriptions()
@@ -33,5 +35,7 @@ public static class EventBus
 
         OnGamePaused = null;
         OnMenuOpen = null;
+
+        OnInventoryChanged = null;
     }
 }

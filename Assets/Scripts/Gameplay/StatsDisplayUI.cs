@@ -10,13 +10,13 @@ public class StatsDisplayUI : MonoBehaviour
 
     private void OnEnable()
     {
-        SlotController.OnInventoryChanged += UpdateDisplay;
+        EventBus.OnInventoryChanged += UpdateDisplay;
         UpdateDisplay();
     }
 
     private void OnDisable()
     {
-        SlotController.OnInventoryChanged -= UpdateDisplay;
+        EventBus.OnInventoryChanged -= UpdateDisplay;
     }
 
     private void UpdateDisplay()

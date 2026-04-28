@@ -28,7 +28,4 @@ public class OrganStatsSummarizer : MonoBehaviour
             TotalBody += organ.GetStat(StatType.Body);
         }
     }
-
-    [ContextMenu("🔄 Recalculate Stats")]
-    private void EditorRecalculate() => CalculateStats();
 }

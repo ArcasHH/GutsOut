@@ -13,6 +13,11 @@ public class ColorPaletteManager : MonoBehaviour
         [Header("UI")]
         public Color buttonHoverColor;
         public Color ButtonClickColor;
+
+        [Header("Gameplay")]
+        public Color goodOrganColor;
+        public Color ordinaryOrganColor;
+        public Color badOrganColor;
     }
 
     [Header("Color Palettes")]

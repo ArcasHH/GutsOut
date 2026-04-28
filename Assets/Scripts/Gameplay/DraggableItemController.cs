@@ -10,10 +10,7 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
     public CanvasGroup canvasGroup;
     public Canvas canvas;
 
-    [Header("Настройки")]
-    [Tooltip("Минимальное смещение (в пикселях) для начала перетаскивания")]
     public float dragThreshold = 5f;
-    [Tooltip("Длительность плавного возврата/обмена (секунды)")]
     public float returnAnimDuration = 0.25f;
 
     public bool IsAnimating { get; private set; }
@@ -137,25 +134,20 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
         IsAnimating = false;
     }
 
-    // 🔑 ИСПРАВЛЕННАЯ ЛОГИКА ОБМЕНА (анимация в экранных координатах)
     private IEnumerator PerformSwap(SlotController targetSlot, DraggableItemController otherItem, SlotController sourceSlot)
     {
         IsAnimating = true;
         otherItem.IsAnimating = true;
 
-        // 1️⃣ Запоминаем ЭКРАННЫЕ позиции ДО любых изменений иерархии
         Vector3 startPosThis = rectTransform.position;
         Vector3 startPosOther = otherItem.rectTransform.position;
 
-        // 2️⃣ Целевые точки = центры слотов на экране (Pivot должен быть 0.5, 0.5)
         Vector3 targetPosThis = targetSlot.rectTransform.position;
         Vector3 targetPosOther = sourceSlot.rectTransform.position;
 
-        // 3️⃣ Отключаем интерактивность на время полёта
         canvasGroup.blocksRaycasts = false;
         if (otherItem.canvasGroup != null) otherItem.canvasGroup.blocksRaycasts = false;
 
-        // 4️⃣ Анимируем именно позицию. Она НЕ зависит от родителей, поэтому скачков нет.
         float elapsed = 0f;
         while (elapsed < returnAnimDuration)
         {
@@ -169,15 +161,12 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
             yield return null;
         }
 
-        // 5️⃣ Фиксируем финальные позиции
         rectTransform.position = targetPosThis;
         otherItem.rectTransform.position = targetPosOther;
 
-        // 6️⃣ Меняем родителей. Так как мы уже визуально в центре, anchoredPosition = 0 не вызовет рывка
         targetSlot.PlaceItem(this);
         sourceSlot.PlaceItem(otherItem);
 
-        // 7️⃣ Восстанавливаем интерактивность
         canvasGroup.blocksRaycasts = true;
         if (otherItem.canvasGroup != null) otherItem.canvasGroup.blocksRaycasts = true;
 

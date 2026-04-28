@@ -9,8 +9,6 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public ItemType RequiredType = ItemType.None;
     public Image SlotImage;
 
-    public static event Action OnInventoryChanged;
-
     public DraggableItemController CurrentItem { get; private set; }
     public bool IsEmpty => CurrentItem == null;
 
@@ -22,8 +20,6 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         rectTransform = GetComponent<RectTransform>();
         if (SlotImage != null) baseColor = SlotImage.color;
 
-        // 🔑 FIX #3: Инициализация при старте. Если предмет уже в слоте (расставлен в редакторе),
-        // связываем их сразу, иначе первый дроп будет считать слот пустым.
         foreach (Transform child in transform)
         {
             DraggableItemController item = child.GetComponent<DraggableItemController>();
@@ -87,12 +83,12 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         item.canvasGroup.blocksRaycasts = true;
         item.canvasGroup.alpha = 1f;
 
-        OnInventoryChanged?.Invoke();
+        EventBus.TriggerInventoryChanged();
     }
 
     public void ClearItem()
     {
         CurrentItem = null;
-        OnInventoryChanged?.Invoke();
+        EventBus.TriggerInventoryChanged();
     }
 }
