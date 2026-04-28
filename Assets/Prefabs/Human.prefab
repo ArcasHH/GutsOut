@@ -105,7 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ContainerAnimationController
   duration: 3
   spawnOffset: {x: 0, y: 700}
-  despawnOffset: {x: 0, y: -300}
+  despawnOffset: {x: 0, y: -600}
   spawnScale: {x: 0, y: 0, z: 1}
 --- !u!1 &1427456781072413488
 GameObject:
