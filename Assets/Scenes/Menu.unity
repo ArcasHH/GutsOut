@@ -1191,9 +1191,9 @@ MonoBehaviour:
   palettes:
   - buttonHoverColor: {r: 0.5849056, g: 0.2896938, b: 0.2896938, a: 1}
     ButtonClickColor: {r: 0.25943398, g: 0.25943398, b: 0.25943398, a: 1}
-    goodOrganColor: {r: 0.38921767, g: 0.6933962, b: 0.3916582, a: 1}
+    goodOrganColor: {r: 0.50060076, g: 0.7122642, b: 0.5033144, a: 1}
     ordinaryOrganColor: {r: 1, g: 1, b: 1, a: 1}
-    badOrganColor: {r: 0.58431375, g: 0.2901961, b: 0.2901961, a: 1}
+    badOrganColor: {r: 0.6792453, g: 0.46457815, b: 0.46457815, a: 1}
   currentPaletteIndex: 0
 --- !u!4 &2127200280
 Transform:

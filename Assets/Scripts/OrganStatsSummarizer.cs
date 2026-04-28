@@ -6,11 +6,25 @@ public class OrganStatsSummarizer : MonoBehaviour
     public int TotalSoul { get; private set; }
     public int TotalBody { get; private set; }
 
-    private void Start()
+    private int ReqMind = 0;
+    private int ReqSoul = 0;
+    private int ReqBody = 0;
+
+    public int GetRequiredMind() => ReqMind;
+    public int GetRequiredSoul() => ReqSoul;
+    public int GetRequiredBody() => ReqBody;
+
+    private void Awake()
     {
-        CalculateStats();
+        RandomRequireStats();
     }
 
+    private void RandomRequireStats()
+    {
+        ReqMind = Random.Range(1, 6);
+        ReqSoul = Random.Range(1, 6);
+        ReqBody = Random.Range(1, 6);
+    }
     public void CalculateStats()
     {
         TotalMind = 0;
