@@ -2,15 +2,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static AudioButton;
 
 public class OrganObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private ObjectTypeData data;
+    [SerializeField] private GameOrgan data;
     [SerializeField] private GameObject stats_panel;
     [SerializeField] private TMP_Text statsText;
 
-    public ObjectTypeData Data => data;
+    public GameOrgan Data => data;
 
 
     private void Awake()

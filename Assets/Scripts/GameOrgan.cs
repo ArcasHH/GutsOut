@@ -4,8 +4,8 @@ public enum ObjectType { Heart, Brain, Lungs, Gut }
 public enum StatType { Mind, Soul, Body }
 public enum QualityType { Bad, Ordinary, Good }
 
-[CreateAssetMenu(fileName = "NewObjectData", menuName = "Game/Object Type Data")]
-public class ObjectTypeData : ScriptableObject
+[CreateAssetMenu(fileName = "NewObjectData", menuName = "Game/Game Organ")]
+public class GameOrgan : ScriptableObject
 {
 
     public ObjectType obj_type;
