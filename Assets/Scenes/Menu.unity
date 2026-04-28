@@ -1191,6 +1191,7 @@ MonoBehaviour:
   palettes:
   - buttonHoverColor: {r: 0.5849056, g: 0.2896938, b: 0.2896938, a: 1}
     ButtonClickColor: {r: 0.25943398, g: 0.25943398, b: 0.25943398, a: 1}
+    outlineColor: {r: 1, g: 0.6938923, b: 0, a: 1}
     cursedOrganColor: {r: 0.3679245, g: 0.10586506, b: 0.10586506, a: 1}
     badOrganColor: {r: 0.6792453, g: 0.46457815, b: 0.46457815, a: 1}
     ordinaryOrganColor: {r: 1, g: 1, b: 1, a: 1}

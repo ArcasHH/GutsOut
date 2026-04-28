@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8265550474340028862}
   - component: {fileID: 3075485028950764438}
   - component: {fileID: 4920909718357398157}
+  - component: {fileID: 3581867739436220863}
   m_Layer: 5
   m_Name: Lungs
   m_TagString: Untagged
@@ -171,6 +172,21 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 305.0536, y: 349.51855}
   m_EdgeRadius: 0
+--- !u!114 &3581867739436220863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8091132100414138715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0.7688679, g: 0.13056247, b: 0.13056247, a: 0.78431374}
+  m_EffectDistance: {x: 10, y: 10}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &7137859195110336169
 PrefabInstance:
   m_ObjectHideFlags: 0

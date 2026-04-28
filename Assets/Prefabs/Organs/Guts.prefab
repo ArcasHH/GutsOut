@@ -100,6 +100,10 @@ PrefabInstance:
       propertyPath: organType
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3581867739436220863, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
+      propertyPath: m_UseGraphicAlpha
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6978871441027045319, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
       propertyPath: m_Sprite
       value: 

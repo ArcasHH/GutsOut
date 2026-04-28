@@ -13,6 +13,7 @@ public class OrganObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private GameOrgan data;
     private Image organImage;
+    private Outline outline;
     public GameOrgan Data => data;
     private string spritesPath = "Sprites/GameSprites/Organs";
 
@@ -29,11 +30,14 @@ public class OrganObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             return;
         }
         organImage = GetComponent<Image>();
+        outline = organImage.gameObject.GetComponent<Outline>();
 
         SetColor();
         SetText();
         HideStatsPanel();
+
         SetImage();
+        SetOutline();
     }
 
     public void OnPointerEnter(PointerEventData eventData) => ShowStatsPanel();
@@ -44,11 +48,13 @@ public class OrganObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private void ShowStatsPanel()
     {
         if (stats_panel != null) stats_panel.SetActive(true);
+        outline.enabled = true;
     }
 
     private void HideStatsPanel()
     {
         if (stats_panel != null) stats_panel.SetActive(false);
+        outline.enabled = false;
     }
     private void SetImage()
     {
@@ -119,5 +125,13 @@ public class OrganObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         statsText.text = $"{GetStat(StatType.Mind)}\n" +
                          $"{GetStat(StatType.Soul)}\n" +
                          $"{GetStat(StatType.Body)}";
+    }
+
+    private void SetOutline()
+    {
+        if (outline != null)
+        {
+            outline.effectColor = ColorPaletteManager.Instance.CurrentPalette.outlineColor;
+        }
     }
 }
