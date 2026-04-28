@@ -281,8 +281,11 @@ MonoBehaviour:
   containerPrefab: {fileID: 1303498805825431328, guid: b782944dd3b188b4dbb61a84de5bd173, type: 3}
   containersParent: {fileID: 489910329}
   dayCounterText: {fileID: 1643290333}
-  replacedCounterText: {fileID: 2112430338}
+  scoreText: {fileID: 2112430338}
   endDayButton: {fileID: 1741940973}
+  rewardForOne: 10
+  rewardForTwo: 30
+  rewardForThree: 50
 --- !u!4 &78124485
 Transform:
   m_ObjectHideFlags: 0

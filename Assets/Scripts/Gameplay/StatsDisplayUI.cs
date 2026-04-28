@@ -1,48 +1,48 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class StatsDisplayUI : MonoBehaviour
 {
-    [Header("UI")]
     [SerializeField] private TMP_Text MindStatsText;
     [SerializeField] private TMP_Text SoulStatsText;
     [SerializeField] private TMP_Text BodyStatsText;
 
-    [SerializeField] private OrganStatsSummarizer summarizer;
-
+    private OrganStatsSummarizer summarizer;
     private Color wrongStatsColor;
 
-    private void Start()
+    private void Awake()
     {
+        summarizer = GetComponentInParent<OrganStatsSummarizer>();
         wrongStatsColor = ColorPaletteManager.Instance.CurrentPalette.buttonHoverColor;
-        UpdateDisplay();
-    }
-    private void OnEnable()
-    {
-        EventBus.OnInventoryChanged += UpdateDisplay;
-        UpdateDisplay();
     }
 
-    private void OnDisable()
+    private void OnEnable() => EventBus.OnInventoryChanged += ForceUpdate;
+    private void OnDisable() => EventBus.OnInventoryChanged -= ForceUpdate;
+
+    // 🔑 Start вызывается ПОСЛЕ всех Awake. Запускаем корутину для 100% безопасности
+    private void Start() => StartCoroutine(InitDisplayDelayed());
+
+    private IEnumerator InitDisplayDelayed()
     {
-        EventBus.OnInventoryChanged -= UpdateDisplay;
+        yield return null; // Ждём конца кадра. Unity гарантированно инициализирует все дети
+        ForceUpdate();
     }
 
-    private void UpdateDisplay()
+    public void ForceUpdate()
     {
         if (summarizer == null) return;
 
         summarizer.CalculateStats();
-
-        UpdateStatDisplay(MindStatsText, "mind", summarizer.TotalMind, summarizer.GetRequiredMind());
-        UpdateStatDisplay(SoulStatsText, "soul", summarizer.TotalSoul, summarizer.GetRequiredSoul());
-        UpdateStatDisplay(BodyStatsText, "body", summarizer.TotalBody, summarizer.GetRequiredBody());
+        UpdateStat(MindStatsText, "mind", summarizer.TotalMind, summarizer.GetRequiredMind());
+        UpdateStat(SoulStatsText, "soul", summarizer.TotalSoul, summarizer.GetRequiredSoul());
+        UpdateStat(BodyStatsText, "body", summarizer.TotalBody, summarizer.GetRequiredBody());
     }
 
-    private void UpdateStatDisplay(TMP_Text textComponent, string statName, int current, int required)
+    private void UpdateStat(TMP_Text text, string name, int current, int required)
     {
-        textComponent.text = $"{statName}: {current}/{required}";
-        textComponent.color = current < required ? wrongStatsColor : Color.white;
+        if (text == null) return;
+        text.text = $"{name}: {current}/{required}";
+        text.color = current < required ? wrongStatsColor : Color.white;
     }
 }

@@ -6,21 +6,21 @@ public class OrganStatsSummarizer : MonoBehaviour
     public int TotalSoul { get; private set; }
     public int TotalBody { get; private set; }
 
-    private int ReqMind = 0;
-    private int ReqSoul = 0;
-    private int ReqBody = 0;
+    public int ReqMind { get; private set; }
+    public int ReqSoul { get; private set; }
+    public int ReqBody { get; private set; }
+
+    public bool IsFulfilled => TotalMind >= ReqMind && TotalSoul >= ReqSoul && TotalBody >= ReqBody;
 
     public int GetRequiredMind() => ReqMind;
     public int GetRequiredSoul() => ReqSoul;
     public int GetRequiredBody() => ReqBody;
 
-    public bool IsFulfilled => TotalMind >= ReqMind && 
-                               TotalSoul >= ReqSoul && 
-                               TotalBody >= ReqBody;
-
+    // 🔑 Awake вызывается РАНЬШЕ Start() у всех объектов в сцене
     private void Awake()
     {
         RandomRequireStats();
+        CalculateStats();
     }
 
     public void RandomRequireStats()
@@ -32,10 +32,7 @@ public class OrganStatsSummarizer : MonoBehaviour
 
     public void CalculateStats()
     {
-        TotalMind = 0;
-        TotalSoul = 0;
-        TotalBody = 0;
-
+        TotalMind = 0; TotalSoul = 0; TotalBody = 0;
         var organs = GetComponentsInChildren<OrganObject>(true);
         foreach (var organ in organs)
         {

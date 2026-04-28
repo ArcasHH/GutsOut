@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 using System.Collections.Generic;
 
 public class DayManager : MonoBehaviour
@@ -11,11 +12,16 @@ public class DayManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private TMP_Text dayCounterText;
-    [SerializeField] private TMP_Text replacedCounterText;
+    [SerializeField] private TMP_Text scoreText;
     [SerializeField] private Button endDayButton;
 
     public int CurrentDay { get; private set; } = 1;
-    public int TotalReplacedCount { get; private set; } = 0;
+    public int TotalScore { get; private set; } = 0;
+
+    [Header("Награды за день")]
+    [SerializeField] private int rewardForOne = 10;
+    [SerializeField] private int rewardForTwo = 30;
+    [SerializeField] private int rewardForThree = 50;
 
     private void Awake()
     {
@@ -30,19 +36,31 @@ public class DayManager : MonoBehaviour
 
     private void Start() => CheckButtonState();
 
+    /// <summary>
+    /// Проверяет, есть ли хотя бы один готовый контейнер.
+    /// Ищет ТОЛЬКО активные, не уничтоженные объекты.
+    /// </summary>
     private void CheckButtonState()
     {
         bool anyFulfilled = false;
-        var summarizers = containersParent.GetComponentsInChildren<OrganStatsSummarizer>();
+        
+        // Получаем только реально существующие в сцене объекты
+        var summarizers = FindObjectsOfType<OrganStatsSummarizer>();
         
         foreach (var s in summarizers)
         {
-            if (s == null) continue;
-            s.CalculateStats();
-            if (s.IsFulfilled)
+            // Пропускаем уничтоженные или выключенные объекты
+            if (s == null || !s.gameObject.activeInHierarchy) continue;
+            
+            // Проверяем только те, что лежат в нашем родителе
+            if (s.transform.IsChildOf(containersParent))
             {
-                anyFulfilled = true;
-                break;
+                s.CalculateStats();
+                if (s.IsFulfilled)
+                {
+                    anyFulfilled = true;
+                    break;
+                }
             }
         }
 
@@ -50,19 +68,30 @@ public class DayManager : MonoBehaviour
             endDayButton.interactable = anyFulfilled;
     }
 
+    /// <summary>
+    /// Запускает процесс завершения дня через корутину
+    /// </summary>
     public void EndDay()
     {
         if (endDayButton != null && !endDayButton.interactable) return;
+        StartCoroutine(ProcessEndDay());
+    }
 
-        var allSummarizers = containersParent.GetComponentsInChildren<OrganStatsSummarizer>();
+    private IEnumerator ProcessEndDay()
+    {
+        var allSummarizers = FindObjectsOfType<OrganStatsSummarizer>();
         int replacedToday = 0;
-
-        var list = new List<OrganStatsSummarizer>(allSummarizers);
+        var list = new List<OrganStatsSummarizer>();
+        
+        // Собираем только валидные контейнеры
+        foreach (var s in allSummarizers)
+        {
+            if (s != null && s.gameObject.activeInHierarchy && s.transform.IsChildOf(containersParent))
+                list.Add(s);
+        }
         
         foreach (var summarizer in list)
         {
-            if (summarizer == null) continue;
-            
             summarizer.CalculateStats();
             if (summarizer.IsFulfilled)
             {
@@ -71,15 +100,25 @@ public class DayManager : MonoBehaviour
             }
         }
 
-        TotalReplacedCount += replacedToday;
+        // Расчёт награды
+        int dailyReward = replacedToday >= 3 ? rewardForThree : 
+                          replacedToday == 2 ? rewardForTwo : 
+                          replacedToday == 1 ? rewardForOne : 0;
+
+        TotalScore += dailyReward;
         CurrentDay++;
-        
         UpdateUI();
         
+        // Обновляем UI статов
         EventBus.OnInventoryChanged?.Invoke();
+        
+        // ⏳ ЖДЁМ КОНЦА КАДРА. Unity окончательно удалит старые контейнеры из иерархии
+        yield return null;
+        
+        // Теперь проверяем кнопку только по новым контейнерам
         CheckButtonState();
         
-        Debug.Log($"[DayManager] День {CurrentDay - 1} завершён. Заменено сегодня: {replacedToday}. Всего: {TotalReplacedCount}");
+        Debug.Log($"[DayManager] День {CurrentDay - 1} завершён. Заменено: {replacedToday}. Награда: +{dailyReward}. Всего очков: {TotalScore}");
     }
 
     private void ReplaceContainer(GameObject oldContainer)
@@ -91,19 +130,12 @@ public class DayManager : MonoBehaviour
         GameObject newContainer = Instantiate(containerPrefab, pos, rot, containersParent);
         newContainer.transform.SetSiblingIndex(index);
 
-        var newSummarizer = newContainer.GetComponent<OrganStatsSummarizer>();
-        if (newSummarizer != null)
-        {
-            newSummarizer.RandomRequireStats();
-            newSummarizer.CalculateStats();
-        }
-
         Destroy(oldContainer);
     }
 
     private void UpdateUI()
     {
         if (dayCounterText != null) dayCounterText.text = $"День: {CurrentDay}";
-        if (replacedCounterText != null) replacedCounterText.text = $"Всего заменено: {TotalReplacedCount}";
+        if (scoreText != null) scoreText.text = $"Валюта: {TotalScore}";
     }
 }
