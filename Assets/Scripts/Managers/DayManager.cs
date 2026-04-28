@@ -30,6 +30,10 @@ public class DayManager : MonoBehaviour
     [SerializeField] private GameObject humanDeleterPrefab;
     [SerializeField] private TMP_Text humanDeleterCostText;
 
+    [Header("Спавн дневных контейнеров")]
+    [Tooltip("Объект 'GameObjects', внутри которого лежат слоты для ежедневных контейнеров")]
+    [SerializeField] private Transform dailySpawnRoot;
+
     private int currentHumanDeleterCost;
     private GameObject currentHumanDeleterInstance;
     private bool humanDeleterUsedThisDay = false;
@@ -71,6 +75,7 @@ public class DayManager : MonoBehaviour
         foreach (var s in summarizers)
         {
             if (s == null || !s.gameObject.activeInHierarchy) continue;
+            if (s.IsCollection) continue;
 
             s.CalculateStats();
             if (s.IsFulfilled)
@@ -102,6 +107,7 @@ public class DayManager : MonoBehaviour
         foreach (var s in summarizers)
         {
             if (s == null || !s.gameObject.activeInHierarchy) continue;
+            if (s.IsCollection) continue;
             s.CalculateStats();
             if (s.IsFulfilled) toReplace.Add(s.gameObject);
         }
@@ -147,11 +153,13 @@ public class DayManager : MonoBehaviour
     {
         if (oldContainer == null) yield break;
 
+        Transform oldParent = oldContainer.transform.parent;
+
         Vector3 pos = oldContainer.transform.position;
         Quaternion rot = oldContainer.transform.rotation;
         int index = oldContainer.transform.GetSiblingIndex();
 
-        GameObject newContainer = Instantiate(containerPrefab, pos, rot, containersParent);
+        GameObject newContainer = Instantiate(containerPrefab, pos, rot, oldParent);
         newContainer.transform.SetSiblingIndex(index);
 
         if (oldContainer.TryGetComponent<ContainerAnimationController>(out var anim))

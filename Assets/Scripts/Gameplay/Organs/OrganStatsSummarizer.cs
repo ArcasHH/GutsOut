@@ -12,11 +12,16 @@ public class OrganStatsSummarizer : MonoBehaviour
 
     public bool IsFulfilled => TotalMind >= ReqMind && TotalSoul >= ReqSoul && TotalBody >= ReqBody;
 
+    [Header("Тип контейнера")]
+    [Tooltip("Если true, контейнер не участвует в смене дня и никогда не исчезает")]
+    [SerializeField] private bool isCollectionContainer = false;
+    
+    public bool IsCollection => isCollectionContainer;
+
     public int GetRequiredMind() => ReqMind;
     public int GetRequiredSoul() => ReqSoul;
     public int GetRequiredBody() => ReqBody;
 
-    // 🔑 Awake вызывается РАНЬШЕ Start() у всех объектов в сцене
     private void Awake()
     {
         RandomRequireStats();
