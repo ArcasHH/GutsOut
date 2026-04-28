@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: BadGuts
   m_EditorClassIdentifier: Assembly-CSharp::ObjectTypeData
   obj_type: 3
-  qulity_type: 0
+  category_type: 0
+  qulity_type: 1
   mind: -2
-  soul: -3
+  soul: -1
   body: 2

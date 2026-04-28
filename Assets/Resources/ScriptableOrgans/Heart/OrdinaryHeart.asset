@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: OrdinaryHeart
   m_EditorClassIdentifier: Assembly-CSharp::ObjectTypeData
   obj_type: 0
-  qulity_type: 1
+  category_type: 0
+  qulity_type: 2
   mind: 0
   soul: 3
-  instinct: -1
+  body: 0

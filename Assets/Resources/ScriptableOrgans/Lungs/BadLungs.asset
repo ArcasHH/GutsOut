@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: BadLungs
   m_EditorClassIdentifier: Assembly-CSharp::ObjectTypeData
   obj_type: 2
-  qulity_type: 0
+  category_type: 0
+  qulity_type: 1
   mind: 1
   soul: 0
   body: -1

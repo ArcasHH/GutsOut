@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: GoodHeart
   m_EditorClassIdentifier: Assembly-CSharp::ObjectTypeData
   obj_type: 0
-  qulity_type: 2
+  category_type: 0
+  qulity_type: 3
   mind: 1
   soul: 4
   body: 2
