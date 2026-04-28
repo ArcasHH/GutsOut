@@ -24,15 +24,15 @@ public class DayManager : MonoBehaviour
     [SerializeField] private int rewardForThree = 50;
 
     [Header("Токен обновления")]
-    [SerializeField] private int tokenBaseCost = 20;
-    [SerializeField] private int tokenCostIncrease = 5;
-    [SerializeField] private Transform tokenSlot;
-    [SerializeField] private GameObject tokenPrefab;
-    [SerializeField] private TMP_Text tokenCostText;
+    [SerializeField] private int humanDeleterBaseCost = 20;
+    [SerializeField] private int humanDeleterCostIncrease = 5;
+    [SerializeField] private Transform humanDeleterSlot;
+    [SerializeField] private GameObject humanDeleterPrefab;
+    [SerializeField] private TMP_Text humanDeleterCostText;
 
-    private int currentTokenCost;
-    private GameObject currentTokenInstance;
-    private bool tokenUsedThisDay = false;
+    private int currentHumanDeleterCost;
+    private GameObject currentHumanDeleterInstance;
+    private bool humanDeleterUsedThisDay = false;
     private bool isBusy = false;
 
     public static DayManager Instance { get; private set; }
@@ -40,16 +40,16 @@ public class DayManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        currentTokenCost = tokenBaseCost;
+        currentHumanDeleterCost = humanDeleterBaseCost;
 
         if (endDayButton != null)
             endDayButton.onClick.AddListener(EndDay);
 
         UpdateUI();
-        UpdateTokenCostUI();
+        UpdateHumanDeleterCostUI();
 
-        if (tokenPrefab != null && tokenSlot != null && currentTokenInstance == null)
-            SpawnToken();
+        if (humanDeleterPrefab != null && humanDeleterSlot != null && currentHumanDeleterInstance == null)
+            SpawnHumanDeleter();
     }
 
     private void OnEnable() => EventBus.OnInventoryChanged += RequestButtonUpdate;
@@ -123,15 +123,15 @@ public class DayManager : MonoBehaviour
         CurrentDay++;
         UpdateUI();
 
-        if (tokenUsedThisDay)
+        if (humanDeleterUsedThisDay)
         {
-            currentTokenCost += tokenCostIncrease;
-            UpdateTokenCostUI();
-            SpawnToken();
+            currentHumanDeleterCost += humanDeleterCostIncrease;
+            UpdateHumanDeleterCostUI();
+            SpawnHumanDeleter();
         }
 
-        tokenUsedThisDay = false;
-        UpdateTokenVisibility();
+        humanDeleterUsedThisDay = false;
+        UpdateHumanDeleterVisibility();
         EventBus.OnInventoryChanged?.Invoke();
 
         yield return new WaitForEndOfFrame();
@@ -160,10 +160,10 @@ public class DayManager : MonoBehaviour
         Destroy(oldContainer);
     }
 
-    public bool HandleTokenDrop(GameObject dropTarget, DraggableItemController token)
+    public bool HandleHumanDeleterDrop(GameObject dropTarget, DraggableItemController humanDeleter)
     {
         if (isBusy) return false; 
-        if (dropTarget == null || TotalScore < currentTokenCost || tokenUsedThisDay)
+        if (dropTarget == null || TotalScore < currentHumanDeleterCost || humanDeleterUsedThisDay)
         {
             return false;
         }
@@ -171,58 +171,58 @@ public class DayManager : MonoBehaviour
         GameObject containerRoot = FindContainerRoot(dropTarget);
         if (containerRoot == null) return false;
 
-        TotalScore -= currentTokenCost;
+        TotalScore -= currentHumanDeleterCost;
         UpdateUI();
 
-        tokenUsedThisDay = true;
-        UpdateTokenVisibility();
+        humanDeleterUsedThisDay = true;
+        UpdateHumanDeleterVisibility();
 
-        if (token != null)
+        if (humanDeleter != null)
         {
-            Destroy(token.gameObject);
-            currentTokenInstance = null;
+            Destroy(humanDeleter.gameObject);
+            currentHumanDeleterInstance = null;
         }
 
         StartCoroutine(ReplaceContainerAsync(containerRoot));
-        StartCoroutine(SyncButtonAfterToken());
+        StartCoroutine(SyncButtonAfterHumanDeleter());
 
         return true;
     }
 
-    private IEnumerator SyncButtonAfterToken()
+    private IEnumerator SyncButtonAfterHumanDeleter()
     {
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         ForceUpdateButtonState();
     }
 
-    private void SpawnToken()
+    private void SpawnHumanDeleter()
     {
-        if (tokenPrefab == null || tokenSlot == null) return;
-        if (currentTokenInstance != null) Destroy(currentTokenInstance);
+        if (humanDeleterPrefab == null || humanDeleterSlot == null) return;
+        if (currentHumanDeleterInstance != null) Destroy(currentHumanDeleterInstance);
 
-        currentTokenInstance = Instantiate(tokenPrefab, tokenSlot);
-        var rt = currentTokenInstance.GetComponent<RectTransform>();
+        currentHumanDeleterInstance = Instantiate(humanDeleterPrefab, humanDeleterSlot);
+        var rt = currentHumanDeleterInstance.GetComponent<RectTransform>();
         if (rt != null) rt.anchoredPosition = Vector2.zero;
 
-        UpdateTokenVisibility();
+        UpdateHumanDeleterVisibility();
     }
 
-    private void UpdateTokenVisibility()
+    private void UpdateHumanDeleterVisibility()
     {
-        bool show = !tokenUsedThisDay;
+        bool show = !humanDeleterUsedThisDay;
 
-        if (currentTokenInstance != null)
-            currentTokenInstance.SetActive(show);
+        if (currentHumanDeleterInstance != null)
+            currentHumanDeleterInstance.SetActive(show);
 
-        if (tokenCostText != null)
-            tokenCostText.gameObject.SetActive(show);
+        if (humanDeleterCostText != null)
+            humanDeleterCostText.gameObject.SetActive(show);
     }
 
-    private void UpdateTokenCostUI()
+    private void UpdateHumanDeleterCostUI()
     {
-        if (tokenCostText != null)
-            tokenCostText.text = $"Cost: {currentTokenCost} karma";
+        if (humanDeleterCostText != null)
+            humanDeleterCostText.text = $"Cost: {currentHumanDeleterCost} karma";
     }
 
     private GameObject FindContainerRoot(GameObject obj)
