@@ -12,7 +12,7 @@ public static class EventBus
     public static event Action<bool> OnGamePaused;
     public static event Action<bool> OnMenuOpen;
 
-    public static event Action OnInventoryChanged;
+    public static Action OnInventoryChanged;
 
     //Common
     public static void TriggerGameStart() => OnGameStart?.Invoke();
