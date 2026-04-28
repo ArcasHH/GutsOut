@@ -72,6 +72,9 @@ public class OrganObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         Color objCol = Color.white;
         switch (data.qulity_type)
         {
+            case QualityType.Cursed:
+                objCol = ColorPaletteManager.Instance.CurrentPalette.cursedOrganColor;
+                break;
             case QualityType.Bad:
                 objCol = ColorPaletteManager.Instance.CurrentPalette.badOrganColor;
                 break;
@@ -82,6 +85,15 @@ public class OrganObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
             case QualityType.Good:
                 objCol = ColorPaletteManager.Instance.CurrentPalette.goodOrganColor;
+                break;
+            case QualityType.Rare:
+                objCol = ColorPaletteManager.Instance.CurrentPalette.rareOrganColor;
+                break;
+            case QualityType.Legendary:
+                objCol = ColorPaletteManager.Instance.CurrentPalette.legendaryOrganColor;
+                break;
+            case QualityType.Epic:
+                objCol = ColorPaletteManager.Instance.CurrentPalette.epicOrganColor;
                 break;
 
             default:

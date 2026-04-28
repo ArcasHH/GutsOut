@@ -1,16 +1,17 @@
 using UnityEngine;
 
 public enum ObjectType { Heart, Brain, Lungs, Gut }
+public enum CategoryType { Organ, Mechanic, Insects }
 public enum StatType { Mind, Soul, Body }
-public enum QualityType { Bad, Ordinary, Good }
+public enum QualityType { Cursed, Bad, Ordinary, Good, Rare, Legendary, Epic }
 
 [CreateAssetMenu(fileName = "NewObjectData", menuName = "Game/Game Organ")]
 public class GameOrgan : ScriptableObject
 {
 
     public ObjectType obj_type;
+    public CategoryType category_type;
     public QualityType qulity_type;
-    //public string displayName = "Unnamed";
 
     public int mind;
     public int soul;

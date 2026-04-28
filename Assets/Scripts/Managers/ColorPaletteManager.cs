@@ -15,9 +15,13 @@ public class ColorPaletteManager : MonoBehaviour
         public Color ButtonClickColor;
 
         [Header("Gameplay")]
-        public Color goodOrganColor;
-        public Color ordinaryOrganColor;
+        public Color cursedOrganColor;
         public Color badOrganColor;
+        public Color ordinaryOrganColor;
+        public Color goodOrganColor;
+        public Color rareOrganColor;
+        public Color legendaryOrganColor;
+        public Color epicOrganColor;
     }
 
     [Header("Color Palettes")]
