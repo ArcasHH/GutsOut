@@ -4,7 +4,7 @@ public class OrganStatsSummarizer : MonoBehaviour
 {
     public int TotalMind { get; private set; }
     public int TotalSoul { get; private set; }
-    public int TotalInstinct { get; private set; }
+    public int TotalBody { get; private set; }
 
     private void Start()
     {
@@ -15,7 +15,7 @@ public class OrganStatsSummarizer : MonoBehaviour
     {
         TotalMind = 0;
         TotalSoul = 0;
-        TotalInstinct = 0;
+        TotalBody = 0;
 
         var organs = GetComponentsInChildren<OrganObject>(true);
 
@@ -25,7 +25,7 @@ public class OrganStatsSummarizer : MonoBehaviour
 
             TotalMind += organ.GetStat(StatType.Mind);
             TotalSoul += organ.GetStat(StatType.Soul);
-            TotalInstinct += organ.GetStat(StatType.Instinct);
+            TotalBody += organ.GetStat(StatType.Body);
         }
     }
 

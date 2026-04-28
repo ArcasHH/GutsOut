@@ -40,6 +40,6 @@ public class OrganObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (statsText == null) return;
         statsText.text = $"{GetStat(StatType.Mind)}\n" +
                          $"{GetStat(StatType.Soul)}\n" +
-                         $"{GetStat(StatType.Instinct)}";
+                         $"{GetStat(StatType.Body)}";
     }
 }

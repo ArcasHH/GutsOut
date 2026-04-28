@@ -1,11 +1,11 @@
 // InventoryEnums.cs
 public enum ItemType 
 { 
-    None,       // Универсальный слот (принимает всё)
-    Brain,     // Мозг
-    Heart,      // Сердце
-    Intestines, // Кишечник
-    Lungs    // Легкие
+    None,
+    Brain,
+    Heart,
+    Guts,
+    Lungs
 }
 
 public enum DropResult 

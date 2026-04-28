@@ -27,6 +27,6 @@ public class StatsDisplayUI : MonoBehaviour
 
         statsText.text = $"Mind: {summarizer.TotalMind}\n" +
                          $"Soul: {summarizer.TotalSoul}\n" +
-                         $"Instinct: {summarizer.TotalInstinct}";
+                         $"Body: {summarizer.TotalBody}";
     }
 }
