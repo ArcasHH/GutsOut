@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8940396115469895681}
   - component: {fileID: 4148828705215551395}
   - component: {fileID: 1254317165441402658}
+  - component: {fileID: 5021209807055913600}
   m_Layer: 5
   m_Name: Human
   m_TagString: Untagged
@@ -107,6 +108,19 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 1000}
   despawnOffset: {x: 0, y: -800}
   spawnScale: {x: 0, y: 0, z: 1}
+--- !u!114 &5021209807055913600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303498805825431328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5778744d39d52a429e8595d0d441211, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  spritesFolderPath: Human
 --- !u!1 &1427456781072413488
 GameObject:
   m_ObjectHideFlags: 0
