@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public enum ObjectType { Heart, Brain, Lungs, Gut }
-public enum StatType { Mind, Soul, Instinct }
+public enum StatType { Mind, Soul, Body }
 public enum QualityType { Bad, Ordinary, Good }
 
 [CreateAssetMenu(fileName = "NewObjectData", menuName = "Game/Object Type Data")]
@@ -14,13 +14,13 @@ public class ObjectTypeData : ScriptableObject
 
     public int mind;
     public int soul;
-    public int instinct;
+    public int body;
 
     public int GetStat(StatType stat) => stat switch
     {
         StatType.Mind => mind,
         StatType.Soul => soul,
-        StatType.Instinct => instinct,
+        StatType.Body => body,
         _ => 0
     };
 }
