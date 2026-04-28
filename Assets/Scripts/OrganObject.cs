@@ -12,6 +12,7 @@ public class OrganObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public ObjectTypeData Data => data;
 
+
     private void Awake()
     {
         if (data == null)
@@ -39,21 +40,22 @@ public class OrganObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private void SetColor()
     {
+        
         Image objImg = GetComponent<Image>();
         if (objImg == null || !ColorPaletteManager.Instance) return;
         Color objCol = Color.white;
         switch (data.qulity_type)
         {
             case QualityType.Bad:
-                objImg.color = ColorPaletteManager.Instance.CurrentPalette.badOrganColor;
+                objCol = ColorPaletteManager.Instance.CurrentPalette.badOrganColor;
                 break;
 
             case QualityType.Ordinary:
-                objImg.color = ColorPaletteManager.Instance.CurrentPalette.ordinaryOrganColor;
+                objCol = ColorPaletteManager.Instance.CurrentPalette.ordinaryOrganColor;
                 break;
 
             case QualityType.Good:
-                objImg.color = ColorPaletteManager.Instance.CurrentPalette.goodOrganColor;
+                objCol = ColorPaletteManager.Instance.CurrentPalette.goodOrganColor;
                 break;
 
             default:
