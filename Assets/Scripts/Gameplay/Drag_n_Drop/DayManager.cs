@@ -127,10 +127,23 @@ public class DayManager : MonoBehaviour
         Quaternion rot = oldContainer.transform.rotation;
         int index = oldContainer.transform.GetSiblingIndex();
 
+        // Создаём новый контейнер
         GameObject newContainer = Instantiate(containerPrefab, pos, rot, containersParent);
         newContainer.transform.SetSiblingIndex(index);
 
-        Destroy(oldContainer);
+        // 🔑 Запускаем анимацию деспавна НА DAY MANAGER, чтобы корутина не убила себя
+        StartCoroutine(DespawnSequence(oldContainer));
+    }
+
+    private IEnumerator DespawnSequence(GameObject container)
+    {
+        if (container == null) yield break;
+        
+        var anim = container.GetComponent<ContainerAnimationController>();
+        if (anim != null)
+            yield return StartCoroutine(anim.AnimateOut());
+            
+        Destroy(container);
     }
 
     private void UpdateUI()
