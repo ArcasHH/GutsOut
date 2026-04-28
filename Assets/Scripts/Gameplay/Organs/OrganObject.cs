@@ -5,21 +5,48 @@ using UnityEngine.UI;
 
 public class OrganObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private GameOrgan data;
+    [SerializeField] private ObjectType organType;
+    
     [SerializeField] private GameObject stats_panel;
     [SerializeField] private TMP_Text statsText;
 
+    private GameOrgan data;
     public GameOrgan Data => data;
 
 
-    private void Awake()
+    private void Start()
     {
+        if (OrganRandomizer.Instance != null)
+        {
+            data = OrganRandomizer.Instance.GetRandomOrgan(organType);
+        }
+
         if (data == null)
-            Debug.LogWarning($"[{name}] No ObjectTypeData! ");
+        {
+            Debug.LogWarning($"[{name}] No data selected for type {organType}!");
+            return;
+        }
 
         SetColor();
         SetText();
         HideStatsPanel();
+    }
+    private void InitializeWithDelay()
+    {
+        if (OrganRandomizer.Instance != null)
+        {
+            data = OrganRandomizer.Instance.GetRandomOrgan(organType);
+            if (data != null)
+            {
+                SetColor();
+                SetText();
+                HideStatsPanel();
+                return;
+            }
+        }
+
+        Debug.LogWarning($"Retrying to get organ for type {organType}...");
+        Invoke(nameof(InitializeWithDelay), 0.1f);
     }
 
     public void OnPointerEnter(PointerEventData eventData) => ShowStatsPanel();

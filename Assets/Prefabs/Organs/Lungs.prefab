@@ -339,7 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c4d200ffcb778a41b857264fefe342d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrganObject
-  data: {fileID: 11400000, guid: eac4c90f48a4761f190a03a90a5605bc, type: 2}
+  organType: 2
   stats_panel: {fileID: 5101937332846321795}
   statsText: {fileID: 608499293648476996}
 --- !u!61 &4920909718357398157

@@ -96,6 +96,10 @@ PrefabInstance:
       propertyPath: data
       value: 
       objectReference: {fileID: 11400000, guid: 1af74fe293328a542a84826978ce7563, type: 2}
+    - target: {fileID: 3075485028950764438, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
+      propertyPath: organType
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6978871441027045319, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
       propertyPath: m_Sprite
       value: 
