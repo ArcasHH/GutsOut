@@ -163,10 +163,8 @@ public class DayManager : MonoBehaviour
     public bool HandleTokenDrop(GameObject dropTarget, DraggableItemController token)
     {
         if (isBusy) return false; 
-
         if (dropTarget == null || TotalScore < currentTokenCost || tokenUsedThisDay)
         {
-            Debug.Log(tokenUsedThisDay ? "[Token] had been already used!" : "[Token] Not enough karma.");
             return false;
         }
 

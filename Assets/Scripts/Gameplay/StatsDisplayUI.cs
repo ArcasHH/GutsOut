@@ -20,12 +20,11 @@ public class StatsDisplayUI : MonoBehaviour
     private void OnEnable() => EventBus.OnInventoryChanged += ForceUpdate;
     private void OnDisable() => EventBus.OnInventoryChanged -= ForceUpdate;
 
-    // 🔑 Start вызывается ПОСЛЕ всех Awake. Запускаем корутину для 100% безопасности
     private void Start() => StartCoroutine(InitDisplayDelayed());
 
     private IEnumerator InitDisplayDelayed()
     {
-        yield return null; // Ждём конца кадра. Unity гарантированно инициализирует все дети
+        yield return null;
         ForceUpdate();
     }
 
