@@ -15,12 +15,12 @@ public class OrganRandomizer : MonoBehaviour
     [SerializeField]
     private List<QualityWeight> qualityWeights = new List<QualityWeight>()
     {
-        new QualityWeight() { quality = QualityType.Cursed, weight = 0.1f },
+        new QualityWeight() { quality = QualityType.Cursed, weight = 0.2f },
         new QualityWeight() { quality = QualityType.Bad, weight = 1f },
         new QualityWeight() { quality = QualityType.Ordinary, weight = 2f },
         new QualityWeight() { quality = QualityType.Good, weight = 1f },
-        new QualityWeight() { quality = QualityType.Rare, weight = 0.1f },
-        new QualityWeight() { quality = QualityType.Legendary, weight = 0.04f },
+        new QualityWeight() { quality = QualityType.Rare, weight = 0.2f },
+        new QualityWeight() { quality = QualityType.Legendary, weight = 0.08f },
         new QualityWeight() { quality = QualityType.Epic, weight = 0.005f }
     };
 
