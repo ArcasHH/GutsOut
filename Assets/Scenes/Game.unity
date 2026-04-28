@@ -155,9 +155,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 960, y: -440}
+  m_AnchoredPosition: {x: 810, y: -340.00018}
   m_SizeDelta: {x: 300, y: 200}
-  m_Pivot: {x: 1, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2368432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,11 +378,11 @@ MonoBehaviour:
   rewardForOne: 10
   rewardForTwo: 30
   rewardForThree: 50
-  tokenBaseCost: 0
-  tokenCostIncrease: 5
-  tokenSlot: {fileID: 2368431}
-  tokenPrefab: {fileID: 5327110970308714389, guid: b59f8a154c93b664082363a0272ed6e8, type: 3}
-  tokenCostText: {fileID: 933695481}
+  humanDeleterBaseCost: 20
+  humanDeleterCostIncrease: 5
+  humanDeleterSlot: {fileID: 2368431}
+  humanDeleterPrefab: {fileID: 5327110970308714389, guid: b59f8a154c93b664082363a0272ed6e8, type: 3}
+  humanDeleterCostText: {fileID: 933695481}
 --- !u!4 &78124485
 Transform:
   m_ObjectHideFlags: 0
