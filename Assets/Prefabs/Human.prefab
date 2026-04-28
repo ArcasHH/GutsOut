@@ -120,7 +120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5778744d39d52a429e8595d0d441211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  spritesFolderPath: Human
 --- !u!1 &1427456781072413488
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,6 +1172,10 @@ PrefabInstance:
     - target: {fileID: 7246178956049224648, guid: 6b24ddb2f5c91bd4099b79c2d9274039, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8175246724954429204, guid: 6b24ddb2f5c91bd4099b79c2d9274039, type: 3}
+      propertyPath: m_Color.a
+      value: 0.8627451
       objectReference: {fileID: 0}
     - target: {fileID: 8175246724954429204, guid: 6b24ddb2f5c91bd4099b79c2d9274039, type: 3}
       propertyPath: m_RaycastTarget
