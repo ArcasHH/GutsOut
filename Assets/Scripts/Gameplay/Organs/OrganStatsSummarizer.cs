@@ -20,6 +20,8 @@ public class OrganStatsSummarizer : MonoBehaviour
     private int type_req = 20;
 #endif
 
+    public int reqStats = 5;
+
     [Header("Container Type")]
     [SerializeField] private bool isCollectionContainer = false;
     
@@ -67,9 +69,9 @@ public class OrganStatsSummarizer : MonoBehaviour
     }
     public void RandomRequireStats()
     {
-        ReqMind = Random.Range(1, 6);
-        ReqSoul = Random.Range(1, 6);
-        ReqBody = Random.Range(1, 6);
+        ReqMind = Random.Range(1, reqStats);
+        ReqSoul = Random.Range(1, reqStats);
+        ReqBody = Random.Range(1, reqStats);
     }
 
     public void CalculateStats()

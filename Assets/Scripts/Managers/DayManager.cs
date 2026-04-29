@@ -24,7 +24,7 @@ public class DayManager : MonoBehaviour
     [SerializeField] private int rewardForThree = 50;
 
     [Header("ChangeToken")]
-    [SerializeField] private int humanDeleterBaseCost = 20;
+    [SerializeField] private int humanDeleterBaseCost = 10;
     [SerializeField] private int humanDeleterCostIncrease = 5;
     [SerializeField] private Transform humanDeleterSlot;
     [SerializeField] private GameObject humanDeleterPrefab;

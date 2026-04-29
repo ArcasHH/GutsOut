@@ -454,7 +454,7 @@ MonoBehaviour:
   rewardForOne: 10
   rewardForTwo: 30
   rewardForThree: 50
-  humanDeleterBaseCost: 20
+  humanDeleterBaseCost: 10
   humanDeleterCostIncrease: 5
   humanDeleterSlot: {fileID: 2368431}
   humanDeleterPrefab: {fileID: 5327110970308714389, guid: b59f8a154c93b664082363a0272ed6e8, type: 3}
