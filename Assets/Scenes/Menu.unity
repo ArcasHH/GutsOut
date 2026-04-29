@@ -1385,6 +1385,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VoluneSlider
       objectReference: {fileID: 0}
+    - target: {fileID: 7543574717901246833, guid: e5fd3b8b18f18574794ff556e4623e10, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7836522149519079129, guid: e5fd3b8b18f18574794ff556e4623e10, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

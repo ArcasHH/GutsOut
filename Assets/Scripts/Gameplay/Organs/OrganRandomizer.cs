@@ -151,16 +151,17 @@ public class OrganRandomizer : MonoBehaviour
         float coef = 0.01f * curr_day;
         qualityWeights = new List<QualityWeight>()
         {
-            new QualityWeight() { quality = QualityType.Cursed, weight = 0.2f + coef},
+            new QualityWeight() { quality = QualityType.Cursed, weight = 0.5f + coef},
             new QualityWeight() { quality = QualityType.Bad, weight = 1f  + coef },
             new QualityWeight() { quality = QualityType.Ordinary, weight = 2f  + coef},
             new QualityWeight() { quality = QualityType.Good, weight = 1f  + coef },
             new QualityWeight() { quality = QualityType.Rare, weight = 0.2f  + coef },
             new QualityWeight() { quality = QualityType.Legendary, weight = 0.08f  + coef },
             new QualityWeight() { quality = QualityType.Epic, weight = 0.005f  + coef }
-        }
-        ;
+        };
+        CalculateQualityProbabilities();
     }
+
 
     private void OnDestroy()
     {

@@ -25,8 +25,8 @@ public class DayManager : MonoBehaviour
     [SerializeField] private TMP_Text karmaText;
 
     [Header("ChangeToken")]
-    [SerializeField] private int humanDeleterBaseCost = 10;
-    [SerializeField] private int humanDeleterCostIncrease = 5;
+    [SerializeField] private int humanDeleterBaseCost = 5;
+    [SerializeField] private int humanDeleterCostIncrease = 3;
     [SerializeField] private Transform humanDeleterSlot;
     [SerializeField] private GameObject humanDeleterPrefab;
     [SerializeField] private TMP_Text humanDeleterCostText;
@@ -103,6 +103,8 @@ public class DayManager : MonoBehaviour
         isBusy = true;
         if (endDayButton != null) endDayButton.interactable = false;
         StartCoroutine(ProcessDayCycle());
+
+        EventBus.TriggerDayEnded();
     }
 
     private IEnumerator ProcessDayCycle()
