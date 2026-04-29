@@ -12,14 +12,15 @@ public class OrganStatsSummarizer : MonoBehaviour
 
     public bool IsFulfilled => TotalMind >= ReqMind && TotalSoul >= ReqSoul && TotalBody >= ReqBody;
 
-    [Header("Тип контейнера")]
-    [Tooltip("Если true, контейнер не участвует в смене дня и никогда не исчезает")]
+    private int base_req = 10;
+    private int type_req = 20;
+
+    [Header("Container Type")]
     [SerializeField] private bool isCollectionContainer = false;
     
     public bool IsCollection => isCollectionContainer;
 
-    [Header("Коллекция")]
-    [Tooltip("Если isCollectionContainer == false, то принимает любые предметы")]
+    [Header("Collection")]
     [SerializeField] private CategoryType category_type = CategoryType.None;
     public CategoryType CollectionCategory => category_type;
 
@@ -29,22 +30,41 @@ public class OrganStatsSummarizer : MonoBehaviour
 
     private void Awake()
     {
-        RandomRequireStats();
+        SetStats();
         CalculateStats();
     }
 
+    private void SetStats()
+    {
+        if (IsCollection)
+        {
+            ReqMind = base_req;
+            ReqSoul = base_req;
+            ReqBody = base_req;
+
+            switch (category_type)
+            {
+                case CategoryType.Organ:
+                    ReqSoul = type_req;
+                    break;
+                case CategoryType.Mechanic:
+                    ReqMind = type_req;
+                    break;
+                case CategoryType.Insects:
+                    ReqBody = type_req;
+                    break;
+                default:
+                    break;
+
+            }
+        }
+        else RandomRequireStats();
+    }
     public void RandomRequireStats()
     {
-        if (IsCollection) {
-            ReqMind = 15;
-            ReqSoul = 15;
-            ReqBody = 15;
-        }
-        else {
-            ReqMind = Random.Range(1, 6);
-            ReqSoul = Random.Range(1, 6);
-            ReqBody = Random.Range(1, 6);
-        }
+        ReqMind = Random.Range(1, 6);
+        ReqSoul = Random.Range(1, 6);
+        ReqBody = Random.Range(1, 6);
     }
 
     public void CalculateStats()

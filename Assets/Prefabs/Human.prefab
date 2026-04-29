@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrganStatsSummarizer
   isCollectionContainer: 0
+  category_type: 3
 --- !u!114 &1254317165441402658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,6 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlotController
   RequiredType: 1
+  categoryRestriction: 3
   SlotImage: {fileID: 0}
   rectTransform: {fileID: 0}
 --- !u!1 &1771298122784892619
@@ -303,6 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlotController
   RequiredType: 3
+  categoryRestriction: 3
   SlotImage: {fileID: 0}
   rectTransform: {fileID: 0}
 --- !u!1 &1990592523168420930
@@ -434,6 +437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlotController
   RequiredType: 2
+  categoryRestriction: 3
   SlotImage: {fileID: 0}
   rectTransform: {fileID: 0}
 --- !u!1 &3916661126706293447
@@ -526,6 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlotController
   RequiredType: 4
+  categoryRestriction: 3
   SlotImage: {fileID: 0}
   rectTransform: {fileID: 0}
 --- !u!1001 &3287679015580043834

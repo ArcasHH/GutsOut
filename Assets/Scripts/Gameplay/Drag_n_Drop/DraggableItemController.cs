@@ -55,7 +55,8 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
                 StartDragging(eventData);
             return;
         }
-        category_type = GetComponent<OrganObject>().Data.category_type;
+        if (Type != ItemType.HumanDeleter)
+            category_type = GetComponent<OrganObject>().Data.category_type;
         Vector2 mouseInCanvas;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, eventData.position, canvas.worldCamera, out mouseInCanvas);
         rectTransform.anchoredPosition = mouseInCanvas;
