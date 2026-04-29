@@ -1,3 +1,4 @@
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,8 +7,10 @@ public class UIScreenManager : MonoBehaviour
     [Header("Panels")]
     [Tooltip("MainGame")]
     [SerializeField] private GameObject[] panelArray;
+    [SerializeField] private GameObject winPanel;
     [Tooltip("CollectionPanel")]
     [SerializeField] private GameObject collectionPanel;
+    [SerializeField] private GameObject collectionObjects;
 
     [Header("Collection")]
     [SerializeField] private Button toggleButton;
@@ -15,6 +18,8 @@ public class UIScreenManager : MonoBehaviour
     [SerializeField] private string textCollection = "Return";
 
     private bool isCollectionOpen = false;
+
+    private HumanCollectioned[] humanCollectionArray;
 
     private void Awake()
     {
@@ -27,8 +32,22 @@ public class UIScreenManager : MonoBehaviour
 
         if (panelArray.Length > 0) SetActivePanelsPanels(true);
         if (collectionPanel != null) collectionPanel.SetActive(false);
+
+        humanCollectionArray = collectionObjects.GetComponentsInChildren<HumanCollectioned>();
+        HideWinScreen();
+        SubscribeDependencies();
     }
 
+    private void SubscribeDependencies()
+    {
+        EventBus.OnSacrificedButtonPressed += CheckWinCondition;
+
+    }
+    private void UnsubscribeDependencies()
+    {
+        EventBus.OnSacrificedButtonPressed -= CheckWinCondition;
+
+    }
     private void ToggleScreens()
     {
         isCollectionOpen = !isCollectionOpen;
@@ -49,5 +68,29 @@ public class UIScreenManager : MonoBehaviour
         {
             panel.SetActive(is_active);
         }
+    }
+
+    private void CheckWinCondition()
+    {
+        foreach(HumanCollectioned child in humanCollectionArray)
+        {
+            if (!child.is_sacrificed)
+                return;
+        }
+        ShowWinScreen();
+    }
+
+    private void ShowWinScreen()
+    {
+        winPanel.SetActive(true);
+    }
+    private void HideWinScreen()
+    {
+        winPanel.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        UnsubscribeDependencies();
     }
 }

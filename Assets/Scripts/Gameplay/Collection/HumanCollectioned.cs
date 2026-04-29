@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,8 @@ public class HumanCollectioned : MonoBehaviour
     [SerializeField] private Button scrButton;
     private OrganStatsSummarizer human;
     private Image img;
+
+    [NonSerialized] public bool is_sacrificed = false;
     void Start()
     {
         scrButton.gameObject.SetActive(false);
@@ -15,6 +18,7 @@ public class HumanCollectioned : MonoBehaviour
         human = GetComponent<OrganStatsSummarizer>();
         img = GetComponent<Image>();
         scrButton.onClick.AddListener(OnButtonClicked);
+        is_sacrificed = false;
     }
     private void SubscribeDependencies()
     {
@@ -27,7 +31,7 @@ public class HumanCollectioned : MonoBehaviour
 
     private void HumanReady()
     {
-        if (human.IsFulfilled)
+        if (human.IsFulfilled && !is_sacrificed)
         {
             scrButton.gameObject.SetActive(true);
         }
@@ -36,6 +40,8 @@ public class HumanCollectioned : MonoBehaviour
     {
         img.color = ColorPaletteManager.Instance.CurrentPalette.ButtonClickColor;
         scrButton.gameObject.SetActive(false);
+        is_sacrificed = true;
+        EventBus.TriggerSacrificedButtonPressed();
     }
 
     private void OnDestroy()

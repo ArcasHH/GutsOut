@@ -13,8 +13,8 @@ public class OrganStatsSummarizer : MonoBehaviour
     public bool IsFulfilled => TotalMind >= ReqMind && TotalSoul >= ReqSoul && TotalBody >= ReqBody;
 
 #if UNITY_EDITOR
-    private int base_req = 1;
-    private int type_req = 2;
+    private int base_req = 0;
+    private int type_req = 1;
 #else
     private int base_req = 10;
     private int type_req = 20;

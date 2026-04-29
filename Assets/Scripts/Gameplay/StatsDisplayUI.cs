@@ -15,10 +15,17 @@ public class StatsDisplayUI : MonoBehaviour
     {
         summarizer = GetComponentInParent<OrganStatsSummarizer>();
         wrongStatsColor = ColorPaletteManager.Instance.CurrentPalette.buttonHoverColor;
+        SubscribeDependencies();
     }
 
-    private void OnEnable() => EventBus.OnInventoryChanged += ForceUpdate;
-    private void OnDisable() => EventBus.OnInventoryChanged -= ForceUpdate;
+    private void SubscribeDependencies()
+    {
+        EventBus.OnInventoryChanged += ForceUpdate;
+    }
+    private void UnsubscribeDependencies()
+    {
+        EventBus.OnInventoryChanged -= ForceUpdate;
+    }
 
     private void Start() => StartCoroutine(InitDisplayDelayed());
 
@@ -43,5 +50,10 @@ public class StatsDisplayUI : MonoBehaviour
         if (text == null) return;
         text.text = $"{name}: {current}/{required}";
         text.color = current < required ? wrongStatsColor : Color.white;
+    }
+
+    private void OnDestroy()
+    {
+        UnsubscribeDependencies();
     }
 }
