@@ -38,9 +38,8 @@ public class OrganStatsSummarizer : MonoBehaviour
     public int GetRequiredSoul() => ReqSoul;
     public int GetRequiredBody() => ReqBody;
 
-    private void Awake()
+    private void Start()
     {
-        UpdateRequires();
         SetStats();
         CalculateStats();
 

@@ -16,7 +16,7 @@ public class DayManager : MonoBehaviour
     [SerializeField] private Button endDayButton;
 
     public int CurrentDay { get; private set; } = 0;
-    public int TotalScore { get; private set; } = 0;
+    public int TotalScore { get; private set; } = -50;
 
     [Header("KarmaPerDay")]
     [SerializeField] private int rewardForOne = 10;
@@ -53,7 +53,6 @@ public class DayManager : MonoBehaviour
 
         if (humanDeleterPrefab != null && humanDeleterSlot != null && currentHumanDeleterInstance == null)
             SpawnHumanDeleter();
-
         StartCoroutine(ProcessDayCycle());
     }
 

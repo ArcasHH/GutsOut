@@ -51,7 +51,7 @@ public class OrganRandomizer : MonoBehaviour
         CalculateQualityProbabilities();
         isInitialized = true;
 
-        Debug.Log("OrganRandomizer initialized manually");
+        //Debug.Log("OrganRandomizer initialized manually");
 
         SubscribeDependencies();
         
