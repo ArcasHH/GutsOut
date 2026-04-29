@@ -10,7 +10,7 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] private CategoryType categoryRestriction = CategoryType.None;
 
     public Image SlotImage;
-    public DraggableItemController CurrentItem { get; private set; }
+    public DraggableItemController CurrentItem { get; set; }
     public bool IsEmpty => CurrentItem == null;
 
     public RectTransform rectTransform;
