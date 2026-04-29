@@ -13,16 +13,8 @@ public class OrganRandomizer : MonoBehaviour
 {
     [Header("QualityProbabilities")]
     [SerializeField]
-    private List<QualityWeight> qualityWeights = new List<QualityWeight>()
-    {
-        new QualityWeight() { quality = QualityType.Cursed, weight = 0.2f },
-        new QualityWeight() { quality = QualityType.Bad, weight = 1f },
-        new QualityWeight() { quality = QualityType.Ordinary, weight = 2f },
-        new QualityWeight() { quality = QualityType.Good, weight = 1f },
-        new QualityWeight() { quality = QualityType.Rare, weight = 0.2f },
-        new QualityWeight() { quality = QualityType.Legendary, weight = 0.08f },
-        new QualityWeight() { quality = QualityType.Epic, weight = 0.005f }
-    };
+    private List<QualityWeight> qualityWeights = new List<QualityWeight>();
+    
 
     [Header("FolderPaths")]
     [SerializeField] private string baseFolderPath = "ScriptableOrgans";
@@ -49,15 +41,20 @@ public class OrganRandomizer : MonoBehaviour
     }
     private bool isInitialized = false;
 
+
     private void Initialize()
     {
         if (isInitialized) return;
 
         LoadAllOrgans();
+        SetQualityWeights();
         CalculateQualityProbabilities();
         isInitialized = true;
 
         Debug.Log("OrganRandomizer initialized manually");
+
+        SubscribeDependencies();
+        
     }
 
     private void Awake()
@@ -71,6 +68,14 @@ public class OrganRandomizer : MonoBehaviour
         CalculateQualityProbabilities();
     }
 
+    private void SubscribeDependencies()
+    {
+        EventBus.OnDayEnded += SetQualityWeights;
+    }
+    private void UnsubscribeDependencies()
+    {
+        EventBus.OnDayEnded -= SetQualityWeights;
+    }
     private void LoadAllOrgans()
     {
         organsByType = new Dictionary<ObjectType, List<GameOrgan>>();
@@ -138,5 +143,27 @@ public class OrganRandomizer : MonoBehaviour
 
         var filtered = organsByType[type].Where(o => o.quality_type == quality).ToList();
         return filtered.Count > 0 ? filtered[Random.Range(0, filtered.Count)] : null;
+    }
+
+    private void SetQualityWeights()
+    {
+        float curr_day = DayManager.Instance.CurrentDay;
+        float coef = 0.01f * curr_day;
+        qualityWeights = new List<QualityWeight>()
+        {
+            new QualityWeight() { quality = QualityType.Cursed, weight = 0.2f + coef},
+            new QualityWeight() { quality = QualityType.Bad, weight = 1f  + coef },
+            new QualityWeight() { quality = QualityType.Ordinary, weight = 2f  + coef},
+            new QualityWeight() { quality = QualityType.Good, weight = 1f  + coef },
+            new QualityWeight() { quality = QualityType.Rare, weight = 0.2f  + coef },
+            new QualityWeight() { quality = QualityType.Legendary, weight = 0.08f  + coef },
+            new QualityWeight() { quality = QualityType.Epic, weight = 0.005f  + coef }
+        }
+        ;
+    }
+
+    private void OnDestroy()
+    {
+        UnsubscribeDependencies();
     }
 }

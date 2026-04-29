@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class OrganStatsSummarizer : MonoBehaviour
@@ -20,7 +21,9 @@ public class OrganStatsSummarizer : MonoBehaviour
     private int type_req = 20;
 #endif
 
-    public int reqStats = 5;
+    private const int startRec = 5;
+    private int reqStats;
+    private int down_reqStats = 0;
 
     [Header("Container Type")]
     [SerializeField] private bool isCollectionContainer = false;
@@ -37,10 +40,31 @@ public class OrganStatsSummarizer : MonoBehaviour
 
     private void Awake()
     {
+        UpdateRequires();
         SetStats();
         CalculateStats();
+
+        SubscribeDependencies();
     }
 
+    private void SubscribeDependencies()
+    {
+        EventBus.OnDayEnded += UpdateRequires;
+    }
+    private void UnsubscribeDependencies()
+    {
+        EventBus.OnDayEnded -= UpdateRequires;
+    }
+
+    private void UpdateRequires()
+    {
+        if (!isCollectionContainer)
+        {
+            reqStats = (int)((float)startRec + 0.05f * (float)(DayManager.Instance.CurrentDay * DayManager.Instance.CurrentDay));
+            down_reqStats = (int)(reqStats / 5f);
+        }
+        
+    }
     private void SetStats()
     {
         if (IsCollection)
@@ -69,9 +93,9 @@ public class OrganStatsSummarizer : MonoBehaviour
     }
     public void RandomRequireStats()
     {
-        ReqMind = Random.Range(1, reqStats);
-        ReqSoul = Random.Range(1, reqStats);
-        ReqBody = Random.Range(1, reqStats);
+        ReqMind = Random.Range(down_reqStats, reqStats);
+        ReqSoul = Random.Range(down_reqStats, reqStats);
+        ReqBody = Random.Range(down_reqStats, reqStats);
     }
 
     public void CalculateStats()
@@ -89,5 +113,10 @@ public class OrganStatsSummarizer : MonoBehaviour
         {
             EventBus.TriggerCollectionHumanReady();
         }
+    }
+
+    private void OnDestroy()
+    {
+        UnsubscribeDependencies();
     }
 }

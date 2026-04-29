@@ -66,7 +66,7 @@ public class AudioButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
             case ButtonAction.None:
             default:
-                Debug.LogWarning($"[AudioButton] No action assigned for {gameObject.name}");
+                //Debug.LogWarning($"[AudioButton] No action assigned for {gameObject.name}");
                 break;
         }
     }

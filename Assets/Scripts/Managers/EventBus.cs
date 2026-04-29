@@ -16,6 +16,8 @@ public static class EventBus
     public static Action OnCollectionHumanReady;
     public static Action OnSacrificedButtonPressed;
 
+    public static Action OnDayEnded;
+
     //Common
     public static void TriggerGameStart() => OnGameStart?.Invoke();
     public static void TriggerGameOpen() => OnGameOpen?.Invoke();
@@ -28,6 +30,7 @@ public static class EventBus
     public static void TriggerInventoryChanged() => OnInventoryChanged?.Invoke();
     public static void TriggerCollectionHumanReady() => OnCollectionHumanReady?.Invoke();
     public static void TriggerSacrificedButtonPressed() => OnSacrificedButtonPressed?.Invoke();
+    public static void TriggerDayEnded() => OnDayEnded?.Invoke();
 
 
     public static void ClearAllSubscriptions()
@@ -43,5 +46,6 @@ public static class EventBus
         OnInventoryChanged = null;
         OnCollectionHumanReady = null;
         OnSacrificedButtonPressed = null;
+        OnDayEnded = null;
     }
 }

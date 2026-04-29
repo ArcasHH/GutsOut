@@ -15,7 +15,7 @@ public class DayManager : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private Button endDayButton;
 
-    public int CurrentDay { get; private set; } = 1;
+    public int CurrentDay { get; private set; } = 0;
     public int TotalScore { get; private set; } = 0;
 
     [Header("KarmaPerDay")]
@@ -53,6 +53,8 @@ public class DayManager : MonoBehaviour
 
         if (humanDeleterPrefab != null && humanDeleterSlot != null && currentHumanDeleterInstance == null)
             SpawnHumanDeleter();
+
+        StartCoroutine(ProcessDayCycle());
     }
 
     private void OnEnable() => EventBus.OnInventoryChanged += RequestButtonUpdate;
