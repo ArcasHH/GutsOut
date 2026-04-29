@@ -101,6 +101,7 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         item.canvasGroup.alpha = 1f;
 
         EventBus.TriggerInventoryChanged();
+        EventBus.TriggerOrganStartDrag();
     }
 
     public void ClearItem()

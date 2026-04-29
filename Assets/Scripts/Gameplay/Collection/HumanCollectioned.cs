@@ -23,10 +23,12 @@ public class HumanCollectioned : MonoBehaviour
     private void SubscribeDependencies()
     {
         EventBus.OnCollectionHumanReady += HumanReady;
+        EventBus.OnOrganStartDrag += HumanReady;
     }
     private void UnsubscribeDependencies()
     {
         EventBus.OnCollectionHumanReady -= HumanReady;
+        EventBus.OnOrganStartDrag -= HumanReady;
     }
 
     private void HumanReady()
@@ -34,6 +36,10 @@ public class HumanCollectioned : MonoBehaviour
         if (human.IsFulfilled && !is_sacrificed)
         {
             scrButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            scrButton.gameObject.SetActive(false);
         }
     }
     private void OnButtonClicked()

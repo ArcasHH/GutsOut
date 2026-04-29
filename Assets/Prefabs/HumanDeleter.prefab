@@ -93,5 +93,5 @@ MonoBehaviour:
   rectTransform: {fileID: 0}
   canvasGroup: {fileID: 0}
   canvas: {fileID: 0}
-  dragThreshold: 3
+  dragThreshold: 5
   returnAnimDuration: 0.25

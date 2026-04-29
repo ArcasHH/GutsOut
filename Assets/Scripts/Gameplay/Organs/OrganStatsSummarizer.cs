@@ -60,10 +60,8 @@ public class OrganStatsSummarizer : MonoBehaviour
     {
         if (!isCollectionContainer)
         {
-            
             reqStats = (int)((float)startRec + 0.08f * (float)(DayManager.Instance.CurrentDay * Mathf.Sqrt(DayManager.Instance.CurrentDay)));
             down_reqStats = (int)(reqStats / 4f);
-            Debug.LogWarning($" {reqStats} , {down_reqStats}");
         }
     }
     private void SetStats()
