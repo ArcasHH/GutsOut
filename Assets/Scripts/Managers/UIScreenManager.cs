@@ -3,13 +3,13 @@ using UnityEngine.UI;
 
 public class UIScreenManager : MonoBehaviour
 {
-    [Header("Панели")]
-    [Tooltip("Основная панель с контейнерами дня, кнопкой завершения и т.д.")]
-    [SerializeField] private GameObject mainGamePanel;
-    [Tooltip("Панель с коллекционными контейнерами")]
+    [Header("Panels")]
+    [Tooltip("MainGame")]
+    [SerializeField] private GameObject[] panelArray;
+    [Tooltip("CollectionPanel")]
     [SerializeField] private GameObject collectionPanel;
 
-    [Header("Кнопка переключения")]
+    [Header("Collection")]
     [SerializeField] private Button toggleButton;
     [SerializeField] private string textMain = "Collection";
     [SerializeField] private string textCollection = "Return";
@@ -25,7 +25,7 @@ public class UIScreenManager : MonoBehaviour
             toggleButton.onClick.AddListener(ToggleScreens);
         }
 
-        if (mainGamePanel != null) mainGamePanel.SetActive(true);
+        if (panelArray.Length > 0) SetActivePanelsPanels(true);
         if (collectionPanel != null) collectionPanel.SetActive(false);
     }
 
@@ -33,13 +33,21 @@ public class UIScreenManager : MonoBehaviour
     {
         isCollectionOpen = !isCollectionOpen;
 
-        if (mainGamePanel != null) mainGamePanel.SetActive(!isCollectionOpen);
+        if (panelArray.Length > 0) SetActivePanelsPanels(!isCollectionOpen);
         if (collectionPanel != null) collectionPanel.SetActive(isCollectionOpen);
 
         if (toggleButton != null)
         {
             var btnText = toggleButton.GetComponentInChildren<UnityEngine.UI.Text>();
             if (btnText != null) btnText.text = isCollectionOpen ? textCollection : textMain;
+        }
+    }
+
+    private void SetActivePanelsPanels(bool is_active)
+    {
+        foreach (var panel in panelArray)
+        {
+            panel.SetActive(is_active);
         }
     }
 }

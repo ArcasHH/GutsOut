@@ -12,8 +12,13 @@ public class OrganStatsSummarizer : MonoBehaviour
 
     public bool IsFulfilled => TotalMind >= ReqMind && TotalSoul >= ReqSoul && TotalBody >= ReqBody;
 
+#if UNITY_EDITOR
+    private int base_req = 1;
+    private int type_req = 2;
+#else
     private int base_req = 10;
     private int type_req = 20;
+#endif
 
     [Header("Container Type")]
     [SerializeField] private bool isCollectionContainer = false;
@@ -77,6 +82,10 @@ public class OrganStatsSummarizer : MonoBehaviour
             TotalMind += organ.GetStat(StatType.Mind);
             TotalSoul += organ.GetStat(StatType.Soul);
             TotalBody += organ.GetStat(StatType.Body);
+        }
+        if (isCollectionContainer && IsFulfilled)
+        {
+            EventBus.TriggerCollectionHumanReady();
         }
     }
 }

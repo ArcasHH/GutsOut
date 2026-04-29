@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class DayManager : MonoBehaviour
 {
-    [Header("Настройки")]
+    [Header("Settings")]
     [SerializeField] private GameObject containerPrefab;
     [SerializeField] private Transform containersParent;
 
@@ -18,20 +18,19 @@ public class DayManager : MonoBehaviour
     public int CurrentDay { get; private set; } = 1;
     public int TotalScore { get; private set; } = 0;
 
-    [Header("Награды за день")]
+    [Header("KarmaPerDay")]
     [SerializeField] private int rewardForOne = 10;
     [SerializeField] private int rewardForTwo = 30;
     [SerializeField] private int rewardForThree = 50;
 
-    [Header("Токен обновления")]
+    [Header("ChangeToken")]
     [SerializeField] private int humanDeleterBaseCost = 20;
     [SerializeField] private int humanDeleterCostIncrease = 5;
     [SerializeField] private Transform humanDeleterSlot;
     [SerializeField] private GameObject humanDeleterPrefab;
     [SerializeField] private TMP_Text humanDeleterCostText;
 
-    [Header("Спавн дневных контейнеров")]
-    [Tooltip("Объект 'GameObjects', внутри которого лежат слоты для ежедневных контейнеров")]
+    [Header("dailyContainersSpawn")]
     [SerializeField] private Transform dailySpawnRoot;
 
     private int currentHumanDeleterCost;

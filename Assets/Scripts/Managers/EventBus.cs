@@ -13,6 +13,7 @@ public static class EventBus
     public static event Action<bool> OnMenuOpen;
 
     public static Action OnInventoryChanged;
+    public static Action OnCollectionHumanReady;
 
     //Common
     public static void TriggerGameStart() => OnGameStart?.Invoke();
@@ -24,6 +25,7 @@ public static class EventBus
     public static void TriggerMenuOpen(bool isMenuOpen) => OnMenuOpen?.Invoke(isMenuOpen);
 
     public static void TriggerInventoryChanged() => OnInventoryChanged?.Invoke();
+    public static void TriggerCollectionHumanReady() => OnCollectionHumanReady?.Invoke();
 
 
     public static void ClearAllSubscriptions()
@@ -37,5 +39,6 @@ public static class EventBus
         OnMenuOpen = null;
 
         OnInventoryChanged = null;
+        OnCollectionHumanReady = null;
     }
 }
