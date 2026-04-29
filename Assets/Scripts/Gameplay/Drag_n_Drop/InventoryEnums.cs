@@ -6,7 +6,8 @@ public enum ItemType
     Heart,
     Guts,
     Lungs,
-    HumanDeleter
+    HumanDeleter,
+    OrganDeleter
 }
 
 public enum DropResult 

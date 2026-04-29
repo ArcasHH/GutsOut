@@ -98,8 +98,17 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
             {
                 bool success = DayManager.Instance.HandleHumanDeleterDrop(targetGo, this);
                 if (!success) ReturnToSource();
+                else
+                {
+                    AudioManager.Instance.PlayRandomSoundFromFolder("Audio/Voices");
+                }
             }
             else ReturnToSource();
+            return;
+        }
+        if (targetSlot && targetSlot.RequiredType == ItemType.OrganDeleter)
+        {
+            Destroy(this.gameObject);
             return;
         }
 

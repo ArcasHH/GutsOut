@@ -83,6 +83,7 @@ public class UIScreenManager : MonoBehaviour
     private void ShowWinScreen()
     {
         winPanel.SetActive(true);
+        AudioManager.Instance.PlaySound(AudioManager.SoundType.PlayerWin);
     }
     private void HideWinScreen()
     {

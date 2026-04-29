@@ -14,15 +14,15 @@ public class OrganStatsSummarizer : MonoBehaviour
     public bool IsFulfilled => TotalMind >= ReqMind && TotalSoul >= ReqSoul && TotalBody >= ReqBody;
 
 #if UNITY_EDITOR
-    private int base_req = 0;
-    private int type_req = 1;
+    private int base_req = 10;
+    private int type_req = 20;
 #else
     private int base_req = 10;
     private int type_req = 20;
 #endif
 
     private const int startRec = 5;
-    private int reqStats;
+    private int reqStats = 5;
     private int down_reqStats = 0;
 
     [Header("Container Type")]

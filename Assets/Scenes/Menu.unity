@@ -347,11 +347,19 @@ MonoBehaviour:
     volume: 1
     source: {fileID: 0}
   - type: 12
-    clip: {fileID: 8300000, guid: 4a8c4bbec5c6d8943bef7a0387abcd91, type: 3}
+    clip: {fileID: 8300000, guid: b14b02513cd6b6c439cec07dfb8ae879, type: 3}
     volume: 1
     source: {fileID: 0}
   - type: 13
-    clip: {fileID: 8300000, guid: 2669a95e484b60042866733e75c0a44d, type: 3}
+    clip: {fileID: 8300000, guid: 14e5436d15184f745a6d03bdc3eccc5a, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - type: 14
+    clip: {fileID: 8300000, guid: 41f3a5df872bef948b2a084fb2a37311, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - type: 11
+    clip: {fileID: 8300000, guid: d4dcd9c8569e2b54abb5a08cd4ea3e9d, type: 3}
     volume: 1
     source: {fileID: 0}
   masterVolume: 1

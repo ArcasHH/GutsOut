@@ -58,7 +58,9 @@ public class AudioManager : MonoBehaviour
         GameRestart,
         PlayerWin,
         StartDragging,
-        EndDragging
+        EndDragging,
+
+        EndDay,
 
     }
 
@@ -134,6 +136,8 @@ public class AudioManager : MonoBehaviour
         
         soundTypeToMixerGroup[SoundType.EndDragging] = gameMixerGroup;
         soundTypeToMixerGroup[SoundType.StartDragging] = gameMixerGroup;
+
+        soundTypeToMixerGroup[SoundType.EndDay] = gameMixerGroup;
     }
 
     private void InitializeAudioSources()
@@ -298,6 +302,27 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlayRandomSoundFromFolder(string folderPath)
+    {
+        AudioClip[] clips = Resources.LoadAll<AudioClip>(folderPath);
+
+        if (clips == null || clips.Length == 0)
+        {
+            Debug.LogWarning($"No audio clips found in Resources/{folderPath}");
+            return;
+        }
+        AudioClip randomClip = clips[Random.Range(0, clips.Length)];
+
+        GameObject tempAudioSource = new GameObject($"TempAudio_{randomClip.name}");
+        tempAudioSource.transform.SetParent(transform);
+
+        AudioSource audioSource = tempAudioSource.AddComponent<AudioSource>();
+        audioSource.clip = randomClip;
+        audioSource.outputAudioMixerGroup = sfxMixerGroup;
+
+        audioSource.Play();
+        Destroy(tempAudioSource, randomClip.length);
+    }
     #endregion
 
     #region Music Management

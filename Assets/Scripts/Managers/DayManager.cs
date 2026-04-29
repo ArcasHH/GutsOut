@@ -15,13 +15,14 @@ public class DayManager : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private Button endDayButton;
 
-    public int CurrentDay { get; private set; } = 0;
-    public int TotalScore { get; private set; } = -50;
+    public int CurrentDay { get; private set; } = 1;
+    public int TotalScore { get; private set; } = 0;
 
     [Header("KarmaPerDay")]
     [SerializeField] private int rewardForOne = 10;
     [SerializeField] private int rewardForTwo = 30;
     [SerializeField] private int rewardForThree = 50;
+    [SerializeField] private TMP_Text karmaText;
 
     [Header("ChangeToken")]
     [SerializeField] private int humanDeleterBaseCost = 10;
@@ -53,7 +54,7 @@ public class DayManager : MonoBehaviour
 
         if (humanDeleterPrefab != null && humanDeleterSlot != null && currentHumanDeleterInstance == null)
             SpawnHumanDeleter();
-        StartCoroutine(ProcessDayCycle());
+        //StartCoroutine(ProcessDayCycle());
     }
 
     private void OnEnable() => EventBus.OnInventoryChanged += RequestButtonUpdate;
@@ -69,7 +70,7 @@ public class DayManager : MonoBehaviour
 
     private void ForceUpdateButtonState()
     {
-        bool anyFulfilled = false;
+        int anyFulfilled = 0;
         var summarizers = containersParent.GetComponentsInChildren<OrganStatsSummarizer>(true);
 
         foreach (var s in summarizers)
@@ -80,22 +81,27 @@ public class DayManager : MonoBehaviour
             s.CalculateStats();
             if (s.IsFulfilled)
             {
-                anyFulfilled = true;
-                break;
+                anyFulfilled++;
             }
         }
+        int expectedReward = anyFulfilled >= 3 ? rewardForThree:
+                            anyFulfilled == 2 ? rewardForTwo:
+                            anyFulfilled == 1 ? rewardForOne : 0;
 
+        if (karmaText != null)
+        {
+            karmaText.text = $"karma gain: {expectedReward}";
+        }
         if (endDayButton != null)
-            endDayButton.interactable = anyFulfilled;
+            endDayButton.interactable = anyFulfilled > 0;
     }
 
     public void EndDay()
     {
         if (isBusy) return;
-
+        AudioManager.Instance.PlaySound(AudioManager.SoundType.EndDay);
         isBusy = true;
         if (endDayButton != null) endDayButton.interactable = false;
-
         StartCoroutine(ProcessDayCycle());
     }
 
