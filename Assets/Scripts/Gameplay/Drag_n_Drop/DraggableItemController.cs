@@ -6,6 +6,7 @@ using System.Collections;
 public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDragHandler
 {
     public ItemType Type;
+    public CategoryType category_type;
     public RectTransform rectTransform;
     public CanvasGroup canvasGroup;
     public Canvas canvas;
@@ -20,7 +21,7 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
     private RectTransform canvasRect;
     private bool isDragging = false;
 
-    private void Awake()
+    private void Start()
     {
         if (rectTransform == null) rectTransform = GetComponent<RectTransform>();
         
@@ -31,6 +32,7 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
         canvas = GetComponentInParent<Canvas>();
         canvasRect = canvas.GetComponent<RectTransform>();
         currentSlot = GetComponentInParent<SlotController>();
+
     }
 
     public void SetSlot(SlotController slot) => currentSlot = slot;
@@ -53,7 +55,7 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
                 StartDragging(eventData);
             return;
         }
-
+        category_type = GetComponent<OrganObject>().Data.category_type;
         Vector2 mouseInCanvas;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, eventData.position, canvas.worldCamera, out mouseInCanvas);
         rectTransform.anchoredPosition = mouseInCanvas;
@@ -98,14 +100,14 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
 
         if (targetSlot != null && targetSlot != sourceSlot)
         {
-            if (targetSlot.CanAccept(this.Type))
+            if (targetSlot.CanAccept(this))
             {
                 if (targetSlot.IsEmpty)
                 {
                     targetSlot.PlaceItem(this);
                     return;
                 }
-                else if (sourceSlot != null && sourceSlot.CanAccept(targetSlot.CurrentItem.Type))
+                else if (sourceSlot != null && sourceSlot.CanAccept(targetSlot.CurrentItem))
                 {
                     DraggableItemController otherItem = targetSlot.CurrentItem;
                     StartCoroutine(PerformSwap(targetSlot, otherItem, sourceSlot));

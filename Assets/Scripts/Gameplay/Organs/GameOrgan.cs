@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public enum ObjectType { Heart, Brain, Lungs, Gut }
-public enum CategoryType { Organ, Mechanic, Insects }
+public enum CategoryType { Organ, Mechanic, Insects, None }
 public enum StatType { Mind, Soul, Body }
 public enum QualityType { Cursed, Bad, Ordinary, Good, Rare, Legendary, Epic }
 

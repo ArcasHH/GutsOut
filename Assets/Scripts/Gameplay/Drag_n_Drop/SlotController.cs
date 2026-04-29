@@ -1,14 +1,15 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System;
 
 public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Настройки слота")]
     public ItemType RequiredType = ItemType.None;
-    public Image SlotImage;
+    
+    [SerializeField] private CategoryType categoryRestriction = CategoryType.None;
 
+    public Image SlotImage;
     public DraggableItemController CurrentItem { get; private set; }
     public bool IsEmpty => CurrentItem == null;
 
@@ -19,6 +20,12 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         rectTransform = GetComponent<RectTransform>();
         if (SlotImage != null) baseColor = SlotImage.color;
+
+        if (categoryRestriction == CategoryType.None)
+        {
+            var summarizer = GetComponentInParent<OrganStatsSummarizer>();
+            if (summarizer != null) categoryRestriction = summarizer.CollectionCategory;
+        }
 
         foreach (Transform child in transform)
         {
@@ -32,13 +39,23 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
     }
 
-    public bool CanAccept(ItemType type) => RequiredType == ItemType.None || type == RequiredType;
+    public bool CanAccept(DraggableItemController item)
+    {
+        if (item == null) return false;
+
+        bool typeOk = RequiredType == ItemType.None || item.Type == RequiredType;
+        bool categoryOk = categoryRestriction == CategoryType.None || item.category_type == categoryRestriction;
+
+        return typeOk && categoryOk;
+    }
+
+    public bool CanAcceptTypeOnly(ItemType type) => RequiredType == ItemType.None || type == RequiredType;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (eventData.pointerDrag == null) return;
         DraggableItemController dragged = eventData.pointerDrag.GetComponent<DraggableItemController>();
-        if (dragged != null) SetHighlight(CanAccept(dragged.Type));
+        if (dragged != null) SetHighlight(CanAccept(dragged));
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -54,15 +71,15 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public DropResult TryAccept(DraggableItemController draggedItem, SlotController sourceSlot)
     {
-        if (!CanAccept(draggedItem.Type)) return DropResult.TypeMismatch;
-        
-        if (IsEmpty) 
+        if (!CanAccept(draggedItem)) return DropResult.TypeMismatch;
+
+        if (IsEmpty)
         {
             PlaceItem(draggedItem);
             return DropResult.Success;
         }
 
-        if (sourceSlot != null && sourceSlot.CanAccept(CurrentItem.Type))
+        if (sourceSlot != null && sourceSlot.CanAccept(CurrentItem))
         {
             DraggableItemController oldItem = CurrentItem;
             PlaceItem(draggedItem);

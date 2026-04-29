@@ -18,6 +18,11 @@ public class OrganStatsSummarizer : MonoBehaviour
     
     public bool IsCollection => isCollectionContainer;
 
+    [Header("Коллекция")]
+    [Tooltip("Если isCollectionContainer == false, то принимает любые предметы")]
+    [SerializeField] private CategoryType category_type = CategoryType.None;
+    public CategoryType CollectionCategory => category_type;
+
     public int GetRequiredMind() => ReqMind;
     public int GetRequiredSoul() => ReqSoul;
     public int GetRequiredBody() => ReqBody;
@@ -30,9 +35,16 @@ public class OrganStatsSummarizer : MonoBehaviour
 
     public void RandomRequireStats()
     {
-        ReqMind = Random.Range(1, 6);
-        ReqSoul = Random.Range(1, 6);
-        ReqBody = Random.Range(1, 6);
+        if (IsCollection) {
+            ReqMind = 15;
+            ReqSoul = 15;
+            ReqBody = 15;
+        }
+        else {
+            ReqMind = Random.Range(1, 6);
+            ReqSoul = Random.Range(1, 6);
+            ReqBody = Random.Range(1, 6);
+        }
     }
 
     public void CalculateStats()
