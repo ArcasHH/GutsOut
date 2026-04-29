@@ -67,6 +67,8 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
         isDragging = true;
         sourceSlot?.ClearItem();
 
+        AudioManager.Instance.PlaySound(AudioManager.SoundType.StartDragging);
+
         Vector2 mouseInCanvas;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, eventData.position, canvas.worldCamera, out mouseInCanvas);
 
@@ -81,6 +83,8 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
     public void OnEndDrag(PointerEventData eventData)
     {
         if (!isDragging) return;
+
+        AudioManager.Instance.PlaySound(AudioManager.SoundType.EndDragging);
 
         canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1f;

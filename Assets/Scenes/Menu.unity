@@ -324,6 +324,7 @@ MonoBehaviour:
   musicMixerGroup: {fileID: -3745041336114442020, guid: 082023e11d9c4d541b236a0d2bac5a30, type: 2}
   sfxMixerGroup: {fileID: 6117710261231542319, guid: 082023e11d9c4d541b236a0d2bac5a30, type: 2}
   uiMixerGroup: {fileID: 8318107517936638578, guid: 082023e11d9c4d541b236a0d2bac5a30, type: 2}
+  gameMixerGroup: {fileID: 6117710261231542319, guid: 082023e11d9c4d541b236a0d2bac5a30, type: 2}
   sounds:
   - type: 6
     clip: {fileID: 8300000, guid: 8fe0a1e8bbf10324a936466723f69bf2, type: 3}
@@ -339,6 +340,18 @@ MonoBehaviour:
     source: {fileID: 0}
   - type: 0
     clip: {fileID: 8300000, guid: cbbafbf670d38d3429a7666a5f40277c, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - type: 0
+    clip: {fileID: 8300000, guid: cbbafbf670d38d3429a7666a5f40277c, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - type: 12
+    clip: {fileID: 8300000, guid: 4a8c4bbec5c6d8943bef7a0387abcd91, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - type: 13
+    clip: {fileID: 8300000, guid: 2669a95e484b60042866733e75c0a44d, type: 3}
     volume: 1
     source: {fileID: 0}
   masterVolume: 1

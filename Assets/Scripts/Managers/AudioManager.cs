@@ -16,6 +16,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixerGroup musicMixerGroup;
     [SerializeField] private AudioMixerGroup sfxMixerGroup;
     [SerializeField] private AudioMixerGroup uiMixerGroup;
+    [SerializeField] private AudioMixerGroup gameMixerGroup;
 
     private const string MASTER_VOLUME_PARAM = "MasterVolume";
     private const string MUSIC_VOLUME_PARAM = "MusicVolume";
@@ -56,6 +57,8 @@ public class AudioManager : MonoBehaviour
         //Game
         GameRestart,
         PlayerWin,
+        StartDragging,
+        EndDragging
 
     }
 
@@ -128,8 +131,9 @@ public class AudioManager : MonoBehaviour
 
         soundTypeToMixerGroup[SoundType.MenuOpen] = uiMixerGroup;
         soundTypeToMixerGroup[SoundType.MenuClose] = uiMixerGroup;
-
         
+        soundTypeToMixerGroup[SoundType.EndDragging] = gameMixerGroup;
+        soundTypeToMixerGroup[SoundType.StartDragging] = gameMixerGroup;
     }
 
     private void InitializeAudioSources()
