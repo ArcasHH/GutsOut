@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class GameOrganImporter : EditorWindow
 {
     [MenuItem("Tools/Import Game Organ Data")]
+
     public static void ShowWindow()
     {
         GetWindow<GameOrganImporter>("Game Organ Importer");
@@ -122,7 +123,7 @@ public class GameOrganImporter : EditorWindow
         organ.soul = soul;
         organ.body = body;
 
-        string baseFolder = "Assets/Data/GameOrgans";
+        string baseFolder = "Assets/Resources/ScriptableOrgans";
 
         string typeFolder = Path.Combine(baseFolder, objType.ToString());
         EnsureFolderExists(typeFolder);
