@@ -85,7 +85,7 @@ public class OrganObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (organImage == null || !ColorPaletteManager.Instance) return;
         Color objCol = Color.white;
-        switch (data.qulity_type)
+        switch (data.quality_type)
         {
             case QualityType.Cursed:
                 objCol = ColorPaletteManager.Instance.CurrentPalette.cursedOrganColor;

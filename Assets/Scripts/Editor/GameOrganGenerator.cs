@@ -148,7 +148,7 @@ public class GameOrganGenerator : EditorWindow
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField(organ.name, GUILayout.Width(150));
                 EditorGUILayout.LabelField(organ.category_type.ToString(), GUILayout.Width(80));
-                EditorGUILayout.LabelField(organ.qulity_type.ToString(), GUILayout.Width(80));
+                EditorGUILayout.LabelField(organ.quality_type.ToString(), GUILayout.Width(80));
                 EditorGUILayout.LabelField($"M:{organ.mind} S:{organ.soul} B:{organ.body}", GUILayout.Width(120));
 
                 // Кнопка загрузки в список для редактирования
@@ -185,7 +185,7 @@ public class GameOrganGenerator : EditorWindow
             name = organ.name,
             objType = organ.obj_type,
             categoryType = organ.category_type,
-            qualityType = organ.qulity_type,
+            qualityType = organ.quality_type,
             mind = organ.mind,
             soul = organ.soul,
             body = organ.body
@@ -287,7 +287,7 @@ public class GameOrganGenerator : EditorWindow
         GameOrgan organ = CreateInstance<GameOrgan>();
         organ.name = data.name;
         organ.obj_type = data.objType;
-        organ.qulity_type = data.qualityType;
+        organ.quality_type = data.qualityType;
         organ.category_type = data.categoryType;
         organ.mind = data.mind;
         organ.soul = data.soul;
@@ -304,7 +304,7 @@ public class GameOrganGenerator : EditorWindow
 
         organ.name = data.name;
         organ.obj_type = data.objType;
-        organ.qulity_type = data.qualityType;
+        organ.quality_type = data.qualityType;
         organ.category_type = data.categoryType;
         organ.mind = data.mind;
         organ.soul = data.soul;

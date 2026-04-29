@@ -11,11 +11,13 @@ public class GameOrgan : ScriptableObject
 
     public ObjectType obj_type;
     public CategoryType category_type;
-    public QualityType qulity_type;
+    public QualityType quality_type;
 
     public int mind;
     public int soul;
     public int body;
+
+    public string ItemName => $"{quality_type}_{obj_type}_{category_type}";
 
     public int GetStat(StatType stat) => stat switch
     {

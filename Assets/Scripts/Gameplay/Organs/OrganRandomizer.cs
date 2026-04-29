@@ -106,7 +106,7 @@ public class OrganRandomizer : MonoBehaviour
 
         QualityType selectedQuality = GetRandomQuality();
 
-        var filteredOrgans = organsByType[type].Where(o => o.qulity_type == selectedQuality).ToList();
+        var filteredOrgans = organsByType[type].Where(o => o.quality_type == selectedQuality).ToList();
 
         if (filteredOrgans.Count == 0)
         {
@@ -136,7 +136,7 @@ public class OrganRandomizer : MonoBehaviour
     {
         if (!organsByType.ContainsKey(type)) return null;
 
-        var filtered = organsByType[type].Where(o => o.qulity_type == quality).ToList();
+        var filtered = organsByType[type].Where(o => o.quality_type == quality).ToList();
         return filtered.Count > 0 ? filtered[Random.Range(0, filtered.Count)] : null;
     }
 }

@@ -334,11 +334,11 @@ MonoBehaviour:
     volume: 0.5
     source: {fileID: 0}
   - type: 1
-    clip: {fileID: 8300000, guid: ad181abc696d10d4db8d8767c3d94adb, type: 3}
+    clip: {fileID: 8300000, guid: d7eb85ad21c227a4386e8af0b195e75c, type: 3}
     volume: 1
     source: {fileID: 0}
   - type: 0
-    clip: {fileID: 8300000, guid: d7eb85ad21c227a4386e8af0b195e75c, type: 3}
+    clip: {fileID: 8300000, guid: cbbafbf670d38d3429a7666a5f40277c, type: 3}
     volume: 1
     source: {fileID: 0}
   masterVolume: 1
