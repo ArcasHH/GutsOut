@@ -25,7 +25,7 @@ public class PupilFollowMouse : MonoBehaviour
         currentAngle = 0f;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
