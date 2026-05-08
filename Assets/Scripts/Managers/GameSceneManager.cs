@@ -68,6 +68,7 @@ public class GameSceneManager : MonoBehaviour
     {
         //GetSceneName();
         LoadScene("Menu");
+        Time.timeScale = 1;
         EventBus.TriggerMenuOpen(true);
     }
 

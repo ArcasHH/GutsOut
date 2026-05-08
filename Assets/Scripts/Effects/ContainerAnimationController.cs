@@ -15,7 +15,8 @@ public class ContainerAnimationController : MonoBehaviour
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        targetPos = rectTransform.anchoredPosition;
+        targetPos = rectTransform.anchoredPosition; // Anchor pivot must be (0.5;0.5) !!!
+        //targetPos = new Vector2( rectTransform.sizeDelta.x * 0.5f,rectTransform.sizeDelta.y * -0.5f);
     }
 
     private void Start() => StartCoroutine(AnimateIn());
@@ -30,7 +31,7 @@ public class ContainerAnimationController : MonoBehaviour
     public IEnumerator AnimateOut()
     {
         Vector2 startPos = rectTransform.anchoredPosition;
-        Vector2 endPos = startPos + despawnOffset; // Летит вниз от текущего положения
+        Vector2 endPos = startPos + despawnOffset;
         Vector3 startScale = rectTransform.localScale;
         return AnimateTo(endPos, Vector3.zero);
     }
