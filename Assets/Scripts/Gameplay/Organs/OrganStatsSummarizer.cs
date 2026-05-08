@@ -13,16 +13,21 @@ public class OrganStatsSummarizer : MonoBehaviour
 
     public bool IsFulfilled => TotalMind >= ReqMind && TotalSoul >= ReqSoul && TotalBody >= ReqBody;
 
+    // Collection Needs
 #if UNITY_EDITOR
-    private int base_req = 10;
-    private int type_req = 20;
+    private int base_req = 1;
+    private int type_req = 2;
 #else
     private int base_req = 10;
     private int type_req = 20;
 #endif
 
+    //Parameters of needs
     private const int startRec = 4;
-    private int reqStats = 4;
+    private const float mul_day = 0.08f;
+    private const float div_low_req = 4f;
+
+    private int reqStats;
     private int down_reqStats = 0;
 
     [Header("Container Type")]
@@ -40,6 +45,7 @@ public class OrganStatsSummarizer : MonoBehaviour
 
     private void Start()
     {
+        reqStats = startRec;
         UpdateRequires();
         SetStats();
         CalculateStats();
@@ -60,8 +66,8 @@ public class OrganStatsSummarizer : MonoBehaviour
     {
         if (!isCollectionContainer)
         {
-            reqStats = (int)((float)startRec + 0.08f * (float)(DayManager.Instance.CurrentDay * Mathf.Sqrt(DayManager.Instance.CurrentDay)));
-            down_reqStats = (int)(reqStats / 4f);
+            reqStats = (int)((float)startRec + mul_day * (float)(DayManager.Instance.CurrentDay * Mathf.Sqrt(DayManager.Instance.CurrentDay)));
+            down_reqStats = (int)(reqStats / div_low_req);
         }
     }
     private void SetStats()

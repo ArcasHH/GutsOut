@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [System.Serializable]
@@ -41,6 +42,8 @@ public class OrganRandomizer : MonoBehaviour
     }
     private bool isInitialized = false;
 
+
+    private const float day_mul_coef = 0.01f;
 
     private void Initialize()
     {
@@ -148,7 +151,7 @@ public class OrganRandomizer : MonoBehaviour
     private void SetQualityWeights()
     {
         float curr_day = DayManager.Instance.CurrentDay;
-        float coef = 0.01f * curr_day;
+        float coef = day_mul_coef * curr_day;
         qualityWeights = new List<QualityWeight>()
         {
             new QualityWeight() { quality = QualityType.Cursed, weight = 0.2f + coef},
