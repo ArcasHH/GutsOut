@@ -73,11 +73,11 @@ public class OrganRandomizer : MonoBehaviour
 
     private void SubscribeDependencies()
     {
-        EventBus.OnDayEnded += SetQualityWeights;
+        EventBus.OnDayEnd += SetQualityWeights;
     }
     private void UnsubscribeDependencies()
     {
-        EventBus.OnDayEnded -= SetQualityWeights;
+        EventBus.OnDayEnd -= SetQualityWeights;
     }
     private void LoadAllOrgans()
     {

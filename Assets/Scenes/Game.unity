@@ -676,9 +676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
   containerPrefab: {fileID: 1303498805825431328, guid: b782944dd3b188b4dbb61a84de5bd173, type: 3}
   containersParent: {fileID: 19164612}
-  dayCounterText: {fileID: 1643290333}
   scoreText: {fileID: 2112430338}
-  endDayButton: {fileID: 1741940973}
   rewardForOne: 10
   rewardForTwo: 30
   rewardForThree: 50
@@ -1679,6 +1677,7 @@ GameObject:
   m_Component:
   - component: {fileID: 290010123}
   - component: {fileID: 290010124}
+  - component: {fileID: 290010125}
   m_Layer: 5
   m_Name: DayPanel
   m_TagString: Untagged
@@ -1734,6 +1733,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &290010125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290010122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f513b92661624d14292dd5a6d9802365, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DayPanelController
+  dayCounterText: {fileID: 1643290333}
+  dayButton: {fileID: 1741940973}
 --- !u!1 &296395027
 GameObject:
   m_ObjectHideFlags: 0
@@ -2046,7 +2059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4542906026969065427, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
       propertyPath: m_Name
-      value: TextButton
+      value: DayEndButton
       objectReference: {fileID: 0}
     - target: {fileID: 4542906026969065427, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2055,6 +2068,34 @@ PrefabInstance:
     - target: {fileID: 5342369073518447923, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532317707856816305, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532317707856816305, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532317707856816305, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 78124484}
+    - target: {fileID: 8532317707856816305, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532317707856816305, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EndDay
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532317707856816305, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DayManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532317707856816305, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

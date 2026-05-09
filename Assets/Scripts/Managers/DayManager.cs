@@ -11,9 +11,7 @@ public class DayManager : MonoBehaviour
     [SerializeField] private Transform containersParent;
 
     [Header("UI")]
-    [SerializeField] private TMP_Text dayCounterText;
     [SerializeField] private TMP_Text scoreText;
-    [SerializeField] private Button endDayButton;
 
     public int CurrentDay { get; private set; } = 1;
     public int TotalScore { get; private set; } = 0;
@@ -43,29 +41,45 @@ public class DayManager : MonoBehaviour
         Instance = this;
         currentHumanDeleterCost = humanDeleterBaseCost;
 
-        if (endDayButton != null)
-            endDayButton.onClick.AddListener(EndDay);
-
         UpdateUI();
         UpdateHumanDeleterCostUI();
 
         if (humanDeleterPrefab != null && humanDeleterSlot != null && currentHumanDeleterInstance == null)
             SpawnHumanDeleter();
         //StartCoroutine(ProcessDayCycle());
+        SubscribeDependencies();
     }
 
-    private void OnEnable() => EventBus.OnInventoryChanged += RequestButtonUpdate;
-    private void OnDisable() => EventBus.OnInventoryChanged -= RequestButtonUpdate;
+    private void SubscribeDependencies()
+    {
+        EventBus.OnDayEnd += EndDay;
+    }
+    private void UnsubscribeDependencies()
+    {
+        EventBus.OnDayEnd -= EndDay;
+    }
 
-    private void Start() => RequestButtonUpdate();
+    private void OnEnable() => EventBus.OnInventoryChanged += RequestStatsUpdate;
+    private void OnDisable() => EventBus.OnInventoryChanged -= RequestStatsUpdate;
 
-    public void RequestButtonUpdate()
+    private void Start() => RequestStatsUpdate();
+
+    public void RequestStatsUpdate()
     {
         if (isBusy) return;
-        ForceUpdateButtonState();
+        RequestRewardUpdate();
+    }
+    public bool RequestStatsReady()
+    {
+        if (isBusy) return false;
+        return RequestRewardUpdate();
+    }
+    public bool GetStatsUpdate()
+    {
+        return RequestRewardUpdate();
     }
 
-    private void ForceUpdateButtonState()
+    private bool RequestRewardUpdate()
     {
         int anyFulfilled = 0;
         var summarizers = containersParent.GetComponentsInChildren<OrganStatsSummarizer>(true);
@@ -89,8 +103,8 @@ public class DayManager : MonoBehaviour
         {
             karmaText.text = $"karma gain: {expectedReward}";
         }
-        if (endDayButton != null)
-            endDayButton.interactable = anyFulfilled > 0;
+
+        return anyFulfilled > 0;
     }
 
     public void EndDay()
@@ -98,10 +112,7 @@ public class DayManager : MonoBehaviour
         if (isBusy) return;
         AudioManager.Instance.PlaySound(AudioManager.SoundType.EndDay);
         isBusy = true;
-        if (endDayButton != null) endDayButton.interactable = false;
         StartCoroutine(ProcessDayCycle());
-
-        EventBus.TriggerDayEnded();
     }
 
     private IEnumerator ProcessDayCycle()
@@ -148,7 +159,7 @@ public class DayManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
 
-        ForceUpdateButtonState();
+        EventBus.TriggerInventoryChanged();
 
         isBusy = false;
         Debug.Log($"[DayManager] Day {CurrentDay - 1} ended. Replaced: {replacedCount}. Reward: +{dailyReward}. Karma: {TotalScore}");
@@ -206,7 +217,7 @@ public class DayManager : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
-        ForceUpdateButtonState();
+        EventBus.TriggerInventoryChanged();
     }
 
     private void SpawnHumanDeleter()
@@ -253,7 +264,11 @@ public class DayManager : MonoBehaviour
 
     private void UpdateUI()
     {
-        if (dayCounterText != null) dayCounterText.text = $"Day: {CurrentDay}";
         if (scoreText != null) scoreText.text = $"Karma: {TotalScore}";
+    }
+
+    private void OnDestroy()
+    {
+        UnsubscribeDependencies();
     }
 }

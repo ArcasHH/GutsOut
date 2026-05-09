@@ -55,11 +55,11 @@ public class OrganStatsSummarizer : MonoBehaviour
 
     private void SubscribeDependencies()
     {
-        EventBus.OnDayEnded += UpdateRequires;
+        EventBus.OnDayEnd += UpdateRequires;
     }
     private void UnsubscribeDependencies()
     {
-        EventBus.OnDayEnded -= UpdateRequires;
+        EventBus.OnDayEnd -= UpdateRequires;
     }
 
     private void UpdateRequires()
