@@ -31,9 +31,6 @@ public class DayManager : MonoBehaviour
     [SerializeField] private GameObject humanDeleterPrefab;
     [SerializeField] private TMP_Text humanDeleterCostText;
 
-    [Header("dailyContainersSpawn")]
-    [SerializeField] private Transform dailySpawnRoot;
-
     private int currentHumanDeleterCost;
     private GameObject currentHumanDeleterInstance;
     private bool humanDeleterUsedThisDay = false;
