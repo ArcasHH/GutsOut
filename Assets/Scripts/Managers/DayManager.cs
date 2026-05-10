@@ -29,13 +29,6 @@ public class DayManager : MonoBehaviour
 
     [SerializeField] private KnifeController knifeController;
 
-    //[SerializeField] private Transform humanDeleterSlot;
-    //[SerializeField] private GameObject humanDeleterPrefab;
-    //[SerializeField] private TMP_Text humanDeleterCostText;
-
-    //private int currentHumanDeleterCost;
-    ////private GameObject currentHumanDeleterInstance;
-    //private bool humanDeleterUsedThisDay = false;
     private bool isBusy = false;
 
     public static DayManager Instance { get; private set; }
@@ -43,14 +36,8 @@ public class DayManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        //currentHumanDeleterCost = humanDeleterBaseCost;
 
         UpdateUI();
-        //UpdateHumanDeleterCostUI();
-
-        //if (humanDeleterPrefab != null && humanDeleterSlot != null && currentHumanDeleterInstance == null)
-        //    SpawnHumanDeleter();
-        //StartCoroutine(ProcessDayCycle());
         SubscribeDependencies();
     }
 
@@ -146,18 +133,8 @@ public class DayManager : MonoBehaviour
                           replacedCount == 1 ? rewardForOne : 0;
 
         TotalScore += dailyReward;
-        //CurrentDay++;
         UpdateUI();
 
-        //if (humanDeleterUsedThisDay)
-        //{
-        //    currentHumanDeleterCost += humanDeleterCostIncrease;
-        //    UpdateHumanDeleterCostUI();
-        //    SpawnHumanDeleter();
-        //}
-
-        //humanDeleterUsedThisDay = false;
-        //UpdateHumanDeleterVisibility();
         EventBus.OnInventoryChanged?.Invoke();
 
         yield return new WaitForEndOfFrame();
@@ -166,7 +143,6 @@ public class DayManager : MonoBehaviour
         EventBus.TriggerInventoryChanged();
 
         isBusy = false;
-        //Debug.Log($"[DayManager] Day {CurrentDay - 1} ended. Replaced: {replacedCount}. Reward: +{dailyReward}. Karma: {TotalScore}");
     }
 
     private IEnumerator ReplaceContainerAsync(GameObject oldContainer)
@@ -188,7 +164,7 @@ public class DayManager : MonoBehaviour
         Destroy(oldContainer);
     }
 
-    public bool HandleKnifeDrop(GameObject dropTarget, DraggableItem humanDeleter)
+    public bool HandleKnifeDrop(GameObject dropTarget, DraggableItem humanDeleter) //BAD! not here
     {
         if (isBusy) return false;
         if (dropTarget == null) return false;
@@ -213,7 +189,6 @@ public class DayManager : MonoBehaviour
         if (humanDeleter != null)
         {
             Destroy(humanDeleter.gameObject);
-            //currentHumanDeleterInstance = null;
             knifeController.SetNull();
         }
 
@@ -229,35 +204,6 @@ public class DayManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
         EventBus.TriggerInventoryChanged();
     }
-
-    //private void SpawnHumanDeleter()
-    //{
-    //    if (humanDeleterPrefab == null || humanDeleterSlot == null) return;
-    //    if (currentHumanDeleterInstance != null) Destroy(currentHumanDeleterInstance);
-
-    //    currentHumanDeleterInstance = Instantiate(humanDeleterPrefab, humanDeleterSlot);
-    //    var rt = currentHumanDeleterInstance.GetComponent<RectTransform>();
-    //    if (rt != null) rt.anchoredPosition = Vector2.zero;
-
-    //    UpdateHumanDeleterVisibility();
-    //}
-
-    //private void UpdateHumanDeleterVisibility()
-    //{
-    //    bool show = !humanDeleterUsedThisDay;
-
-    //    if (currentHumanDeleterInstance != null)
-    //        currentHumanDeleterInstance.SetActive(show);
-
-    //    if (humanDeleterCostText != null)
-    //        humanDeleterCostText.gameObject.SetActive(show);
-    //}
-
-    //private void UpdateHumanDeleterCostUI()
-    //{
-    //    if (humanDeleterCostText != null)
-    //        humanDeleterCostText.text = $"Cost: {currentHumanDeleterCost} karma";
-    //}
 
     private GameObject FindContainerRoot(GameObject obj)
     {

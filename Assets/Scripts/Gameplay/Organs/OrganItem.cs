@@ -65,14 +65,12 @@ public class OrganItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
         GameObject targetGo = eventData.pointerCurrentRaycast.gameObject;
         SlotController targetSlot = targetGo?.GetComponentInParent<SlotController>();
 
-        // Проверяем слот-уничтожитель органов
         if (targetSlot && targetSlot.RequiredType == ItemType.OrganDeleter)
         {
             Destroy(gameObject);
             return;
         }
 
-        // Обычная логика слота
         if (targetSlot != null && targetSlot != sourceSlot)
         {
             if (targetSlot.CanAccept(this))
