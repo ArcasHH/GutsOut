@@ -29,7 +29,7 @@ public class DayPanelController : MonoBehaviour
         if (dayCounterText != null)
         {
             int day = DayManager.Instance.CurrentDay;
-            dayCounterText.text = $"Day: {day}";
+            dayCounterText.text = $"Day {day}";
         }
     }
 
