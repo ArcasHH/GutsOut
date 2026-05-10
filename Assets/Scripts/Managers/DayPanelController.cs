@@ -6,13 +6,18 @@ public class DayPanelController : MonoBehaviour
 {
     [SerializeField] private TMP_Text dayCounterText;
     [SerializeField] private Button dayButton;
+
+    private int curr_day;
+
     void Start()
     {
         SubscribeDependencies();
-
-        UpdateDayCounter();
+        
         if (dayButton != null)
             dayButton.onClick.AddListener(ClickDayButton);
+
+        curr_day = 1;
+        UpdateDayCounter();
     }
 
     private void SubscribeDependencies()
@@ -26,18 +31,22 @@ public class DayPanelController : MonoBehaviour
 
     private void UpdateDayCounter()
     {
+        DayManager.Instance.CurrentDay = curr_day;
         if (dayCounterText != null)
         {
-            int day = DayManager.Instance.CurrentDay;
-            dayCounterText.text = $"Day {day}";
+            //int curr_day = DayManager.Instance.CurrentDay;
+            dayCounterText.text = $"Day {curr_day}";
         }
     }
 
     private void ClickDayButton()
     {
+        curr_day++;
+
+        UpdateDayCounter();
         dayButton.interactable = false;
         EventBus.TriggerDayEnd();
-        UpdateDayCounter();
+        
         Invoke(nameof(RequestStatsUpdate), 1f); // timer for request of human ready
     }
     private void RequestStatsUpdate()
