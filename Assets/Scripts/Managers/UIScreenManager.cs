@@ -13,7 +13,7 @@ public class UIScreenManager : MonoBehaviour
     [SerializeField] private GameObject collectionObjects;
 
     [Header("Collection")]
-    [SerializeField] private Button toggleButton;
+    [SerializeField] private Button ritualButton;
     [SerializeField] private string textMain = "Collection";
     [SerializeField] private string textCollection = "Return";
 
@@ -23,11 +23,11 @@ public class UIScreenManager : MonoBehaviour
 
     private void Awake()
     {
-        if (toggleButton != null)
+        if (ritualButton != null)
         {
-            var btnText = toggleButton.GetComponentInChildren<UnityEngine.UI.Text>();
+            var btnText = ritualButton.GetComponentInChildren<Text>();
             if (btnText != null) btnText.text = textMain;
-            toggleButton.onClick.AddListener(ToggleScreens);
+            ritualButton.onClick.AddListener(ToggleScreens);
         }
 
         if (panelArray.Length > 0) SetActivePanelsPanels(true);
@@ -55,11 +55,12 @@ public class UIScreenManager : MonoBehaviour
         if (panelArray.Length > 0) SetActivePanelsPanels(!isCollectionOpen);
         if (collectionPanel != null) collectionPanel.SetActive(isCollectionOpen);
 
-        if (toggleButton != null)
+        if (ritualButton != null)
         {
-            var btnText = toggleButton.GetComponentInChildren<UnityEngine.UI.Text>();
+            var btnText = ritualButton.GetComponentInChildren<UnityEngine.UI.Text>();
             if (btnText != null) btnText.text = isCollectionOpen ? textCollection : textMain;
         }
+        EventBus.TriggerInventoryChanged();
     }
 
     private void SetActivePanelsPanels(bool is_active)

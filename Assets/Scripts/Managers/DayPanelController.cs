@@ -18,6 +18,7 @@ public class DayPanelController : MonoBehaviour
 
         curr_day = 1;
         UpdateDayCounter();
+        dayButton.interactable = false;//the first animations will give a signal when
     }
 
     private void SubscribeDependencies()
@@ -47,7 +48,7 @@ public class DayPanelController : MonoBehaviour
         dayButton.interactable = false;
         EventBus.TriggerDayEnd();
         
-        Invoke(nameof(RequestStatsUpdate), 1f); // timer for request of human ready
+        //Invoke(nameof(RequestStatsUpdate), 1f); // timer for request of human ready
     }
     private void RequestStatsUpdate()
     {

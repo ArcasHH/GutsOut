@@ -14,7 +14,7 @@ public class DayManager : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
 
     public int CurrentDay = 1; // need redo. now it is just for set
-    public int TotalScore { get; private set; } = 0;
+    public int TotalScore { get; set; } = 0;
 
     [SerializeField] private TMP_Text karmaText;
 
@@ -28,8 +28,6 @@ public class DayManager : MonoBehaviour
     public int humanDeleterCostIncrease = 3;
 
     [SerializeField] private KnifeController knifeController;
-
-    private bool isBusy = false;
 
     public static DayManager Instance { get; private set; }
 
@@ -57,12 +55,10 @@ public class DayManager : MonoBehaviour
 
     public void RequestStatsUpdate()
     {
-        if (isBusy) return;
         RequestRewardUpdate();
     }
     public bool RequestStatsReady()
     {
-        if (isBusy) return false;
         return RequestRewardUpdate();
     }
     public bool GetStatsUpdate()
@@ -100,13 +96,11 @@ public class DayManager : MonoBehaviour
 
     public void EndDay()
     {
-        if (isBusy) return;
         AudioManager.Instance.PlaySound(AudioManager.SoundType.EndDay);
-        isBusy = true;
-        StartCoroutine(ProcessDayCycle());
+        ProcessDayCycle();
     }
 
-    private IEnumerator ProcessDayCycle()
+    private void ProcessDayCycle()
     {
         var summarizers = containersParent.GetComponentsInChildren<OrganStatsSummarizer>(true);
         var toReplace = new List<GameObject>();
@@ -121,12 +115,8 @@ public class DayManager : MonoBehaviour
 
         int replacedCount = toReplace.Count;
 
-        var despawnTasks = new List<Coroutine>();
         foreach (var old in toReplace)
-            despawnTasks.Add(StartCoroutine(ReplaceContainerAsync(old)));
-
-        foreach (var task in despawnTasks)
-            yield return task;
+            ReplaceContainer(old);
 
         int dailyReward = replacedCount >= 3 ? rewardForThree :
                           replacedCount == 2 ? rewardForTwo :
@@ -135,22 +125,13 @@ public class DayManager : MonoBehaviour
         TotalScore += dailyReward;
         UpdateUI();
 
-        EventBus.OnInventoryChanged?.Invoke();
-
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-
-        EventBus.TriggerInventoryChanged();
-
-        isBusy = false;
     }
 
-    private IEnumerator ReplaceContainerAsync(GameObject oldContainer)
+    public void ReplaceContainer(GameObject oldContainer)
     {
-        if (oldContainer == null) yield break;
+        if (oldContainer == null) return;
 
         Transform oldParent = oldContainer.transform.parent;
-
         Vector3 pos = oldContainer.transform.position;
         Quaternion rot = oldContainer.transform.rotation;
         int index = oldContainer.transform.GetSiblingIndex();
@@ -159,66 +140,18 @@ public class DayManager : MonoBehaviour
         newContainer.transform.SetSiblingIndex(index);
 
         if (oldContainer.TryGetComponent<ContainerAnimationController>(out var anim))
-            yield return StartCoroutine(anim.AnimateOut());
-
-        Destroy(oldContainer);
-    }
-
-    public bool HandleKnifeDrop(GameObject dropTarget, DraggableItem humanDeleter) //BAD! not here
-    {
-        if (isBusy) return false;
-        if (dropTarget == null) return false;
-        if (dropTarget == null) return false;
-
-        int currentHumanDeleterCost = knifeController.GetCurrKnifeCost();
-
-        if (TotalScore < currentHumanDeleterCost || knifeController.knifeUsedThisDay)
         {
-            return false;
+            anim.OnAnimationComplete = null;
+            anim.OnAnimationComplete += () => Destroy(oldContainer);
+            anim.PlayAnimateOut();
         }
-
-        GameObject containerRoot = FindContainerRoot(dropTarget);
-        if (containerRoot == null) return false;
-
-        TotalScore -= currentHumanDeleterCost;
-        UpdateUI();
-
-        knifeController.knifeUsedThisDay = true;
-        knifeController.UpdateKnifeVisibility();
-
-        if (humanDeleter != null)
+        else
         {
-            Destroy(humanDeleter.gameObject);
-            knifeController.SetNull();
+            Destroy(oldContainer);
         }
-
-        StartCoroutine(ReplaceContainerAsync(containerRoot));
-        StartCoroutine(SyncButtonAfterKnife());
-
-        return true;
     }
 
-    private IEnumerator SyncButtonAfterKnife()
-    {
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        EventBus.TriggerInventoryChanged();
-    }
-
-    private GameObject FindContainerRoot(GameObject obj)
-    {
-        Transform current = obj.transform;
-        while (current != null)
-        {
-            if (current.GetComponent<OrganStatsSummarizer>() != null ||
-                current.GetComponent<ContainerAnimationController>() != null)
-                return current.gameObject;
-            current = current.parent;
-        }
-        return null;
-    }
-
-    private void UpdateUI()
+    public void UpdateUI()
     {
         if (scoreText != null) scoreText.text = $"Karma: {TotalScore}";
     }

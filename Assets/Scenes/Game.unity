@@ -4245,6 +4245,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 1254317165441402658, guid: b782944dd3b188b4dbb61a84de5bd173, type: 3}
+      propertyPath: rectTransform
+      value: 
+      objectReference: {fileID: 633894159}
     - target: {fileID: 1303498805825431328, guid: b782944dd3b188b4dbb61a84de5bd173, type: 3}
       propertyPath: m_Name
       value: Human
@@ -5252,7 +5256,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4542906026969065427, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
       propertyPath: m_Name
-      value: TextButton
+      value: RitualButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5744,7 +5748,7 @@ MonoBehaviour:
   winPanel: {fileID: 1999481425}
   collectionPanel: {fileID: 548613815}
   collectionObjects: {fileID: 2100590473}
-  toggleButton: {fileID: 84789383}
+  ritualButton: {fileID: 84789383}
   textMain: Collection
   textCollection: Return
 --- !u!1001 &1372353519
@@ -5787,6 +5791,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 1254317165441402658, guid: b782944dd3b188b4dbb61a84de5bd173, type: 3}
+      propertyPath: rectTransform
+      value: 
+      objectReference: {fileID: 720346641}
     - target: {fileID: 1254317165441402658, guid: b782944dd3b188b4dbb61a84de5bd173, type: 3}
       propertyPath: spawnOffset.y
       value: 1000
@@ -7929,6 +7937,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 1254317165441402658, guid: b782944dd3b188b4dbb61a84de5bd173, type: 3}
+      propertyPath: rectTransform
+      value: 
+      objectReference: {fileID: 1731216534}
     - target: {fileID: 1303498805825431328, guid: b782944dd3b188b4dbb61a84de5bd173, type: 3}
       propertyPath: m_Name
       value: Human (1)

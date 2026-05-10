@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class SlotController : MonoBehaviour
 {
     [Header("Настройки слота")]
     public ItemType RequiredType = ItemType.None;
@@ -21,7 +21,6 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             if (summarizer != null) categoryRestriction = summarizer.CollectionCategory;
         }
 
-        // Ищем дочерний DraggableItem
         foreach (Transform child in transform)
         {
             DraggableItem item = child.GetComponent<DraggableItem>();
@@ -45,16 +44,6 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     }
 
     public bool CanAcceptTypeOnly(ItemType type) => RequiredType == ItemType.None || type == RequiredType;
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        // Можно оставить для визуальной обратной связи
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        // Можно оставить для визуальной обратной связи
-    }
 
     public void PlaceItem(DraggableItem item)
     {

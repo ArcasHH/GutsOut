@@ -109,7 +109,7 @@ MonoBehaviour:
   duration: 1
   spawnOffset: {x: 0, y: 1000}
   despawnOffset: {x: 0, y: -800}
-  spawnScale: {x: 0, y: 0, z: 1}
+  spawnScale: {x: 0.5, y: 0.5, z: 1}
 --- !u!114 &5021209807055913600
 MonoBehaviour:
   m_ObjectHideFlags: 0

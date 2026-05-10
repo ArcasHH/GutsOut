@@ -1,5 +1,6 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class KnifeController : MonoBehaviour
 {
@@ -14,9 +15,7 @@ public class KnifeController : MonoBehaviour
     private GameObject currentKnifeInstance;
 
     private int currentKnifeCost;
-    public bool knifeUsedThisDay = false;
-
-    public int GetCurrKnifeCost() => currentKnifeCost;
+    private bool knifeUsedThisDay = false;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -50,6 +49,12 @@ public class KnifeController : MonoBehaviour
             Destroy(currentKnifeInstance); //why,,,,??????? need to hide intaed destroying
 
         currentKnifeInstance = Instantiate(knifePrefab, knifeSlot);
+        var knifeItem = currentKnifeInstance.GetComponent<KnifeItem>();
+        if (knifeItem != null)
+        {
+            knifeItem.parentController = this;
+        }
+
         var rt = currentKnifeInstance.GetComponent<RectTransform>();
         if (rt != null) rt.anchoredPosition = Vector2.zero;
 
@@ -93,9 +98,48 @@ public class KnifeController : MonoBehaviour
         return true;
     }
 
-    public void SetNull()
+    public bool HandleKnifeDrop(GameObject dropTarget, DraggableItem humanDeleter)
     {
-        currentKnifeInstance = null;
+        //if (isBusy) return false;
+        if (dropTarget == null) return false;
+        if (dropTarget == null) return false;
+
+        if (DayManager.Instance.TotalScore < currentKnifeCost || knifeUsedThisDay)
+        {
+            return false;
+        }
+
+        GameObject containerRoot = FindContainerRoot(dropTarget);
+        if (containerRoot == null) return false;
+
+        DayManager.Instance.TotalScore -= currentKnifeCost;
+        DayManager.Instance.UpdateUI();
+
+       knifeUsedThisDay = true;
+        UpdateKnifeVisibility();
+
+        if (humanDeleter != null)
+        {
+            Destroy(humanDeleter.gameObject);
+            currentKnifeInstance = null;
+        }
+
+        DayManager.Instance.ReplaceContainer(containerRoot);
+        EventBus.TriggerInventoryChanged();
+
+        return true;
+    }
+    private GameObject FindContainerRoot(GameObject obj)
+    {
+        Transform current = obj.transform;
+        while (current != null)
+        {
+            if (current.GetComponent<OrganStatsSummarizer>() != null ||
+                current.GetComponent<ContainerAnimationController>() != null)
+                return current.gameObject;
+            current = current.parent;
+        }
+        return null;
     }
 
     private void OnDestroy()

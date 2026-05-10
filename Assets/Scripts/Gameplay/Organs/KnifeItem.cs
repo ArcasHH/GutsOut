@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -5,6 +6,7 @@ using UnityEngine.UI;
 public class KnifeItem : DraggableItem, IPointerEnterHandler, IPointerExitHandler
 {
     private Outline outline;
+    public KnifeController parentController;
 
     public override ItemType Type => ItemType.HumanDeleter;
     public override CategoryType CategoryType => CategoryType.None;
@@ -23,14 +25,12 @@ public class KnifeItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
     {
         GameObject targetGo = eventData.pointerCurrentRaycast.gameObject;
 
-        if (DayManager.Instance != null)
-        {
-            bool success = DayManager.Instance.HandleKnifeDrop(targetGo, this);
-            if (!success) ReturnToSource();
-            else AudioManager.Instance.PlayRandomSoundFromFolder("Audio/Voices");
-        }
-        else ReturnToSource();
+        bool success = parentController.HandleKnifeDrop(targetGo, this);//DayManager.Instance.HandleKnifeDrop(targetGo, this);
+        if (!success)
+                ReturnToSource();
+        else AudioManager.Instance.PlayRandomSoundFromFolder("Audio/Voices");
     }
+
 
     private void ShowOutline()
     {
