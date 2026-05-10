@@ -135,8 +135,8 @@ public class OrganItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
             QualityType.Ordinary => ColorPaletteManager.Instance.CurrentPalette.ordinaryOrganColor,
             QualityType.Good => ColorPaletteManager.Instance.CurrentPalette.goodOrganColor,
             QualityType.Rare => ColorPaletteManager.Instance.CurrentPalette.rareOrganColor,
-            QualityType.Legendary => ColorPaletteManager.Instance.CurrentPalette.legendaryOrganColor,
-            QualityType.Epic => ColorPaletteManager.Instance.CurrentPalette.epicOrganColor,
+            QualityType.Epic => ColorPaletteManager.Instance.CurrentPalette.legendaryOrganColor,
+            QualityType.Legendary => ColorPaletteManager.Instance.CurrentPalette.epicOrganColor,
             _ => Color.white
         };
 
