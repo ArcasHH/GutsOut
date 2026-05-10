@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 6814073839849262447}
   - component: {fileID: 3255868779531301792}
   - component: {fileID: 5391465496224038221}
-  - component: {fileID: 7860203153618878830}
-  - component: {fileID: 1893670307032261491}
   - component: {fileID: 7795932922176426378}
+  - component: {fileID: 520890211685266582}
   m_Layer: 5
   m_Name: HumanDeleter
   m_TagString: Untagged
@@ -78,37 +77,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7860203153618878830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5327110970308714389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b82674a2ebc4e344ab7af8e70d9cd09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DraggableItemController
-  Type: 5
-  category_type: 3
-  rectTransform: {fileID: 0}
-  canvasGroup: {fileID: 0}
-  canvas: {fileID: 0}
-  dragThreshold: 5
-  returnAnimDuration: 0.25
---- !u!114 &1893670307032261491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5327110970308714389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8e501f83eb919a4db45250e82975ef0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Knife
 --- !u!114 &7795932922176426378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,3 +92,20 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 0, b: 0.13828564, a: 0.78431374}
   m_EffectDistance: {x: 10, y: 10}
   m_UseGraphicAlpha: 1
+--- !u!114 &520890211685266582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5327110970308714389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f5a3ec1115f30f4ba6a021a947b5c9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KnifeItem
+  dragThreshold: 5
+  returnAnimDuration: 0.25
+  rectTransform: {fileID: 0}
+  canvasGroup: {fileID: 0}
+  canvas: {fileID: 0}

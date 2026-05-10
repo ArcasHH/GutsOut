@@ -52,7 +52,7 @@ public class ContainerSwapButton : MonoBehaviour
         if (itemB != null) BindItemToSlot(itemB, slotA);
     }
 
-    private void BindItemToSlot(DraggableItemController item, SlotController slot)
+    private void BindItemToSlot(DraggableItem item, SlotController slot)
     {
         item.SetSlot(slot);
         item.transform.SetParent(slot.rectTransform, false);

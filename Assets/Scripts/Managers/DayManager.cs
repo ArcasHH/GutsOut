@@ -188,7 +188,7 @@ public class DayManager : MonoBehaviour
         Destroy(oldContainer);
     }
 
-    public bool HandleKnifeDrop(GameObject dropTarget, DraggableItemController humanDeleter)
+    public bool HandleKnifeDrop(GameObject dropTarget, DraggableItem humanDeleter)
     {
         if (isBusy) return false;
         if (dropTarget == null) return false;

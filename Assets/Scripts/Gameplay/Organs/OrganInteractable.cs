@@ -6,13 +6,11 @@ public class OrganInteractable : MonoBehaviour
     [Header("Visuals")]
     [SerializeField] private GameObject outlineObject;
 
-    private OrganObject organData;
+    private OrganItem organData;
     private Camera mainCamera;
 
     private void Awake()
     {
-        //organData = GetComponent<OrganObject>();
-
         if (outlineObject != null)
             outlineObject.SetActive(false);
     }

@@ -1,19 +1,15 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Настройки слота")]
     public ItemType RequiredType = ItemType.None;
-    
     [SerializeField] private CategoryType categoryRestriction = CategoryType.None;
 
-    public DraggableItemController CurrentItem { get; set; }
+    public DraggableItem CurrentItem { get; set; }
     public bool IsEmpty => CurrentItem == null;
-
     public RectTransform rectTransform;
-    private Color baseColor;
 
     private void Awake()
     {
@@ -25,9 +21,10 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             if (summarizer != null) categoryRestriction = summarizer.CollectionCategory;
         }
 
+        // Ищем дочерний DraggableItem
         foreach (Transform child in transform)
         {
-            DraggableItemController item = child.GetComponent<DraggableItemController>();
+            DraggableItem item = child.GetComponent<DraggableItem>();
             if (item != null)
             {
                 CurrentItem = item;
@@ -37,12 +34,12 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
     }
 
-    public bool CanAccept(DraggableItemController item)
+    public bool CanAccept(DraggableItem item)
     {
         if (item == null) return false;
 
         bool typeOk = RequiredType == ItemType.None || item.Type == RequiredType;
-        bool categoryOk = categoryRestriction == CategoryType.None || item.category_type == categoryRestriction;
+        bool categoryOk = categoryRestriction == CategoryType.None || item.CategoryType == categoryRestriction;
 
         return typeOk && categoryOk;
     }
@@ -51,44 +48,15 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (eventData.pointerDrag == null) return;
-        DraggableItemController dragged = eventData.pointerDrag.GetComponent<DraggableItemController>();
-        //if (dragged != null) SetHighlight(CanAccept(dragged));
+        // Можно оставить для визуальной обратной связи
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        //if (SlotImage != null) SlotImage.color = baseColor;
+        // Можно оставить для визуальной обратной связи
     }
 
-    //private void SetHighlight(bool isValid)
-    //{
-    //    if (SlotImage == null) return;
-    //    SlotImage.color = isValid ? new Color(0.5f, 1f, 0.5f, 0.4f) : new Color(1f, 0.3f, 0.3f, 0.4f);
-    //}
-
-    public DropResult TryAccept(DraggableItemController draggedItem, SlotController sourceSlot)
-    {
-        if (!CanAccept(draggedItem)) return DropResult.TypeMismatch;
-
-        if (IsEmpty)
-        {
-            PlaceItem(draggedItem);
-            return DropResult.Success;
-        }
-
-        if (sourceSlot != null && sourceSlot.CanAccept(CurrentItem))
-        {
-            DraggableItemController oldItem = CurrentItem;
-            PlaceItem(draggedItem);
-            sourceSlot.PlaceItem(oldItem);
-            return DropResult.Swap;
-        }
-
-        return DropResult.Occupied;
-    }
-
-    public void PlaceItem(DraggableItemController item)
+    public void PlaceItem(DraggableItem item)
     {
         CurrentItem = item;
         item.SetSlot(this);

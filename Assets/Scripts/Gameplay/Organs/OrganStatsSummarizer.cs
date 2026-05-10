@@ -106,7 +106,7 @@ public class OrganStatsSummarizer : MonoBehaviour
     public void CalculateStats()
     {
         TotalMind = 0; TotalSoul = 0; TotalBody = 0;
-        var organs = GetComponentsInChildren<OrganObject>(true);
+        var organs = GetComponentsInChildren<OrganItem>(true);
         foreach (var organ in organs)
         {
             if (organ == null) continue;

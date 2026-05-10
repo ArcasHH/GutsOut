@@ -1,0 +1,159 @@
+using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+public class OrganItem : DraggableItem, IPointerEnterHandler, IPointerExitHandler
+{
+    [Header("Organ Settings")]
+    [SerializeField] private ObjectType organType;
+    [SerializeField] private GameObject statsPanel;
+    [SerializeField] private TMP_Text statsText;
+
+    private GameOrgan data;
+    private Image organImage;
+    private Outline outline;
+
+    public override ItemType Type => ConvertToItemType(organType);
+    public override CategoryType CategoryType => data?.category_type ?? CategoryType.None;
+    public GameOrgan Data => data;
+
+    private string spritesPath = "Sprites/GameSprites/Organs";
+
+    protected override void Start()
+    {
+        base.Start();
+
+        if (OrganRandomizer.Instance != null)
+            data = OrganRandomizer.Instance.GetRandomOrgan(organType);
+
+        if (data == null)
+        {
+            Debug.LogWarning($"[{name}] No data selected for type {organType}!");
+            return;
+        }
+
+        organImage = GetComponent<Image>();
+        outline = GetComponent<Outline>();
+
+        SetColor();
+        SetText();
+        HideStatsPanel();
+        SetImage();
+        SetOutline();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData) => ShowStatsPanel();
+    public void OnPointerExit(PointerEventData eventData) => HideStatsPanel();
+
+    public int GetStat(StatType stat) => data?.GetStat(stat) ?? 0;
+
+    private void ShowStatsPanel()
+    {
+        if (statsPanel != null) statsPanel.SetActive(true);
+        if (outline != null) outline.enabled = true;
+    }
+
+    private void HideStatsPanel()
+    {
+        if (statsPanel != null) statsPanel.SetActive(false);
+        if (outline != null) outline.enabled = false;
+    }
+
+    protected override void HandleDrop(PointerEventData eventData)
+    {
+        GameObject targetGo = eventData.pointerCurrentRaycast.gameObject;
+        SlotController targetSlot = targetGo?.GetComponentInParent<SlotController>();
+
+        // Проверяем слот-уничтожитель органов
+        if (targetSlot && targetSlot.RequiredType == ItemType.OrganDeleter)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        // Обычная логика слота
+        if (targetSlot != null && targetSlot != sourceSlot)
+        {
+            if (targetSlot.CanAccept(this))
+            {
+                if (targetSlot.IsEmpty)
+                {
+                    targetSlot.PlaceItem(this);
+                    return;
+                }
+                else if (sourceSlot != null && sourceSlot.CanAccept(targetSlot.CurrentItem))
+                {
+                    DraggableItem otherItem = targetSlot.CurrentItem;
+                    StartCoroutine(PerformSwap(targetSlot, otherItem, sourceSlot));
+                    return;
+                }
+            }
+        }
+
+        if (!IsAnimating) ReturnToSource();
+    }
+
+    private ItemType ConvertToItemType(ObjectType objectType)
+    {
+        return objectType switch
+        {
+            ObjectType.Heart => ItemType.Heart,
+            ObjectType.Brain => ItemType.Brain,
+            ObjectType.Lungs => ItemType.Lungs,
+            ObjectType.Gut => ItemType.Guts,
+            _ => ItemType.None
+        };
+    }
+
+    private void SetImage()
+    {
+        if (organImage == null) return;
+
+        Sprite[] allSprites = Resources.LoadAll<Sprite>(spritesPath);
+        if (allSprites == null || allSprites.Length == 0)
+        {
+            Debug.LogWarning($"No sprites found at path: {spritesPath}");
+            return;
+        }
+
+        string targetSpriteName = $"{data.category_type}_{organType}";
+        Sprite targetSprite = System.Array.Find(allSprites, s => s.name == targetSpriteName);
+
+        if (targetSprite != null)
+            organImage.sprite = targetSprite;
+        else
+            Debug.LogWarning($"Sprite not found: {targetSpriteName} in {spritesPath}");
+    }
+
+    private void SetColor()
+    {
+        if (organImage == null || !ColorPaletteManager.Instance) return;
+
+        Color objCol = data.quality_type switch
+        {
+            QualityType.Cursed => ColorPaletteManager.Instance.CurrentPalette.cursedOrganColor,
+            QualityType.Bad => ColorPaletteManager.Instance.CurrentPalette.badOrganColor,
+            QualityType.Ordinary => ColorPaletteManager.Instance.CurrentPalette.ordinaryOrganColor,
+            QualityType.Good => ColorPaletteManager.Instance.CurrentPalette.goodOrganColor,
+            QualityType.Rare => ColorPaletteManager.Instance.CurrentPalette.rareOrganColor,
+            QualityType.Legendary => ColorPaletteManager.Instance.CurrentPalette.legendaryOrganColor,
+            QualityType.Epic => ColorPaletteManager.Instance.CurrentPalette.epicOrganColor,
+            _ => Color.white
+        };
+
+        organImage.color = objCol;
+    }
+
+    private void SetText()
+    {
+        if (statsText == null) return;
+        statsText.text = $"{GetStat(StatType.Mind)}\n{GetStat(StatType.Soul)}\n{GetStat(StatType.Body)}";
+    }
+
+    private void SetOutline()
+    {
+        if (outline != null && ColorPaletteManager.Instance != null)
+            outline.effectColor = ColorPaletteManager.Instance.CurrentPalette.outlineColor;
+    }
+}

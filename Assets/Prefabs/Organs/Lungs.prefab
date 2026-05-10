@@ -11,10 +11,8 @@ GameObject:
   - component: {fileID: 441149564403155060}
   - component: {fileID: 6256749715601897238}
   - component: {fileID: 6978871441027045319}
-  - component: {fileID: 600283766916161901}
-  - component: {fileID: 8265550474340028862}
-  - component: {fileID: 3075485028950764438}
   - component: {fileID: 3581867739436220863}
+  - component: {fileID: 9199275215592968954}
   m_Layer: 5
   m_Name: Lungs
   m_TagString: Untagged
@@ -80,52 +78,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &600283766916161901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8091132100414138715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b82674a2ebc4e344ab7af8e70d9cd09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DraggableItemController
-  Type: 4
-  category_type: 0
-  rectTransform: {fileID: 0}
-  canvasGroup: {fileID: 0}
-  canvas: {fileID: 0}
-  dragThreshold: 5
-  returnAnimDuration: 0.25
---- !u!225 &8265550474340028862
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8091132100414138715}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
---- !u!114 &3075485028950764438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8091132100414138715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c4d200ffcb778a41b857264fefe342d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OrganObject
-  organType: 2
-  stats_panel: {fileID: 3985072320251869427}
-  statsText: {fileID: 8787006874772767540}
 --- !u!114 &3581867739436220863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,6 +93,26 @@ MonoBehaviour:
   m_EffectColor: {r: 0.7688679, g: 0.13056247, b: 0.13056247, a: 0.78431374}
   m_EffectDistance: {x: 10, y: 10}
   m_UseGraphicAlpha: 1
+--- !u!114 &9199275215592968954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8091132100414138715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be257d710741224281bcb93b57d9145, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OrganItem
+  dragThreshold: 5
+  returnAnimDuration: 0.25
+  rectTransform: {fileID: 0}
+  canvasGroup: {fileID: 0}
+  canvas: {fileID: 0}
+  organType: 2
+  statsPanel: {fileID: 3985072320251869427}
+  statsText: {fileID: 8787006874772767540}
 --- !u!1001 &7137859195110336169
 PrefabInstance:
   m_ObjectHideFlags: 0

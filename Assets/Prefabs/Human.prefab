@@ -213,7 +213,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SlotController
   RequiredType: 1
   categoryRestriction: 3
-  SlotImage: {fileID: 0}
   rectTransform: {fileID: 0}
 --- !u!1 &1771298122784892619
 GameObject:
@@ -306,7 +305,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SlotController
   RequiredType: 3
   categoryRestriction: 3
-  SlotImage: {fileID: 0}
   rectTransform: {fileID: 0}
 --- !u!1 &1990592523168420930
 GameObject:
@@ -438,7 +436,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SlotController
   RequiredType: 2
   categoryRestriction: 3
-  SlotImage: {fileID: 0}
   rectTransform: {fileID: 0}
 --- !u!1 &3916661126706293447
 GameObject:
@@ -531,7 +528,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SlotController
   RequiredType: 4
   categoryRestriction: 3
-  SlotImage: {fileID: 0}
   rectTransform: {fileID: 0}
 --- !u!1001 &3287679015580043834
 PrefabInstance:

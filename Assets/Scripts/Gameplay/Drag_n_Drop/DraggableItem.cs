@@ -1,31 +1,28 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using System.Collections;
 
-public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDragHandler
+public abstract class DraggableItem : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDragHandler
 {
-    public ItemType Type;
-    public CategoryType category_type;
+    [Header("Drag Settings")]
+    [SerializeField] protected float dragThreshold = 5f;
+    [SerializeField] protected float returnAnimDuration = 0.25f;
 
-    [HideInInspector]  public RectTransform rectTransform;
-    [HideInInspector]  public CanvasGroup canvasGroup;
-    [HideInInspector]  public Canvas canvas;
+    [HideInInspector] public RectTransform rectTransform;
+    [HideInInspector] public CanvasGroup canvasGroup;
+    [HideInInspector] public Canvas canvas;
 
-    public float dragThreshold = 5f;
-    public float returnAnimDuration = 0.25f;
+    public bool IsAnimating { get; protected set; }
+    public abstract ItemType Type { get; }
+    public abstract CategoryType CategoryType { get; }
 
-    public bool IsAnimating { get; private set; }
+    protected SlotController currentSlot;
+    protected SlotController sourceSlot;
+    protected RectTransform canvasRect;
+    protected bool isDragging = false;
 
-    private SlotController currentSlot;
-    private SlotController sourceSlot;
-    private RectTransform canvasRect;
-    private bool isDragging = false;
-
-    private void Start()
+    protected virtual void Start()
     {
-        if (rectTransform == null) rectTransform = GetComponent<RectTransform>();
-        
+        rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null)
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
@@ -33,19 +30,18 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
         canvas = GetComponentInParent<Canvas>();
         canvasRect = canvas.GetComponent<RectTransform>();
         currentSlot = GetComponentInParent<SlotController>();
-
     }
 
     public void SetSlot(SlotController slot) => currentSlot = slot;
 
-    public void OnPointerDown(PointerEventData eventData)
+    public virtual void OnPointerDown(PointerEventData eventData)
     {
         if (IsAnimating) return;
         sourceSlot = currentSlot;
         isDragging = false;
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public virtual void OnDrag(PointerEventData eventData)
     {
         if (IsAnimating) return;
 
@@ -56,14 +52,13 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
                 StartDragging(eventData);
             return;
         }
-        if (Type != ItemType.HumanDeleter)
-            category_type = GetComponent<OrganObject>().Data.category_type;
+
         Vector2 mouseInCanvas;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, eventData.position, canvas.worldCamera, out mouseInCanvas);
         rectTransform.anchoredPosition = mouseInCanvas;
     }
 
-    private void StartDragging(PointerEventData eventData)
+    protected virtual void StartDragging(PointerEventData eventData)
     {
         isDragging = true;
         sourceSlot?.ClearItem();
@@ -79,10 +74,11 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
 
         canvasGroup.blocksRaycasts = false;
         canvasGroup.alpha = 0.85f;
+
         EventBus.TriggerOrganStartDrag();
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public virtual void OnEndDrag(PointerEventData eventData)
     {
         if (!isDragging) return;
 
@@ -92,57 +88,18 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
         canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1f;
 
-        GameObject targetGo = eventData.pointerCurrentRaycast.gameObject;
-        SlotController targetSlot = targetGo?.GetComponentInParent<SlotController>();
-
-        if (Type == ItemType.HumanDeleter)
-        {
-            if (DayManager.Instance != null)
-            {
-                bool success = DayManager.Instance.HandleKnifeDrop(targetGo, this);
-                if (!success) ReturnToSource();
-                else
-                {
-                    AudioManager.Instance.PlayRandomSoundFromFolder("Audio/Voices");
-                }
-            }
-            else ReturnToSource();
-            return;
-        }
-        if (targetSlot && targetSlot.RequiredType == ItemType.OrganDeleter)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-
-        if (targetSlot != null && targetSlot != sourceSlot)
-        {
-            if (targetSlot.CanAccept(this))
-            {
-                if (targetSlot.IsEmpty)
-                {
-                    targetSlot.PlaceItem(this);
-                    return;
-                }
-                else if (sourceSlot != null && sourceSlot.CanAccept(targetSlot.CurrentItem))
-                {
-                    DraggableItemController otherItem = targetSlot.CurrentItem;
-                    StartCoroutine(PerformSwap(targetSlot, otherItem, sourceSlot));
-                    return;
-                }
-            }
-        }
-
-        if (!IsAnimating) ReturnToSource();
+        HandleDrop(eventData);
     }
 
-    private void ReturnToSource()
+    protected abstract void HandleDrop(PointerEventData eventData);
+
+    protected virtual void ReturnToSource()
     {
         if (sourceSlot == null || IsAnimating) return;
         StartCoroutine(SmoothReturnToSlot(sourceSlot));
     }
 
-    private IEnumerator SmoothReturnToSlot(SlotController targetSlot)
+    protected System.Collections.IEnumerator SmoothReturnToSlot(SlotController targetSlot)
     {
         IsAnimating = true;
         canvasGroup.blocksRaycasts = false;
@@ -167,7 +124,7 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
         IsAnimating = false;
     }
 
-    private IEnumerator PerformSwap(SlotController targetSlot, DraggableItemController otherItem, SlotController sourceSlot)
+    public System.Collections.IEnumerator PerformSwap(SlotController targetSlot, DraggableItem otherItem, SlotController sourceSlot)
     {
         IsAnimating = true;
         otherItem.IsAnimating = true;
@@ -186,7 +143,7 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
         {
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / returnAnimDuration);
-            float ease = 1f - Mathf.Pow(1f - t, 3); // Ease-out cubic
+            float ease = 1f - Mathf.Pow(1f - t, 3);
 
             rectTransform.position = Vector3.Lerp(startPosThis, targetPosThis, ease);
             otherItem.rectTransform.position = Vector3.Lerp(startPosOther, targetPosOther, ease);
@@ -207,7 +164,7 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
         otherItem.IsAnimating = false;
     }
 
-    private Vector2 GetSlotCenterInCanvas(RectTransform slotRect)
+    protected Vector2 GetSlotCenterInCanvas(RectTransform slotRect)
     {
         Vector2 localPos;
         Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, slotRect.position);
