@@ -42,6 +42,9 @@ public class DayPanelController : MonoBehaviour
 
     private void ClickDayButton()
     {
+        if (DayManager.Instance.IsHumanAnimation())
+            return;
+
         curr_day++;
 
         UpdateDayCounter();

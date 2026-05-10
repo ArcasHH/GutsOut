@@ -683,7 +683,10 @@ MonoBehaviour:
   rewardForThree: 50
   humanDeleterBaseCost: 5
   humanDeleterCostIncrease: 3
-  knifeController: {fileID: 1183807907}
+  HumansContainers:
+  - {fileID: 633894158}
+  - {fileID: 1731216533}
+  - {fileID: 720346640}
 --- !u!4 &78124485
 Transform:
   m_ObjectHideFlags: 0
@@ -5591,7 +5594,6 @@ MonoBehaviour:
   knifeSlot: {fileID: 335302528}
   knifePrefab: {fileID: 5327110970308714389, guid: b59f8a154c93b664082363a0272ed6e8, type: 3}
   knifeCostText: {fileID: 933695481}
-  knifeUsedThisDay: 0
 --- !u!114 &1183807908
 MonoBehaviour:
   m_ObjectHideFlags: 0

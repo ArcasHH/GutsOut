@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 public class DayManager : MonoBehaviour
 {
@@ -27,10 +28,10 @@ public class DayManager : MonoBehaviour
     public int humanDeleterBaseCost = 5; // just to set cost in this script
     public int humanDeleterCostIncrease = 3;
 
-    [SerializeField] private KnifeController knifeController;
-
+    [SerializeField] private GameObject[] HumansContainers;
     public static DayManager Instance { get; private set; }
 
+    
     private void Awake()
     {
         Instance = this;
@@ -46,6 +47,16 @@ public class DayManager : MonoBehaviour
     private void UnsubscribeDependencies()
     {
         EventBus.OnDayEnd -= EndDay;
+    }
+
+    public bool IsHumanAnimation()
+    {
+        int counter = 0;
+        foreach (var humanContainer in HumansContainers)
+        {
+            counter += humanContainer.transform.childCount;
+        }
+        return counter > HumansContainers.Length;
     }
 
     private void OnEnable() => EventBus.OnInventoryChanged += RequestStatsUpdate;
