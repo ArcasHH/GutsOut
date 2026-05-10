@@ -7,9 +7,10 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
 {
     public ItemType Type;
     public CategoryType category_type;
-    public RectTransform rectTransform;
-    public CanvasGroup canvasGroup;
-    public Canvas canvas;
+
+    [HideInInspector]  public RectTransform rectTransform;
+    [HideInInspector]  public CanvasGroup canvasGroup;
+    [HideInInspector]  public Canvas canvas;
 
     public float dragThreshold = 5f;
     public float returnAnimDuration = 0.25f;
