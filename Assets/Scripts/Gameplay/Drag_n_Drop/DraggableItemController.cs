@@ -99,7 +99,7 @@ public class DraggableItemController : MonoBehaviour, IPointerDownHandler, IDrag
         {
             if (DayManager.Instance != null)
             {
-                bool success = DayManager.Instance.HandleHumanDeleterDrop(targetGo, this);
+                bool success = DayManager.Instance.HandleKnifeDrop(targetGo, this);
                 if (!success) ReturnToSource();
                 else
                 {

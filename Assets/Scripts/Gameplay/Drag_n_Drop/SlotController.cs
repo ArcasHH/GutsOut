@@ -9,7 +9,6 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     
     [SerializeField] private CategoryType categoryRestriction = CategoryType.None;
 
-    public Image SlotImage;
     public DraggableItemController CurrentItem { get; set; }
     public bool IsEmpty => CurrentItem == null;
 
@@ -19,7 +18,6 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        if (SlotImage != null) baseColor = SlotImage.color;
 
         if (categoryRestriction == CategoryType.None)
         {
@@ -55,19 +53,19 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (eventData.pointerDrag == null) return;
         DraggableItemController dragged = eventData.pointerDrag.GetComponent<DraggableItemController>();
-        if (dragged != null) SetHighlight(CanAccept(dragged));
+        //if (dragged != null) SetHighlight(CanAccept(dragged));
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (SlotImage != null) SlotImage.color = baseColor;
+        //if (SlotImage != null) SlotImage.color = baseColor;
     }
 
-    private void SetHighlight(bool isValid)
-    {
-        if (SlotImage == null) return;
-        SlotImage.color = isValid ? new Color(0.5f, 1f, 0.5f, 0.4f) : new Color(1f, 0.3f, 0.3f, 0.4f);
-    }
+    //private void SetHighlight(bool isValid)
+    //{
+    //    if (SlotImage == null) return;
+    //    SlotImage.color = isValid ? new Color(0.5f, 1f, 0.5f, 0.4f) : new Color(1f, 0.3f, 0.3f, 0.4f);
+    //}
 
     public DropResult TryAccept(DraggableItemController draggedItem, SlotController sourceSlot)
     {

@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 2368433}
   - component: {fileID: 2368432}
   m_Layer: 5
-  m_Name: HumanDeleterSlot
+  m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,13 +150,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 933695483}
+  - {fileID: 335302528}
   m_Father: {fileID: 1183807906}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -50}
-  m_SizeDelta: {x: 300, y: 200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1024, y: 256}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &2368432
 MonoBehaviour:
@@ -165,14 +165,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2368430}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0aecd588653590043972fb82838f3584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlotController
   RequiredType: 5
   categoryRestriction: 3
-  SlotImage: {fileID: 0}
   rectTransform: {fileID: 0}
 --- !u!114 &2368433
 MonoBehaviour:
@@ -195,7 +194,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: b9be536e535efb64385d143abb811d6b, type: 3}
-  m_Type: 2
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -677,15 +676,14 @@ MonoBehaviour:
   containerPrefab: {fileID: 1303498805825431328, guid: b782944dd3b188b4dbb61a84de5bd173, type: 3}
   containersParent: {fileID: 19164612}
   scoreText: {fileID: 2112430338}
+  CurrentDay: 1
+  karmaText: {fileID: 241921653}
   rewardForOne: 10
   rewardForTwo: 30
   rewardForThree: 50
-  karmaText: {fileID: 241921653}
   humanDeleterBaseCost: 5
   humanDeleterCostIncrease: 3
-  humanDeleterSlot: {fileID: 2368431}
-  humanDeleterPrefab: {fileID: 5327110970308714389, guid: b59f8a154c93b664082363a0272ed6e8, type: 3}
-  humanDeleterCostText: {fileID: 933695481}
+  knifeController: {fileID: 1183807907}
 --- !u!4 &78124485
 Transform:
   m_ObjectHideFlags: 0
@@ -1878,6 +1876,66 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &335302527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 335302528}
+  - component: {fileID: 335302530}
+  - component: {fileID: 335302529}
+  m_Layer: 5
+  m_Name: KnifeSlot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!224 &335302528
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335302527}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2368431}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 256, y: 256}
+  m_Pivot: {x: 0, y: 0.5}
+--- !u!114 &335302529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335302527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aecd588653590043972fb82838f3584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SlotController
+  RequiredType: 5
+  categoryRestriction: 3
+  rectTransform: {fileID: 0}
+--- !u!222 &335302530
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335302527}
+  m_CullTransparentMesh: 1
 --- !u!1 &389861156
 GameObject:
   m_ObjectHideFlags: 0
@@ -4669,7 +4727,7 @@ GameObject:
   - component: {fileID: 933695482}
   - component: {fileID: 933695481}
   m_Layer: 5
-  m_Name: KnifeKarmaCost
+  m_Name: KnifeKarmaCostText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4782,16 +4840,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 933695480}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2368431}
+  m_Father: {fileID: 1183807906}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 80}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 300, y: 64}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &959307618
@@ -5484,6 +5542,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1183807906}
+  - component: {fileID: 1183807908}
+  - component: {fileID: 1183807907}
   m_Layer: 5
   m_Name: KnifeSlot
   m_TagString: Untagged
@@ -5503,14 +5563,57 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 933695483}
   - {fileID: 2368431}
   m_Father: {fileID: 325605219}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 400}
+  m_SizeDelta: {x: 300, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1183807907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183807905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72c3e37c4d0a65c4c823737f2dafd565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KnifeController
+  knifeSlot: {fileID: 335302528}
+  knifePrefab: {fileID: 5327110970308714389, guid: b59f8a154c93b664082363a0272ed6e8, type: 3}
+  knifeCostText: {fileID: 933695481}
+  knifeUsedThisDay: 0
+--- !u!114 &1183807908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183807905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &1242183443
 GameObject:
   m_ObjectHideFlags: 0
@@ -6720,7 +6823,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SlotController
   RequiredType: 6
   categoryRestriction: 3
-  SlotImage: {fileID: 0}
   rectTransform: {fileID: 0}
 --- !u!114 &1529662644
 MonoBehaviour:
