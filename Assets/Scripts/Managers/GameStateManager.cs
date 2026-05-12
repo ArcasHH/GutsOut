@@ -15,11 +15,11 @@ public class GameStateManager : MonoBehaviour, IGameState
     private void Awake()
     {
         InitializeSingleton();
-        SubscribeDependencies();
     }
     private void Start()
     {
         EventBus.TriggerGameOpen();
+        StartGame();
     }
 
     private void Update()
@@ -37,15 +37,6 @@ public class GameStateManager : MonoBehaviour, IGameState
         {
             Destroy(gameObject);
         }
-    }
-
-    private void SubscribeDependencies()
-    {
-        EventBus.OnGameStart += StartGame;
-    }
-    private void UnsubscribeDependencies()
-    {
-        EventBus.OnGameStart -= StartGame;
     }
 
     public void StartGame()
@@ -98,6 +89,5 @@ public class GameStateManager : MonoBehaviour, IGameState
     private void OnDestroy()
     {
         Time.timeScale = 1f;
-        UnsubscribeDependencies();
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class SlotController : MonoBehaviour
 {
-    [Header("Настройки слота")]
+    [Header("Slot Settings")]
     public ItemType RequiredType = ItemType.None;
     [SerializeField] private CategoryType categoryRestriction = CategoryType.None;
 
@@ -56,7 +56,6 @@ public class SlotController : MonoBehaviour
         item.canvasGroup.alpha = 1f;
 
         EventBus.TriggerInventoryChanged();
-        EventBus.TriggerOrganStartDrag();
     }
 
     public void ClearItem()

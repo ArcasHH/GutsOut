@@ -31,41 +31,9 @@ public class OrganStatsSummarizer : MonoBehaviour
 
     private void Start()
     {
-        UpdateRequires();
         SetStats();
         CalculateStats();
 
-        SubscribeDependencies();
-    }
-
-    private void SubscribeDependencies()
-    {
-        EventBus.OnDayEnd += UpdateRequires;
-    }
-    private void UnsubscribeDependencies()
-    {
-        EventBus.OnDayEnd -= UpdateRequires;
-    }
-
-    private void UpdateRequires()
-    {
-        if (!isCollectionContainer)
-        {
-            DataManager.Instance.OnRequirementsChanged += OnRequirementsChanged;
-            UpdateStats();
-        }
-    }
-    private void OnRequirementsChanged(int reqStats, int downReqStats)
-    {
-        // Обновляем UI с новыми требованиями
-        UpdateStats();
-    }
-    private void UpdateStats()
-    {
-        if (isCollectionContainer) return;
-
-        //int reqStats = DataManager.Instance.CurrentReqStats;
-        //int downReqStats = DataManager.Instance.CurrentDownReqStats;
     }
     private void SetStats()
     {
@@ -119,10 +87,5 @@ public class OrganStatsSummarizer : MonoBehaviour
         {
             EventBus.TriggerCollectionHumanReady();
         }
-    }
-
-    private void OnDestroy()
-    {
-        UnsubscribeDependencies();
     }
 }

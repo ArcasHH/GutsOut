@@ -74,8 +74,7 @@ public abstract class DraggableItem : MonoBehaviour, IPointerDownHandler, IDragH
 
         canvasGroup.blocksRaycasts = false;
         canvasGroup.alpha = 0.85f;
-
-        EventBus.TriggerOrganStartDrag();
+        EventBus.TriggerInventoryChanged();
     }
 
     public virtual void OnEndDrag(PointerEventData eventData)
@@ -83,7 +82,6 @@ public abstract class DraggableItem : MonoBehaviour, IPointerDownHandler, IDragH
         if (!isDragging) return;
 
         AudioManager.Instance.PlaySound(AudioManager.SoundType.EndDragging);
-        EventBus.TriggerOrganStartDrag();
 
         canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1f;

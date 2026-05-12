@@ -41,17 +41,28 @@ public class DataManager : MonoBehaviour
             Destroy(gameObject);
         }
         SubscribeDependencies();
+        SetInitParams();
     }
 
     private void SubscribeDependencies()
     {
         EventBus.OnDayEnd += EndDay;
+        EventBus.OnGameStart += SetInitParams;
     }
     private void UnsubscribeDependencies()
     {
         EventBus.OnDayEnd -= EndDay;
+        EventBus.OnGameStart -= SetInitParams;
     }
 
+    private void SetInitParams()
+    {
+        totalKarma = 0;
+        knivesBought = 0;
+        currentDay = 1;
+        currentReqStats = Balance.startRec;
+        currentDownReqStats = 0;
+    }
     private void EndDay()
     {
         currentDay++;

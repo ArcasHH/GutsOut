@@ -61,6 +61,7 @@ public class GameSceneManager : MonoBehaviour
         //GetSceneName();
         Time.timeScale = 1;
         LoadScene("Game");
+        EventBus.TriggerGameOpen();
         EventBus.TriggerMenuOpen(false);
     }
 

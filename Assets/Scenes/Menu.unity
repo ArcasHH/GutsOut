@@ -1533,7 +1533,6 @@ MonoBehaviour:
   hardBalance: {fileID: 11400000, guid: 28fef650de4380c4c91294a41482ce15, type: 2}
   currentDifficulty: 1
   currentBalance: {fileID: 11400000, guid: 9fd770f48641ec4418a0215def5733c7, type: 2}
-  totalKarma: 0
   knivesBought: 0
 --- !u!4 &1156167008
 Transform:

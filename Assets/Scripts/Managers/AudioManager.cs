@@ -100,13 +100,13 @@ public class AudioManager : MonoBehaviour
 
     void SubscribeDependencies()
     {
-        EventBus.OnGameOpen += HandleGameStart;
+        EventBus.OnGameStart += HandleGameStart;
         EventBus.OnMenuOpen += HandleMenuOpen;
     }
 
     void UnsubscribeDependencies()
     {
-        EventBus.OnGameOpen -= HandleGameStart;
+        EventBus.OnGameStart -= HandleGameStart;
         EventBus.OnMenuOpen -= HandleMenuOpen;
     }
 

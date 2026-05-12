@@ -23,12 +23,12 @@ public class HumanCollectioned : MonoBehaviour
     private void SubscribeDependencies()
     {
         EventBus.OnCollectionHumanReady += HumanReady;
-        EventBus.OnOrganStartDrag += HumanReady;
+        EventBus.OnInventoryChanged += HumanReady;
     }
     private void UnsubscribeDependencies()
     {
         EventBus.OnCollectionHumanReady -= HumanReady;
-        EventBus.OnOrganStartDrag -= HumanReady;
+        EventBus.OnInventoryChanged -= HumanReady;
     }
 
     private void HumanReady()

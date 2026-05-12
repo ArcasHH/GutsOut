@@ -9,14 +9,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject gameUI;
 
-    private void Awake()
-    {
-        //Perhaps it can be fixed correctly
-         // for for dependent objects, Awake() and Start() are called when they become active. to subscribe dependencies and be correctly invoked via System.Action (EventBus) they need to be initialized. 
-        SubscribeDependencies();
-    }
     private void Start()
     {
+        SubscribeDependencies();
         pausePanel.SetActive(false);
         gameUI.SetActive(true);
     }

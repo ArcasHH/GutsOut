@@ -5,8 +5,7 @@ using UnityEngine.InputSystem.LowLevel;
 public static class EventBus
 {
     //Common
-    public static event Action OnGameStart;
-    public static event Action OnGameOpen; //open game scene
+    public static event Action OnGameStart; //open game scene
     public static event Action OnGameEnd;
 
     public static event Action<bool> OnGamePaused;
@@ -17,11 +16,11 @@ public static class EventBus
     public static Action OnSacrificedButtonPressed;
 
     public static Action OnDayEnd;
-    public static Action OnOrganStartDrag;
+
 
     //Common
-    public static void TriggerGameStart() => OnGameStart?.Invoke();
-    public static void TriggerGameOpen() => OnGameOpen?.Invoke();
+
+    public static void TriggerGameOpen() => OnGameStart?.Invoke();
     public static void TriggerGameEnd() => OnGameEnd?.Invoke();
 
 
@@ -32,14 +31,12 @@ public static class EventBus
     public static void TriggerCollectionHumanReady() => OnCollectionHumanReady?.Invoke();
     public static void TriggerSacrificedButtonPressed() => OnSacrificedButtonPressed?.Invoke();
     public static void TriggerDayEnd() => OnDayEnd?.Invoke();
-    public static void TriggerOrganStartDrag() => OnOrganStartDrag?.Invoke();
 
 
     public static void ClearAllSubscriptions()
     {
         //Common
         OnGameStart = null;
-        OnGameOpen = null;
         OnGameEnd = null;
 
         OnGamePaused = null;
@@ -49,6 +46,5 @@ public static class EventBus
         OnCollectionHumanReady = null;
         OnSacrificedButtonPressed = null;
         OnDayEnd = null;
-        OnOrganStartDrag = null;
     }
 }

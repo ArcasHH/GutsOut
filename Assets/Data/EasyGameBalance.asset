@@ -27,6 +27,7 @@ MonoBehaviour:
   humanDeleterCostIncrease: 1
   startRec: 3
   mulDay: 0.08
+  pow: 1.2
   divLowReq: 5
   baseReqEditor: 0
   typeReqEditor: 1
