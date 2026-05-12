@@ -19,6 +19,8 @@ public class DataManager : MonoBehaviour
     public int knivesBought;
     public int currentDay;
 
+    public Difficulty GetCurrentDifficulty() => currentDifficulty;
+
     private void Awake()
     {
         if (Instance == null)
@@ -56,8 +58,6 @@ public class DataManager : MonoBehaviour
                 currentBalance = hardBalance;
                 break;
         }
-
-        Debug.Log($"Difficulty changed to {newDifficulty}");
 
         OnDifficultyChanged?.Invoke(newDifficulty);
     }
