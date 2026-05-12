@@ -7,7 +7,6 @@ public class DayPanelController : MonoBehaviour
     [SerializeField] private TMP_Text dayCounterText;
     [SerializeField] private Button dayButton;
 
-    //private int curr_day;
 
     void Start()
     {
@@ -16,7 +15,6 @@ public class DayPanelController : MonoBehaviour
         if (dayButton != null)
             dayButton.onClick.AddListener(ClickDayButton);
 
-        //curr_day = 1;
         UpdateDayCounter();
         dayButton.interactable = false;//the first animations will give a signal when
     }
@@ -32,7 +30,6 @@ public class DayPanelController : MonoBehaviour
 
     private void UpdateDayCounter()
     {
-        //GameManager.Instance.SetCurrentDay(curr_day);
         if (dayCounterText != null)
         {
             dayCounterText.text = $"Day {DataManager.Instance.currentDay}";

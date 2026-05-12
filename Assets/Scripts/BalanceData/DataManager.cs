@@ -15,9 +15,15 @@ public class DataManager : MonoBehaviour
     [SerializeField] private GameBalance currentBalance;
 
     [Header("Game Data")]
-    public int totalKarma;
+    public int totalKarma { get; private set; }
     public int knivesBought;
     public int currentDay { get; private set; } = 1;
+
+    public int currentReqStats { get; private set; }
+    public int currentDownReqStats { get; private set; } = 0;
+    public System.Action<int, int> OnRequirementsChanged;
+    public System.Action<Difficulty> OnDifficultyChanged;
+
     public Difficulty GetCurrentDifficulty() => currentDifficulty;
 
     private void Awake()
@@ -28,6 +34,7 @@ public class DataManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             LoadSettings();
             SetDifficulty(currentDifficulty);
+            UpdateRequirements();
         }
         else
         {
@@ -48,6 +55,7 @@ public class DataManager : MonoBehaviour
     private void EndDay()
     {
         currentDay++;
+        UpdateRequirements();
     }
     public void AddScore(int score)
     {
@@ -80,8 +88,21 @@ public class DataManager : MonoBehaviour
         OnDifficultyChanged?.Invoke(newDifficulty);
     }
 
-    public System.Action<Difficulty> OnDifficultyChanged;
+    
+    public void UpdateRequirements()
+    {
+        if (currentBalance == null) return;
 
+        var (req, downReq) = currentBalance.CalculateRequirements(currentDay);
+        currentReqStats = req;
+        currentDownReqStats = downReq;
+
+        OnRequirementsChanged?.Invoke(currentReqStats, currentDownReqStats);
+
+#if UNITY_EDITOR
+        Debug.Log($"Day {currentDay}: Requirements updated - {currentReqStats} / {currentDownReqStats}");
+#endif
+    }
     public float GetDropChance(QualityType rarity) => currentBalance.GetDropChance(rarity);
     public int GetRewardForKarma(int count) => currentBalance.GetRewardByKarmaCount(count);
     public int GetKnifeBaseCost() => currentBalance.humanDeleterBaseCost;
@@ -128,6 +149,7 @@ public static class Balance
 
     public static int StartRec => DataManager.Balance.startRec;
     public static float MulDay => DataManager.Balance.mulDay;
+    public static float Pow => DataManager.Balance.pow;
     public static float DivLowReq => DataManager.Balance.divLowReq;
 
     public static int GetBaseReq() => DataManager.Balance.GetBaseReq();

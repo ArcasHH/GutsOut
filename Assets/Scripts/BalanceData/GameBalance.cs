@@ -27,6 +27,7 @@ public class GameBalance : ScriptableObject
     [Header("Player Needs")]
     public int startRec = 4;
     public float mulDay = 0.08f;
+    public float pow = 1.5f;
     public float divLowReq = 4f;
 
     [Header("Production (Editor vs Release)")]
@@ -51,6 +52,17 @@ public class GameBalance : ScriptableObject
 #else
             return typeReqRelease;
 #endif
+    }
+
+    public (int reqStats, int downReqStats) CalculateRequirements(int currentDay)
+    {
+        float curr_day = (float)currentDay;
+
+        float dayFactor = Mathf.Pow(curr_day, pow);
+        int reqStats = (int)(startRec + mulDay * dayFactor);
+        int downReqStats = (int)(reqStats / divLowReq);
+
+        return (reqStats, downReqStats);
     }
 
     public float GetDropChance(QualityType rarity)

@@ -14,8 +14,7 @@ public class OrganStatsSummarizer : MonoBehaviour
 
     public bool IsFulfilled => TotalMind >= ReqMind && TotalSoul >= ReqSoul && TotalBody >= ReqBody;
 
-    private int reqStats;
-    private int down_reqStats = 0;
+
 
     [Header("Container Type")]
     [SerializeField] private bool isCollectionContainer = false;
@@ -32,8 +31,6 @@ public class OrganStatsSummarizer : MonoBehaviour
 
     private void Start()
     {
-        reqStats = Balance.StartRec;
-
         UpdateRequires();
         SetStats();
         CalculateStats();
@@ -54,10 +51,21 @@ public class OrganStatsSummarizer : MonoBehaviour
     {
         if (!isCollectionContainer)
         {
-            float curr_day = (float)DataManager.Instance.currentDay;
-            reqStats = (int)((float)Balance.StartRec + Balance.MulDay * (curr_day * Mathf.Sqrt(curr_day)));
-            down_reqStats = (int)(reqStats / Balance.DivLowReq);
+            DataManager.Instance.OnRequirementsChanged += OnRequirementsChanged;
+            UpdateStats();
         }
+    }
+    private void OnRequirementsChanged(int reqStats, int downReqStats)
+    {
+        // Обновляем UI с новыми требованиями
+        UpdateStats();
+    }
+    private void UpdateStats()
+    {
+        if (isCollectionContainer) return;
+
+        //int reqStats = DataManager.Instance.CurrentReqStats;
+        //int downReqStats = DataManager.Instance.CurrentDownReqStats;
     }
     private void SetStats()
     {
@@ -89,6 +97,8 @@ public class OrganStatsSummarizer : MonoBehaviour
     }
     public void RandomRequireStats()
     {
+        int down_reqStats = DataManager.Instance.currentReqStats;
+        int reqStats = DataManager.Instance.currentDownReqStats;
         ReqMind = Random.Range(down_reqStats, reqStats);
         ReqSoul = Random.Range(down_reqStats, reqStats);
         ReqBody = Random.Range(down_reqStats, reqStats);
