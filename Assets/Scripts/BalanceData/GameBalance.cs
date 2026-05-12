@@ -15,6 +15,14 @@ public class GameBalance : ScriptableObject
     public float epicBase = 0.08f;
     public float legendaryBase = 0.01f;
 
+    public float cursedMul = 0.02f;
+    public float badMul = 0.01f;
+    public float ordinaryMul = 0.005f;
+    public float goodMul = 0.01f;
+    public float rareMul = 0.02f;
+    public float epicMul = 0.025f;
+    public float legendaryMul = 0.03f;
+
     [Header("Karma Rewards (per day)")]
     public int rewardForOne = 10;
     public int rewardForTwo = 30;
@@ -65,7 +73,7 @@ public class GameBalance : ScriptableObject
         return (reqStats, downReqStats);
     }
 
-    public float GetDropChance(QualityType rarity)
+    public float GetDropChanceBase(QualityType rarity)
     {
         switch (rarity)
         {
@@ -79,21 +87,36 @@ public class GameBalance : ScriptableObject
             default: return 0;
         }
     }
+    public float GetDropChanceMul(QualityType rarity)
+    {
+        switch (rarity)
+        {
+            case QualityType.Cursed: return cursedMul;
+            case QualityType.Bad: return badMul;
+            case QualityType.Ordinary: return ordinaryMul;
+            case QualityType.Good: return goodMul;
+            case QualityType.Rare: return rareMul;
+            case QualityType.Epic: return epicMul;
+            case QualityType.Legendary: return legendaryMul;
+            default: return 0;
+        }
+    }
     public float GetWeightWithDayCoef(QualityType quality, float currentDay)
     {
-        float baseWeight = GetDropChance(quality);
-        float dayBonus = dayMulCoef * currentDay;
-        return baseWeight + dayBonus;
+        float baseWeight = GetDropChanceBase(quality);
+        float mulWeight = GetDropChanceMul(quality);
+        return baseWeight + mulWeight * currentDay;
     }
 
     public Dictionary<QualityType, float> GetAllWeightsWithDayCoef(float currentDay)
     {
-        float coef = dayMulCoef * currentDay;
+        
         var weights = new Dictionary<QualityType, float>();
 
         foreach (QualityType quality in System.Enum.GetValues(typeof(QualityType)))
         {
-            weights[quality] = GetDropChance(quality) + coef;
+            float coef = GetDropChanceMul(quality) * currentDay;
+            weights[quality] = GetDropChanceBase(quality) + coef;
         }
         return weights;
     }

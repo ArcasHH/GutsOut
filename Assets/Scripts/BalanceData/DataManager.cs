@@ -114,7 +114,8 @@ public class DataManager : MonoBehaviour
         Debug.Log($"Day {currentDay}: Requirements updated - {currentReqStats} / {currentDownReqStats}");
 #endif
     }
-    public float GetDropChance(QualityType rarity) => currentBalance.GetDropChance(rarity);
+    public float GetDropChanceBase(QualityType rarity) => currentBalance.GetDropChanceBase(rarity);
+    public float GetDropChanceMul(QualityType rarity) => currentBalance.GetDropChanceMul(rarity);
     public int GetRewardForKarma(int count) => currentBalance.GetRewardByKarmaCount(count);
     public int GetKnifeBaseCost() => currentBalance.humanDeleterBaseCost;
     public int GetKnifeCostIncrease() => currentBalance.humanDeleterCostIncrease;
@@ -165,7 +166,8 @@ public static class Balance
 
     public static int GetBaseReq() => DataManager.Balance.GetBaseReq();
     public static int GetTypeReq() => DataManager.Balance.GetTypeReq();
-    public static float GetDropChance(QualityType rarity) => DataManager.Balance.GetDropChance(rarity);
+    public static float GetDropChanceBase(QualityType rarity) => DataManager.Balance.GetDropChanceBase(rarity);
+    public static float GetDropChanceMul(QualityType rarity) => DataManager.Balance.GetDropChanceMul(rarity);
     public static float GetWeightWithDayCoef(QualityType quality, float currentDay) => DataManager.Balance.GetWeightWithDayCoef(quality, currentDay);
     public static int GetRewardByKarmaCount(int count) => DataManager.Balance.GetRewardByKarmaCount(count);
     public static Dictionary<QualityType, float> GetAllWeightsWithDayCoef(float currentDay) => DataManager.Balance.GetAllWeightsWithDayCoef(currentDay);
