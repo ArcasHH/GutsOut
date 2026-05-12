@@ -660,7 +660,6 @@ MonoBehaviour:
   containerPrefab: {fileID: 1303498805825431328, guid: b782944dd3b188b4dbb61a84de5bd173, type: 3}
   containersParent: {fileID: 19164612}
   scoreText: {fileID: 2112430338}
-  CurrentDay: 1
   karmaText: {fileID: 241921653}
   rewardForOne: 10
   rewardForTwo: 30

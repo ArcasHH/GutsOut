@@ -32,7 +32,7 @@ public class DayPanelController : MonoBehaviour
 
     private void UpdateDayCounter()
     {
-        DayManager.Instance.SetCurrentDay(curr_day);
+        GameManager.Instance.SetCurrentDay(curr_day);
         if (dayCounterText != null)
         {
             dayCounterText.text = $"Day {curr_day}";
@@ -41,7 +41,7 @@ public class DayPanelController : MonoBehaviour
 
     private void ClickDayButton()
     {
-        if (DayManager.Instance.IsHumanAnimation())
+        if (GameManager.Instance.IsHumanAnimation())
             return;
 
         curr_day++;
@@ -51,7 +51,7 @@ public class DayPanelController : MonoBehaviour
     }
     private void RequestStatsUpdate()
     {
-        dayButton.interactable = DayManager.Instance.GetStatsUpdate(); // return true if any reward karmma gain > 0, else false
+        dayButton.interactable = GameManager.Instance.GetStatsUpdate(); // return true if any reward karmma gain > 0, else false
     }
 
     private void OnDestroy()

@@ -22,8 +22,8 @@ public class KnifeItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
         outline = GetComponent<Outline>();
         HideOutline();
         
-        currentKnifeCost = DayManager.Instance.humanDeleterBaseCost;
-        knifeCostIncrease = DayManager.Instance.humanDeleterCostIncrease;
+        currentKnifeCost = GameManager.Instance.humanDeleterBaseCost;
+        knifeCostIncrease = GameManager.Instance.humanDeleterCostIncrease;
         parentController.UpdateKnifeUI(currentKnifeCost);
     }
 
@@ -45,7 +45,7 @@ public class KnifeItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
     {
         if (dropTarget == null) return false;
 
-        bool is_kill = DayManager.Instance.KillTargetHuman(dropTarget, currentKnifeCost);
+        bool is_kill = GameManager.Instance.KillTargetHuman(dropTarget, currentKnifeCost);
         if (is_kill)
             UpdateKnifeCost();
         return is_kill;
@@ -60,7 +60,7 @@ public class KnifeItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
     
     private void ShowOutline()
     {
-        if (DayManager.Instance.TotalScore < currentKnifeCost)
+        if (GameManager.Instance.TotalScore < currentKnifeCost)
         {
             return;
         }

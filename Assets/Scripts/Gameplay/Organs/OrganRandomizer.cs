@@ -45,6 +45,14 @@ public class OrganRandomizer : MonoBehaviour
 
     private const float day_mul_coef = 0.01f;
 
+    private const float cursed_base = 0.2f;
+    private const float bad_base = 0.5f;
+    private const float ordinary_base = 1f;
+    private const float good_base = 0.5f;
+    private const float rare_base = 0.2f;
+    private const float epic_base = 0.08f;
+    private const float legendary_base = 0.01f;
+
     private void Initialize()
     {
         if (isInitialized) return;
@@ -150,17 +158,17 @@ public class OrganRandomizer : MonoBehaviour
 
     private void SetQualityWeights()
     {
-        float curr_day = DayManager.Instance.CurrentDay;
+        float curr_day = GameManager.Instance.CurrentDay;
         float coef = day_mul_coef * curr_day;
         qualityWeights = new List<QualityWeight>()
         {
-            new QualityWeight() { quality = QualityType.Cursed, weight = 0.2f + coef},
-            new QualityWeight() { quality = QualityType.Bad, weight = 0.5f  + coef },
-            new QualityWeight() { quality = QualityType.Ordinary, weight = 1f  + coef},
-            new QualityWeight() { quality = QualityType.Good, weight = 0.5f  + coef },
-            new QualityWeight() { quality = QualityType.Rare, weight = 0.2f  + coef },
-            new QualityWeight() { quality = QualityType.Legendary, weight = 0.08f  + coef },
-            new QualityWeight() { quality = QualityType.Epic, weight = 0.01f  + coef }
+            new QualityWeight() { quality = QualityType.Cursed, weight = cursed_base + coef},
+            new QualityWeight() { quality = QualityType.Bad, weight = bad_base  + coef },
+            new QualityWeight() { quality = QualityType.Ordinary, weight = ordinary_base  + coef},
+            new QualityWeight() { quality = QualityType.Good, weight = good_base  + coef },
+            new QualityWeight() { quality = QualityType.Rare, weight = rare_base  + coef },
+            new QualityWeight() { quality = QualityType.Epic, weight = epic_base  + coef },
+            new QualityWeight() { quality = QualityType.Legendary, weight = legendary_base  + coef }
         };
         CalculateQualityProbabilities();
     }

@@ -66,7 +66,8 @@ public class OrganStatsSummarizer : MonoBehaviour
     {
         if (!isCollectionContainer)
         {
-            reqStats = (int)((float)startRec + mul_day * (float)(DayManager.Instance.CurrentDay * Mathf.Sqrt(DayManager.Instance.CurrentDay)));
+            float curr_day = (float)GameManager.Instance.CurrentDay;
+            reqStats = (int)((float)startRec + mul_day * (curr_day * Mathf.Sqrt(curr_day)));
             down_reqStats = (int)(reqStats / div_low_req);
         }
     }
