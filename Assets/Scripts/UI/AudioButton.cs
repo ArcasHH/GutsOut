@@ -26,7 +26,7 @@ public class AudioButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         if (button == null)
         {
             enabled = false;
-            Debug.LogError($"AudioButton: Button component not found on {gameObject.name}", gameObject);
+            //Debug.LogError($"AudioButton: Button component not found on {gameObject.name}", gameObject);
             return;
         }
 
@@ -38,7 +38,7 @@ public class AudioButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
     private void OnButtonClick()
     {
-        Debug.Log($"[AudioButton] Clicked: {action} on {gameObject.name}");
+        //Debug.Log($"[AudioButton] Clicked: {action} on {gameObject.name}");
 
         switch (action)
         {

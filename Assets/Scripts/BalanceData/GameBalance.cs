@@ -83,7 +83,6 @@ public class GameBalance : ScriptableObject
         {
             weights[quality] = GetDropChance(quality) + coef;
         }
-
         return weights;
     }
 

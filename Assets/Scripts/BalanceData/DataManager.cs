@@ -17,8 +17,7 @@ public class DataManager : MonoBehaviour
     [Header("Game Data")]
     public int totalKarma;
     public int knivesBought;
-    public int currentDay;
-
+    public int currentDay { get; private set; } = 1;
     public Difficulty GetCurrentDifficulty() => currentDifficulty;
 
     private void Awake()
@@ -34,6 +33,25 @@ public class DataManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        SubscribeDependencies();
+    }
+
+    private void SubscribeDependencies()
+    {
+        EventBus.OnDayEnd += EndDay;
+    }
+    private void UnsubscribeDependencies()
+    {
+        EventBus.OnDayEnd -= EndDay;
+    }
+
+    private void EndDay()
+    {
+        currentDay++;
+    }
+    public void AddScore(int score)
+    {
+        totalKarma += score;
     }
 
     private void LoadSettings()
@@ -75,6 +93,11 @@ public class DataManager : MonoBehaviour
     public static int RewardForTwo => Instance.currentBalance.rewardForTwo;
     public static int RewardForThree => Instance.currentBalance.rewardForThree;
     public static float CursedBase => Instance.currentBalance.cursedBase;
+
+    private void OnDestroy()
+    {
+        UnsubscribeDependencies();
+    }
 }
 
 public enum Difficulty

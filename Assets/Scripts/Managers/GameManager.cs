@@ -14,15 +14,11 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private TMP_Text scoreText;
-
-    public int CurrentDay { get; private set; } = 1;
-    public int TotalScore { get; private set; } = 0;
-
     [SerializeField] private TMP_Text karmaText;
+    
 
     [SerializeField] private GameObject[] HumansContainers;
     public static GameManager Instance { get; private set; }
-    public void SetCurrentDay(int day) => CurrentDay = day;
 
 
     private void Awake()
@@ -61,41 +57,9 @@ public class GameManager : MonoBehaviour
     {
         RequestRewardUpdate();
     }
-    public bool RequestStatsReady()
-    {
-        return RequestRewardUpdate();
-    }
     public bool GetStatsUpdate()
     {
         return RequestRewardUpdate();
-    }
-
-    private bool RequestRewardUpdate()
-    {
-        int anyFulfilled = 0;
-        var summarizers = containersParent.GetComponentsInChildren<OrganStatsSummarizer>(true);
-
-        foreach (var s in summarizers)
-        {
-            if (s == null || !s.gameObject.activeInHierarchy) continue;
-            if (s.IsCollection) continue;
-
-            s.CalculateStats();
-            if (s.IsFulfilled)
-            {
-                anyFulfilled++;
-            }
-        }
-        int expectedReward = anyFulfilled >= 3 ? Balance.RewardForThree :
-                            anyFulfilled == 2 ? Balance.RewardForTwo :
-                            anyFulfilled == 1 ? Balance.RewardForOne : 0;
-
-        if (karmaText != null)
-        {
-            karmaText.text = $"karma gain: {expectedReward}";
-        }
-
-        return anyFulfilled > 0;
     }
 
     public void EndDay()
@@ -103,42 +67,59 @@ public class GameManager : MonoBehaviour
         AudioManager.Instance.PlaySound(AudioManager.SoundType.EndDay);
         ProcessDayCycle();
     }
-
     private void ProcessDayCycle()
     {
+        int replacedCount = ProcessAndCountFulfilledContainers(replaceContainers: true);
+        DataManager.Instance.AddScore(Balance.GetRewardByKarmaCount(replacedCount));
+        UpdateUI();
+    }
+    private bool RequestRewardUpdate()
+    {
+        int toReplace = ProcessAndCountFulfilledContainers(replaceContainers: false);
+
+        if (karmaText != null)
+        {
+            karmaText.text = $"karma gain: {Balance.GetRewardByKarmaCount(toReplace)}";
+        }
+        return toReplace > 0;
+    }
+    private int ProcessAndCountFulfilledContainers(bool replaceContainers)
+    {
         var summarizers = containersParent.GetComponentsInChildren<OrganStatsSummarizer>(true);
-        var toReplace = new List<GameObject>();
+        var fulfilledContainers = new List<GameObject>();
 
         foreach (var s in summarizers)
         {
             if (s == null || !s.gameObject.activeInHierarchy) continue;
             if (s.IsCollection) continue;
+
             s.CalculateStats();
-            if (s.IsFulfilled) toReplace.Add(s.gameObject);
+
+            if (s.IsFulfilled)
+            {
+                fulfilledContainers.Add(s.gameObject);
+            }
         }
 
-        int replacedCount = toReplace.Count;
+        if (replaceContainers)
+        {
+            foreach (var container in fulfilledContainers)
+            {
+                ReplaceContainer(container);
+            }
+        }
 
-        foreach (var old in toReplace)
-            ReplaceContainer(old);
-
-        int dailyReward = replacedCount >= 3 ? Balance.RewardForThree :
-                          replacedCount == 2 ? Balance.RewardForTwo :
-                          replacedCount == 1 ? Balance.RewardForOne : 0;
-
-        TotalScore += dailyReward;
-        UpdateUI();
-
+        return fulfilledContainers.Count;
     }
 
     public bool KillTargetHuman(GameObject dropTarget, int knifeCost)
     {
         GameObject containerRoot = FindContainerRoot(dropTarget);
-        if (TotalScore < knifeCost || containerRoot == null)
+        if (DataManager.Instance.totalKarma < knifeCost || containerRoot == null)
         {
             return false;
         }
-        TotalScore -= knifeCost;
+        DataManager.Instance.AddScore(- knifeCost);
         UpdateUI();
         ReplaceContainer(containerRoot);
 
@@ -184,7 +165,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateUI()
     {
-        if (scoreText != null) scoreText.text = $"Karma: {TotalScore}";
+        if (scoreText != null) scoreText.text = $"Karma: {DataManager.Instance.totalKarma}";
     }
 
     private void OnDestroy()

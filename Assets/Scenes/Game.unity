@@ -661,11 +661,6 @@ MonoBehaviour:
   containersParent: {fileID: 19164612}
   scoreText: {fileID: 2112430338}
   karmaText: {fileID: 241921653}
-  rewardForOne: 10
-  rewardForTwo: 30
-  rewardForThree: 50
-  humanDeleterBaseCost: 5
-  humanDeleterCostIncrease: 3
   HumansContainers:
   - {fileID: 633894158}
   - {fileID: 1731216533}

@@ -42,14 +42,6 @@ public class OrganRandomizer : MonoBehaviour
     }
     private bool isInitialized = false;
 
-    private const float cursed_base = 0.2f;
-    private const float bad_base = 0.5f;
-    private const float ordinary_base = 1f;
-    private const float good_base = 0.5f;
-    private const float rare_base = 0.2f;
-    private const float epic_base = 0.08f;
-    private const float legendary_base = 0.01f;
-
     private void Initialize()
     {
         if (isInitialized) return;
@@ -58,8 +50,6 @@ public class OrganRandomizer : MonoBehaviour
         SetQualityWeights();
         CalculateQualityProbabilities();
         isInitialized = true;
-
-        //Debug.Log("OrganRandomizer initialized manually");
 
         SubscribeDependencies();
         
@@ -155,7 +145,7 @@ public class OrganRandomizer : MonoBehaviour
 
     private void SetQualityWeights()
     {
-        float currentDay = GameManager.Instance.CurrentDay;
+        float currentDay = DataManager.Instance.currentDay;
 
         qualityWeights = new List<QualityWeight>();
         foreach (QualityType quality in System.Enum.GetValues(typeof(QualityType)))

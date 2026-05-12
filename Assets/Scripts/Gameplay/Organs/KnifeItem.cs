@@ -61,7 +61,7 @@ public class KnifeItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
     
     private void ShowOutline()
     {
-        if (GameManager.Instance.TotalScore < currentKnifeCost)
+        if (DataManager.Instance.totalKarma < currentKnifeCost)
         {
             return;
         }
