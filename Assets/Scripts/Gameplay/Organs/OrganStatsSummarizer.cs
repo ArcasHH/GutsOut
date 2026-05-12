@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class OrganStatsSummarizer : MonoBehaviour
@@ -12,20 +13,6 @@ public class OrganStatsSummarizer : MonoBehaviour
     public int ReqBody { get; private set; }
 
     public bool IsFulfilled => TotalMind >= ReqMind && TotalSoul >= ReqSoul && TotalBody >= ReqBody;
-
-    // Collection Needs
-#if UNITY_EDITOR
-    private int base_req = 1;
-    private int type_req = 2;
-#else
-    private int base_req = 10;
-    private int type_req = 20;
-#endif
-
-    //Parameters of needs
-    private const int startRec = 4;
-    private const float mul_day = 0.08f;
-    private const float div_low_req = 4f;
 
     private int reqStats;
     private int down_reqStats = 0;
@@ -45,7 +32,8 @@ public class OrganStatsSummarizer : MonoBehaviour
 
     private void Start()
     {
-        reqStats = startRec;
+        reqStats = Balance.StartRec;
+
         UpdateRequires();
         SetStats();
         CalculateStats();
@@ -67,14 +55,16 @@ public class OrganStatsSummarizer : MonoBehaviour
         if (!isCollectionContainer)
         {
             float curr_day = (float)GameManager.Instance.CurrentDay;
-            reqStats = (int)((float)startRec + mul_day * (curr_day * Mathf.Sqrt(curr_day)));
-            down_reqStats = (int)(reqStats / div_low_req);
+            reqStats = (int)((float)Balance.StartRec + Balance.MulDay * (curr_day * Mathf.Sqrt(curr_day)));
+            down_reqStats = (int)(reqStats / Balance.DivLowReq);
         }
     }
     private void SetStats()
     {
         if (IsCollection)
         {
+            int base_req = Balance.GetBaseReq();
+            int type_req = Balance.GetTypeReq();
             ReqMind = base_req;
             ReqSoul = base_req;
             ReqBody = base_req;

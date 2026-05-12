@@ -22,8 +22,9 @@ public class KnifeItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
         outline = GetComponent<Outline>();
         HideOutline();
         
-        currentKnifeCost = GameManager.Instance.humanDeleterBaseCost;
-        knifeCostIncrease = GameManager.Instance.humanDeleterCostIncrease;
+        currentKnifeCost = Balance.KnifeBaseCost;
+        knifeCostIncrease = Balance.KnifeCostIncrease;
+
         parentController.UpdateKnifeUI(currentKnifeCost);
     }
 

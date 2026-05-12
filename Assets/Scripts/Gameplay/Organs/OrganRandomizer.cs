@@ -42,9 +42,6 @@ public class OrganRandomizer : MonoBehaviour
     }
     private bool isInitialized = false;
 
-
-    private const float day_mul_coef = 0.01f;
-
     private const float cursed_base = 0.2f;
     private const float bad_base = 0.5f;
     private const float ordinary_base = 1f;
@@ -158,18 +155,18 @@ public class OrganRandomizer : MonoBehaviour
 
     private void SetQualityWeights()
     {
-        float curr_day = GameManager.Instance.CurrentDay;
-        float coef = day_mul_coef * curr_day;
-        qualityWeights = new List<QualityWeight>()
+        float currentDay = GameManager.Instance.CurrentDay;
+
+        qualityWeights = new List<QualityWeight>();
+        foreach (QualityType quality in System.Enum.GetValues(typeof(QualityType)))
         {
-            new QualityWeight() { quality = QualityType.Cursed, weight = cursed_base + coef},
-            new QualityWeight() { quality = QualityType.Bad, weight = bad_base  + coef },
-            new QualityWeight() { quality = QualityType.Ordinary, weight = ordinary_base  + coef},
-            new QualityWeight() { quality = QualityType.Good, weight = good_base  + coef },
-            new QualityWeight() { quality = QualityType.Rare, weight = rare_base  + coef },
-            new QualityWeight() { quality = QualityType.Epic, weight = epic_base  + coef },
-            new QualityWeight() { quality = QualityType.Legendary, weight = legendary_base  + coef }
-        };
+            qualityWeights.Add(new QualityWeight()
+            {
+                quality = quality,
+                weight = Balance.GetWeightWithDayCoef(quality, currentDay)
+            });
+        }
+
         CalculateQualityProbabilities();
     }
 

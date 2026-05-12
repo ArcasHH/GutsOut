@@ -20,15 +20,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private TMP_Text karmaText;
 
-    [Header("KarmaPerDay")]
-    [SerializeField] private int rewardForOne = 10;
-    [SerializeField] private int rewardForTwo = 30;
-    [SerializeField] private int rewardForThree = 50;
-
-    [Header("KnifeCost")]
-    public int humanDeleterBaseCost = 5; // just to set cost in this script
-    public int humanDeleterCostIncrease = 3;
-
     [SerializeField] private GameObject[] HumansContainers;
     public static GameManager Instance { get; private set; }
     public void SetCurrentDay(int day) => CurrentDay = day;
@@ -95,9 +86,9 @@ public class GameManager : MonoBehaviour
                 anyFulfilled++;
             }
         }
-        int expectedReward = anyFulfilled >= 3 ? rewardForThree:
-                            anyFulfilled == 2 ? rewardForTwo:
-                            anyFulfilled == 1 ? rewardForOne : 0;
+        int expectedReward = anyFulfilled >= 3 ? Balance.RewardForThree :
+                            anyFulfilled == 2 ? Balance.RewardForTwo :
+                            anyFulfilled == 1 ? Balance.RewardForOne : 0;
 
         if (karmaText != null)
         {
@@ -131,9 +122,9 @@ public class GameManager : MonoBehaviour
         foreach (var old in toReplace)
             ReplaceContainer(old);
 
-        int dailyReward = replacedCount >= 3 ? rewardForThree :
-                          replacedCount == 2 ? rewardForTwo :
-                          replacedCount == 1 ? rewardForOne : 0;
+        int dailyReward = replacedCount >= 3 ? Balance.RewardForThree :
+                          replacedCount == 2 ? Balance.RewardForTwo :
+                          replacedCount == 1 ? Balance.RewardForOne : 0;
 
         TotalScore += dailyReward;
         UpdateUI();
