@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73322b2357e045c41a0b839961718167, type: 3}
   m_Name: EasyGameBalance
   m_EditorClassIdentifier: Assembly-CSharp::GameBalance
-  dayMulCoef: 0.01
+  dayMulCoef: 0.03
   cursedBase: 0.1
   badBase: 0.4
   ordinaryBase: 0.8
   goodBase: 0.4
   rareBase: 0.2
-  epicBase: 0.08
-  legendaryBase: 0.01
+  epicBase: 0.1
+  legendaryBase: 0.04
   rewardForOne: 10
   rewardForTwo: 30
   rewardForThree: 50

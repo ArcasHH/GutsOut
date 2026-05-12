@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameBalance
   dayMulCoef: 0.01
   cursedBase: 0.3
-  badBase: 0.5
+  badBase: 0.4
   ordinaryBase: 0.8
-  goodBase: 0.5
-  rareBase: 0.2
+  goodBase: 0.6
+  rareBase: 0.12
   epicBase: 0.05
   legendaryBase: 0.01
   rewardForOne: 10
@@ -27,7 +27,7 @@ MonoBehaviour:
   humanDeleterCostIncrease: 3
   startRec: 4
   mulDay: 0.1
-  pow: 1.8
+  pow: 1.4
   divLowReq: 3
   baseReqEditor: 2
   typeReqEditor: 4

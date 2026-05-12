@@ -12,21 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73322b2357e045c41a0b839961718167, type: 3}
   m_Name: NormalGameBalance
   m_EditorClassIdentifier: Assembly-CSharp::GameBalance
-  dayMulCoef: 0.01
+  dayMulCoef: 0.02
   cursedBase: 0.2
   badBase: 0.5
-  ordinaryBase: 1
+  ordinaryBase: 0.9
   goodBase: 0.5
-  rareBase: 0.2
+  rareBase: 0.16
   epicBase: 0.08
-  legendaryBase: 0.01
+  legendaryBase: 0.02
   rewardForOne: 10
   rewardForTwo: 30
   rewardForThree: 50
   humanDeleterBaseCost: 5
-  humanDeleterCostIncrease: 3
+  humanDeleterCostIncrease: 2
   startRec: 4
-  mulDay: 0.08
+  mulDay: 0.09
+  pow: 1.5
   divLowReq: 4
   baseReqEditor: 1
   typeReqEditor: 2
