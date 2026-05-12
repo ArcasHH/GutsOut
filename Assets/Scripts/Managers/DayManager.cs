@@ -1,9 +1,10 @@
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class DayManager : MonoBehaviour
 {
@@ -14,8 +15,8 @@ public class DayManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text scoreText;
 
-    public int CurrentDay = 1; // need redo. now it is just for set
-    public int TotalScore { get; set; } = 0;
+    public int CurrentDay { get; private set; } = 1;
+    public int TotalScore { get; private set; } = 0;
 
     [SerializeField] private TMP_Text karmaText;
 
@@ -30,8 +31,9 @@ public class DayManager : MonoBehaviour
 
     [SerializeField] private GameObject[] HumansContainers;
     public static DayManager Instance { get; private set; }
+    public void SetCurrentDay(int day) => CurrentDay = day;
 
-    
+
     private void Awake()
     {
         Instance = this;
@@ -138,6 +140,32 @@ public class DayManager : MonoBehaviour
 
     }
 
+    public bool KillTargetHuman(GameObject dropTarget, int knifeCost)
+    {
+        GameObject containerRoot = FindContainerRoot(dropTarget);
+        if (TotalScore < knifeCost || containerRoot == null)
+        {
+            return false;
+        }
+        TotalScore -= knifeCost;
+        UpdateUI();
+        ReplaceContainer(containerRoot);
+
+        return true;
+    }
+    private GameObject FindContainerRoot(GameObject obj)
+    {
+        Transform current = obj.transform;
+        while (current != null)
+        {
+            if (current.GetComponent<OrganStatsSummarizer>() != null ||
+                current.GetComponent<ContainerAnimationController>() != null)
+                return current.gameObject;
+            current = current.parent;
+        }
+        return null;
+    }
+
     public void ReplaceContainer(GameObject oldContainer)
     {
         if (oldContainer == null) return;
@@ -160,6 +188,7 @@ public class DayManager : MonoBehaviour
         {
             Destroy(oldContainer);
         }
+        EventBus.TriggerInventoryChanged();
     }
 
     public void UpdateUI()

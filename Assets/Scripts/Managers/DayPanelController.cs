@@ -32,10 +32,9 @@ public class DayPanelController : MonoBehaviour
 
     private void UpdateDayCounter()
     {
-        DayManager.Instance.CurrentDay = curr_day;
+        DayManager.Instance.SetCurrentDay(curr_day);
         if (dayCounterText != null)
         {
-            //int curr_day = DayManager.Instance.CurrentDay;
             dayCounterText.text = $"Day {curr_day}";
         }
     }
@@ -46,12 +45,9 @@ public class DayPanelController : MonoBehaviour
             return;
 
         curr_day++;
-
         UpdateDayCounter();
         dayButton.interactable = false;
         EventBus.TriggerDayEnd();
-        
-        //Invoke(nameof(RequestStatsUpdate), 1f); // timer for request of human ready
     }
     private void RequestStatsUpdate()
     {

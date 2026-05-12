@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,15 +8,23 @@ public class KnifeItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
 {
     private Outline outline;
     public KnifeController parentController;
+    
 
     public override ItemType Type => ItemType.HumanDeleter;
     public override CategoryType CategoryType => CategoryType.None;
+
+    private int currentKnifeCost;
+    private int knifeCostIncrease;
 
     protected override void Start()
     {
         base.Start();
         outline = GetComponent<Outline>();
         HideOutline();
+        
+        currentKnifeCost = DayManager.Instance.humanDeleterBaseCost;
+        knifeCostIncrease = DayManager.Instance.humanDeleterCostIncrease;
+        parentController.UpdateKnifeUI(currentKnifeCost);
     }
 
     public void OnPointerEnter(PointerEventData eventData) => ShowOutline();
@@ -25,15 +34,36 @@ public class KnifeItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
     {
         GameObject targetGo = eventData.pointerCurrentRaycast.gameObject;
 
-        bool success = parentController.HandleKnifeDrop(targetGo, this);//DayManager.Instance.HandleKnifeDrop(targetGo, this);
-        if (!success)
-                ReturnToSource();
-        else AudioManager.Instance.PlayRandomSoundFromFolder("Audio/Voices");
+        bool success = HandleKnifeDrop(targetGo);
+
+        if (success)
+            AudioManager.Instance.PlayRandomSoundFromFolder("Audio/Voices");
+        ReturnToSource();
     }
 
+    public bool HandleKnifeDrop(GameObject dropTarget)
+    {
+        if (dropTarget == null) return false;
 
+        bool is_kill = DayManager.Instance.KillTargetHuman(dropTarget, currentKnifeCost);
+        if (is_kill)
+            UpdateKnifeCost();
+        return is_kill;
+    }
+
+    
+    private void UpdateKnifeCost()
+    {
+        currentKnifeCost += knifeCostIncrease;
+        parentController.UpdateKnifeUI(currentKnifeCost);
+    }
+    
     private void ShowOutline()
     {
+        if (DayManager.Instance.TotalScore < currentKnifeCost)
+        {
+            return;
+        }
         if (outline != null) outline.enabled = true;
     }
 
