@@ -21,7 +21,7 @@ MonoBehaviour:
   epicBase: 0.01
   legendaryBase: 0.001
   cursedMul: 0.01
-  badMul: 0.02
+  badMul: 0.005
   ordinaryMul: 0
   goodMul: 0.02
   rareMul: 0.04

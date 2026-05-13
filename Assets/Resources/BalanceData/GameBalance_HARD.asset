@@ -22,9 +22,9 @@ MonoBehaviour:
   legendaryBase: 0.01
   cursedMul: 0.05
   badMul: 0.02
-  ordinaryMul: 0.01
-  goodMul: 0.015
-  rareMul: 0.02
+  ordinaryMul: 0
+  goodMul: 0
+  rareMul: 0.01
   epicMul: 0.03
   legendaryMul: 0.04
   rewardForOne: 10
@@ -32,7 +32,7 @@ MonoBehaviour:
   rewardForThree: 50
   knifeBaseCost: 5
   knifeCostIncrease: 3
-  startRec: 5
+  startRec: 4
   mulDay: 0.04
   pow: 1.6
   divLowReq: 3
