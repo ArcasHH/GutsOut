@@ -171,7 +171,7 @@ public class DataManager : MonoBehaviour
             currentBalance = customBalance;
         }
 
-        Debug.Log("Custom balance saved");
+        //Debug.Log("Custom balance saved");
     }
 
     public void LoadCustomBalance()

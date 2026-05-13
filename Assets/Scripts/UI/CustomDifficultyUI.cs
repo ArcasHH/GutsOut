@@ -20,11 +20,22 @@ public class CustomDifficultyUI : MonoBehaviour
     [SerializeField] private Slider collectionNeedSlider;
     [SerializeField] private TMP_Text collectionNeedText;
 
+    [Header("OrganProgression")]
+    [SerializeField] private Slider organInitSlider;
+    [SerializeField] private Slider organGrowthSlider;
+    [SerializeField] private Slider organRiskSlider;
+
+    [Header("Karma Reward")]
+    [SerializeField] private Slider karmaRewardSlider;
+    [SerializeField] private TMP_Text karmaRewardText;
+
     [Header("UI References")]
     [SerializeField] private GameObject customSettingsPanel;
 
     [Header("Preview")]
     [SerializeField] private TMP_Text previewText;
+    [SerializeField] private TMP_Text dayText;
+    [SerializeField] private Slider difficultySlider;
 
     private GameBalance customBalance;
 
@@ -64,6 +75,24 @@ public class CustomDifficultyUI : MonoBehaviour
                 collectionNeedSlider.onValueChanged.AddListener(OnCollectionNeedChanged);
             }
 
+            if (organInitSlider != null)
+            {
+                organInitSlider.onValueChanged.AddListener(OnOrganInitChanged);
+            }
+            if (organGrowthSlider != null)
+            {
+                organGrowthSlider.onValueChanged.AddListener(OnOrganGrowthChanged);
+            }
+            if (organRiskSlider != null)
+            {
+                organRiskSlider.onValueChanged.AddListener(OnOrganRiskChanged);
+            }
+
+            if (karmaRewardSlider != null)
+            {
+                karmaRewardSlider.onValueChanged.AddListener(OnKarmaRewardChanged);
+            }
+
             UpdateUI();
         }
 
@@ -91,6 +120,7 @@ public class CustomDifficultyUI : MonoBehaviour
     {
         if (customBalance == null) return;
 
+        //Knife
         if (knifeBaseCostSlider != null)
         {
             knifeBaseCostSlider.value = customBalance.knifeBaseCost;
@@ -101,7 +131,7 @@ public class CustomDifficultyUI : MonoBehaviour
             knifeCostIncreaseSlider.value = customBalance.knifeCostIncrease;
         }
 
-
+        //Needs
         if (needGrowthSlider != null)
         {
             needGrowthSlider.value = customBalance.mulDay;
@@ -119,19 +149,38 @@ public class CustomDifficultyUI : MonoBehaviour
 
         if (collectionNeedSlider != null)
         {
-            collectionNeedSlider.value = ((float)customBalance.typeReqRelease / 40f) ;
+            collectionNeedSlider.value = customBalance.baseReqRelease ;
+        }
+
+        //Organ settings
+        if (organInitSlider != null)
+        {
+            organInitSlider.value = customBalance.initialWealth*5f;
+        }
+
+        if (organGrowthSlider != null)
+        {
+            organGrowthSlider.value = customBalance.progressionSpeed;
+        }
+
+        if (organRiskSlider != null)
+        {
+            organRiskSlider.value = customBalance.riskRewardBalance;
+        }
+
+        if (karmaRewardSlider != null)
+        {
+            karmaRewardSlider.value = customBalance.rewardForOne * 2;
         }
 
         UpdatePreview();
     }
-
+    //KNife
     private void OnKnifeBaseCostChanged(float value)
     {
         int intValue = Mathf.RoundToInt(value);
         customBalance.knifeBaseCost = intValue;
         knifeBaseCostText.text = $"base cost: {intValue}";
-
-        DataManager.Instance.SaveCustomBalance();
 
         UpdatePreview();
     }
@@ -142,8 +191,6 @@ public class CustomDifficultyUI : MonoBehaviour
         customBalance.knifeCostIncrease = intValue;
         knifeCostIncreaseText.text = $"up cost: {intValue}";
 
-        DataManager.Instance.SaveCustomBalance();
-
         UpdatePreview();
     }
 
@@ -151,38 +198,67 @@ public class CustomDifficultyUI : MonoBehaviour
     private void OnNeedGrowthChanged(float value)
     {
         customBalance.mulDay = value;
-        DataManager.Instance.SaveCustomBalance();
         UpdatePreview();
     }
     private void OnLinearGrowthChanged(float value)
     {
         customBalance.pow = value;
-        DataManager.Instance.SaveCustomBalance();
         UpdatePreview();
     }
     private void OnrandomGrowthChanged(float value)
     {
         customBalance.divLowReq = value;
-        DataManager.Instance.SaveCustomBalance();
         UpdatePreview();
     }
     //Collection
     private void OnCollectionNeedChanged(float value)
     {
-        customBalance.baseReqRelease = (int)(value * 21f);
-        customBalance.typeReqRelease = (int)(value * 45f);
-        DataManager.Instance.SaveCustomBalance();
+        int intValue = Mathf.RoundToInt(value);
+        customBalance.baseReqRelease = intValue;
+        customBalance.typeReqRelease = intValue * 2;
+        UpdatePreview();
+    }
+
+    //Organs
+    private void OnOrganInitChanged(float value)
+    {
+        customBalance.initialWealth = value/5f;
+        UpdatePreview();
+    }
+    private void OnOrganGrowthChanged(float value)
+    {
+        customBalance.progressionSpeed = value;
+        UpdatePreview();
+    }
+    private void OnOrganRiskChanged(float value)
+    {
+        customBalance.riskRewardBalance = value;
+        UpdatePreview();
+    }
+    //Karma
+    private void OnKarmaRewardChanged(float value)
+    {
+        int intValue = Mathf.RoundToInt(value);
+        customBalance.rewardForOne = 2*intValue;
+        customBalance.rewardForOne = 6*intValue;
+        customBalance.rewardForOne = 10*intValue;
+        karmaRewardText.text = $"min reward: {intValue}";
+
         UpdatePreview();
     }
 
     private void UpdatePreview()
     {
+        DataManager.Instance.SaveCustomBalance();
         if (previewText != null && customBalance != null)
         {
-            previewText.text = $"Текущие настройки Custom сложности:\n" +
-                              $"Базовая стоимость ножа: {customBalance.knifeBaseCost}\n" +
-                              $"Увеличение стоимости: {customBalance.knifeCostIncrease}\n";
+            previewText.text = customBalance.GetBalanceWarning();
+            dayText.text = $"game length: {customBalance.predictedDaysToWin} days";
+            
+            difficultySlider.value = customBalance.predictedDifficulty;
+            if (customBalance.predictedDaysToWin == 0) difficultySlider.value = 10;
         }
+        customBalance.RecalculatePredictions();
     }
 
     public void ResetToDefault()
