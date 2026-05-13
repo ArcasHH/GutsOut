@@ -35,6 +35,7 @@ public class DataManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             LoadBalancesFromResources();
             LoadSettings();
+            LoadCustomBalance();
             SetDifficulty(currentDifficulty);
             UpdateRequirements();
         }
@@ -102,9 +103,9 @@ public class DataManager : MonoBehaviour
         }
 
         OnDifficultyChanged?.Invoke(newDifficulty);
+        UpdateRequirements();
     }
 
-    
     public void UpdateRequirements()
     {
         if (currentBalance == null) return;
@@ -152,6 +153,35 @@ public class DataManager : MonoBehaviour
     if (hardBalance == null) Debug.LogWarning("Hard balance not found in Resources/BalanceData");
     if (customBalance == null) Debug.LogWarning("Custom balance not found in Resources/BalanceData");
 #endif
+    }
+
+    public GameBalance GetCustomBalance()
+    {
+        return customBalance;
+    }
+
+    public void SaveCustomBalance()
+    {
+        string json = JsonUtility.ToJson(customBalance);
+        PlayerPrefs.SetString("CustomBalanceData", json);
+        PlayerPrefs.Save();
+
+        if (currentDifficulty == Difficulty.Custom)
+        {
+            currentBalance = customBalance;
+        }
+
+        Debug.Log("Custom balance saved");
+    }
+
+    public void LoadCustomBalance()
+    {
+        if (PlayerPrefs.HasKey("CustomBalanceData"))
+        {
+            string json = PlayerPrefs.GetString("CustomBalanceData");
+            JsonUtility.FromJsonOverwrite(json, customBalance);
+            Debug.Log("Custom balance loaded");
+        }
     }
 
 
