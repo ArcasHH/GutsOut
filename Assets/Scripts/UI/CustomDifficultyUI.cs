@@ -6,9 +6,19 @@ public class CustomDifficultyUI : MonoBehaviour
 {
     [Header("Knife Settings")]
     [SerializeField] private Slider knifeBaseCostSlider;
-    [SerializeField] private TMP_Text knifeBaseCostValue;
+    [SerializeField] private TMP_Text knifeBaseCostText;
+
     [SerializeField] private Slider knifeCostIncreaseSlider;
-    [SerializeField] private TMP_Text knifeCostIncreaseValue;
+    [SerializeField] private TMP_Text knifeCostIncreaseText;
+
+    [Header("Patient Needs")]
+    [SerializeField] private Slider needGrowthSlider;
+    [SerializeField] private Slider linearGrowthSlider;
+    [SerializeField] private Slider randomGrowthSlider;
+
+    [Header("Collection Needs")]
+    [SerializeField] private Slider collectionNeedSlider;
+    [SerializeField] private TMP_Text collectionNeedText;
 
     [Header("UI References")]
     [SerializeField] private GameObject customSettingsPanel;
@@ -35,6 +45,23 @@ public class CustomDifficultyUI : MonoBehaviour
             {
                 knifeCostIncreaseSlider.onValueChanged.AddListener(OnKnifeCostIncreaseChanged);
                 knifeCostIncreaseSlider.wholeNumbers = true;
+            }
+
+            if (needGrowthSlider != null)
+            {
+                needGrowthSlider.onValueChanged.AddListener(OnNeedGrowthChanged);
+            }
+            if (linearGrowthSlider != null)
+            {
+                linearGrowthSlider.onValueChanged.AddListener(OnLinearGrowthChanged);
+            }
+            if (randomGrowthSlider != null)
+            {
+                randomGrowthSlider.onValueChanged.AddListener(OnrandomGrowthChanged);
+            }
+            if (collectionNeedSlider != null)
+            {
+                collectionNeedSlider.onValueChanged.AddListener(OnCollectionNeedChanged);
             }
 
             UpdateUI();
@@ -66,18 +93,33 @@ public class CustomDifficultyUI : MonoBehaviour
 
         if (knifeBaseCostSlider != null)
         {
-            knifeBaseCostSlider.minValue = 1;
-            knifeBaseCostSlider.maxValue = 20;
             knifeBaseCostSlider.value = customBalance.knifeBaseCost;
-            knifeBaseCostValue.text = $"base cost: {customBalance.knifeBaseCost}";
         }
 
         if (knifeCostIncreaseSlider != null)
         {
-            knifeCostIncreaseSlider.minValue = 0;
-            knifeCostIncreaseSlider.maxValue = 10;
             knifeCostIncreaseSlider.value = customBalance.knifeCostIncrease;
-            knifeCostIncreaseValue.text = $"up cost: {customBalance.knifeCostIncrease}";
+        }
+
+
+        if (needGrowthSlider != null)
+        {
+            needGrowthSlider.value = customBalance.mulDay;
+        }
+
+        if (linearGrowthSlider != null)
+        {
+            linearGrowthSlider.value = customBalance.pow;
+        }
+
+        if (randomGrowthSlider != null)
+        {
+            randomGrowthSlider.value = customBalance.divLowReq;
+        }
+
+        if (collectionNeedSlider != null)
+        {
+            collectionNeedSlider.value = ((float)customBalance.typeReqRelease / 40f) ;
         }
 
         UpdatePreview();
@@ -87,7 +129,7 @@ public class CustomDifficultyUI : MonoBehaviour
     {
         int intValue = Mathf.RoundToInt(value);
         customBalance.knifeBaseCost = intValue;
-        knifeBaseCostValue.text = $"base cost: {intValue}";
+        knifeBaseCostText.text = $"base cost: {intValue}";
 
         DataManager.Instance.SaveCustomBalance();
 
@@ -98,10 +140,38 @@ public class CustomDifficultyUI : MonoBehaviour
     {
         int intValue = Mathf.RoundToInt(value);
         customBalance.knifeCostIncrease = intValue;
-        knifeCostIncreaseValue.text = $"up cost: {intValue}";
+        knifeCostIncreaseText.text = $"up cost: {intValue}";
 
         DataManager.Instance.SaveCustomBalance();
 
+        UpdatePreview();
+    }
+
+    //Patients
+    private void OnNeedGrowthChanged(float value)
+    {
+        customBalance.mulDay = value;
+        DataManager.Instance.SaveCustomBalance();
+        UpdatePreview();
+    }
+    private void OnLinearGrowthChanged(float value)
+    {
+        customBalance.pow = value;
+        DataManager.Instance.SaveCustomBalance();
+        UpdatePreview();
+    }
+    private void OnrandomGrowthChanged(float value)
+    {
+        customBalance.divLowReq = value;
+        DataManager.Instance.SaveCustomBalance();
+        UpdatePreview();
+    }
+    //Collection
+    private void OnCollectionNeedChanged(float value)
+    {
+        customBalance.baseReqRelease = (int)(value * 21f);
+        customBalance.typeReqRelease = (int)(value * 45f);
+        DataManager.Instance.SaveCustomBalance();
         UpdatePreview();
     }
 

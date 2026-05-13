@@ -48,20 +48,23 @@ public class GameBalance : ScriptableObject
 
     public int GetBaseReq()
     {
-#if UNITY_EDITOR
-        return baseReqEditor;
-#else
-            return baseReqRelease;
-#endif
+        return baseReqRelease;
+//#if UNITY_EDITOR
+//        return baseReqEditor;
+//#else
+//            return baseReqRelease;
+//#endif
+
     }
 
     public int GetTypeReq()
     {
-#if UNITY_EDITOR
-        return typeReqEditor;
-#else
-            return typeReqRelease;
-#endif
+        return typeReqRelease;
+//#if UNITY_EDITOR
+//        return typeReqEditor;
+//#else
+//        return typeReqRelease;
+//#endif
     }
 
     public (int reqStats, int downReqStats) CalculateRequirements(int currentDay)
