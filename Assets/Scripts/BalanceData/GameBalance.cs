@@ -4,8 +4,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameBalance", menuName = "Game/Game Balance")]
 public class GameBalance : ScriptableObject
 {
+    [Header("Difficulty Settings")]
+    public string difficultyName = "EASY";
+
     [Header("Drop Rates")]
-    public float dayMulCoef = 0.01f;
 
     public float cursedBase = 0.2f;
     public float badBase = 0.5f;
@@ -28,9 +30,9 @@ public class GameBalance : ScriptableObject
     public int rewardForTwo = 30;
     public int rewardForThree = 50;
 
-    [Header("Knife Shop")]
-    public int humanDeleterBaseCost = 5;
-    public int humanDeleterCostIncrease = 3;
+    [Header("Knife")]
+    public int knifeBaseCost = 5;
+    public int knifeCostIncrease = 3;
 
     [Header("Player Needs")]
     public int startRec = 4;

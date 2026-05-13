@@ -10,32 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73322b2357e045c41a0b839961718167, type: 3}
-  m_Name: EasyGameBalance
+  m_Name: GameBalance_EASY
   m_EditorClassIdentifier: Assembly-CSharp::GameBalance
-  cursedBase: 0.2
-  badBase: 0.5
+  difficultyName: EASY
+  cursedBase: 0.1
+  badBase: 0.2
   ordinaryBase: 1
-  goodBase: 0.5
+  goodBase: 0.4
   rareBase: 0.2
-  epicBase: 0.08
-  legendaryBase: 0.02
-  cursedMul: 0.02
-  badMul: 0.01
+  epicBase: 0.01
+  legendaryBase: 0.001
+  cursedMul: 0.01
+  badMul: 0.02
   ordinaryMul: 0
-  goodMul: 0
-  rareMul: 0.02
-  epicMul: 0.025
-  legendaryMul: 0.03
+  goodMul: 0.02
+  rareMul: 0.04
+  epicMul: 0.03
+  legendaryMul: 0.02
   rewardForOne: 10
   rewardForTwo: 30
   rewardForThree: 50
   knifeBaseCost: 5
-  knifeCostIncrease: 3
+  knifeCostIncrease: 1
   startRec: 3
-  mulDay: 0.01
-  pow: 2
-  divLowReq: 10
-  baseReqEditor: 0
-  typeReqEditor: 1
-  baseReqRelease: 10
-  typeReqRelease: 20
+  mulDay: 0.14
+  pow: 1.2
+  divLowReq: 5
+  baseReqEditor: 1
+  typeReqEditor: 2
+  baseReqRelease: 8
+  typeReqRelease: 15

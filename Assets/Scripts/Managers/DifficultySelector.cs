@@ -8,12 +8,14 @@ public class DifficultySelector : MonoBehaviour
     [SerializeField] private Toggle easyToggle;
     [SerializeField] private Toggle normalToggle;
     [SerializeField] private Toggle hardToggle;
+    [SerializeField] private Toggle customToggle;
 
     private void Start()
     {
         easyToggle.onValueChanged.AddListener((isOn) => OnDifficultySelected(Difficulty.Easy, isOn));
         normalToggle.onValueChanged.AddListener((isOn) => OnDifficultySelected(Difficulty.Normal, isOn));
         hardToggle.onValueChanged.AddListener((isOn) => OnDifficultySelected(Difficulty.Hard, isOn));
+        customToggle.onValueChanged.AddListener((isOn) => OnDifficultySelected(Difficulty.Custom, isOn));
 
         LoadSavedDifficulty();
     }
@@ -45,6 +47,9 @@ public class DifficultySelector : MonoBehaviour
                 break;
             case Difficulty.Hard:
                 hardToggle.isOn = true;
+                break;
+            case Difficulty.Custom:
+                customToggle.isOn = true;
                 break;
         }
     }

@@ -6,9 +6,10 @@ public class DataManager : MonoBehaviour
     public static DataManager Instance { get; private set; }
 
     [Header("Balance Presets")]
-    [SerializeField] private GameBalance easyBalance;
-    [SerializeField] private GameBalance normalBalance;
-    [SerializeField] private GameBalance hardBalance;
+     private GameBalance easyBalance;
+     private GameBalance normalBalance;
+     private GameBalance hardBalance;
+     private GameBalance customBalance;
 
     [Header("Current Settings")]
     [SerializeField] private Difficulty currentDifficulty = Difficulty.Normal;
@@ -32,6 +33,7 @@ public class DataManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            LoadBalancesFromResources();
             LoadSettings();
             SetDifficulty(currentDifficulty);
             UpdateRequirements();
@@ -94,6 +96,9 @@ public class DataManager : MonoBehaviour
             case Difficulty.Hard:
                 currentBalance = hardBalance;
                 break;
+            case Difficulty.Custom:
+                currentBalance = customBalance;
+                break;
         }
 
         OnDifficultyChanged?.Invoke(newDifficulty);
@@ -114,11 +119,47 @@ public class DataManager : MonoBehaviour
         Debug.Log($"Day {currentDay}: Requirements updated - {currentReqStats} / {currentDownReqStats}");
 #endif
     }
+
+    private void LoadBalancesFromResources()
+    {
+        // Загружаем все ассеты типа GameBalance из папки BalanceData
+        GameBalance[] allBalances = Resources.LoadAll<GameBalance>("BalanceData");
+
+        foreach (var balance in allBalances)
+        {
+            // Ищем по имени ассета (без расширения)
+            switch (balance.name)
+            {
+                case "GameBalance_EASY":
+                    easyBalance = balance;
+                    break;
+                case "GameBalance_NORMAL":
+                    normalBalance = balance;
+                    break;
+                case "GameBalance_HARD":
+                    hardBalance = balance;
+                    break;
+                case "GameBalance_CUSTOM":
+                    customBalance = balance;
+                    break;
+            }
+        }
+
+        // Проверяем, что все балансы загрузились
+#if UNITY_EDITOR
+    if (easyBalance == null) Debug.LogWarning("Easy balance not found in Resources/BalanceData");
+    if (normalBalance == null) Debug.LogWarning("Normal balance not found in Resources/BalanceData");
+    if (hardBalance == null) Debug.LogWarning("Hard balance not found in Resources/BalanceData");
+    if (customBalance == null) Debug.LogWarning("Custom balance not found in Resources/BalanceData");
+#endif
+    }
+
+
     public float GetDropChanceBase(QualityType rarity) => currentBalance.GetDropChanceBase(rarity);
     public float GetDropChanceMul(QualityType rarity) => currentBalance.GetDropChanceMul(rarity);
     public int GetRewardForKarma(int count) => currentBalance.GetRewardByKarmaCount(count);
-    public int GetKnifeBaseCost() => currentBalance.humanDeleterBaseCost;
-    public int GetKnifeCostIncrease() => currentBalance.humanDeleterCostIncrease;
+    public int GetKnifeBaseCost() => currentBalance.knifeBaseCost;
+    public int GetKnifeCostIncrease() => currentBalance.knifeCostIncrease;
 
     public static GameBalance Balance => Instance.currentBalance;
 
@@ -137,13 +178,12 @@ public enum Difficulty
 {
     Easy,
     Normal,
-    Hard
+    Hard,
+    Custom
 }
 
 public static class Balance
 {
-    public static float DayMulCoef => DataManager.Balance.dayMulCoef;
-
     public static float CursedBase => DataManager.Balance.cursedBase;
     public static float BadBase => DataManager.Balance.badBase;
     public static float OrdinaryBase => DataManager.Balance.ordinaryBase;
@@ -156,8 +196,8 @@ public static class Balance
     public static int RewardForTwo => DataManager.Balance.rewardForTwo;
     public static int RewardForThree => DataManager.Balance.rewardForThree;
 
-    public static int KnifeBaseCost => DataManager.Balance.humanDeleterBaseCost;
-    public static int KnifeCostIncrease => DataManager.Balance.humanDeleterCostIncrease;
+    public static int KnifeBaseCost => DataManager.Balance.knifeBaseCost;
+    public static int KnifeCostIncrease => DataManager.Balance.knifeCostIncrease;
 
     public static int StartRec => DataManager.Balance.startRec;
     public static float MulDay => DataManager.Balance.mulDay;
