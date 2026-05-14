@@ -63,7 +63,7 @@ public class MusicPlaylist : ScriptableObject
             case TrackSourceMode.LoadFromResources:
                 AudioClip[] loadedClips = Resources.LoadAll<AudioClip>(resourcesFolderPath);
                 runtimeTracks.AddRange(loadedClips);
-                Debug.Log($"Loaded {runtimeTracks.Count} tracks from Resources/{resourcesFolderPath}");
+                //Debug.Log($"Loaded {runtimeTracks.Count} tracks from Resources/{resourcesFolderPath}");
                 break;
         }
 

@@ -220,13 +220,13 @@ public class AudioManager : MonoBehaviour
         if (menuMusicPlaylist != null)
         {
             menuMusicPlaylist.Initialize();
-            Debug.Log($"Menu playlist initialized with {menuMusicPlaylist.TrackCount} tracks");
+            //Debug.Log($"Menu playlist initialized with {menuMusicPlaylist.TrackCount} tracks");
         }
 
         if (gameMusicPlaylist != null)
         {
             gameMusicPlaylist.Initialize();
-            Debug.Log($"Game playlist initialized with {gameMusicPlaylist.TrackCount} tracks");
+            //Debug.Log($"Game playlist initialized with {gameMusicPlaylist.TrackCount} tracks");
         }
     }
     #endregion
@@ -392,17 +392,17 @@ public class AudioManager : MonoBehaviour
             currentMusicCoroutine = null;
         }
 
-        Debug.Log("StopAllMusic called");
+        //Debug.Log("StopAllMusic called");
 
         if (menuMusicSource != null && menuMusicSource.isPlaying)
         {
-            Debug.Log("Stopping menuMusicSource");
+            //Debug.Log("Stopping menuMusicSource");
             menuMusicSource.Stop();
         }
 
         if (gameMusicSource != null && gameMusicSource.isPlaying)
         {
-            Debug.Log("Stopping gameMusicSource");
+            //Debug.Log("Stopping gameMusicSource");
             gameMusicSource.Stop();
         }
     }
@@ -579,7 +579,7 @@ public float GetSoundLength(SoundType soundType)
                 savedMusicTime = currentSource.time;
                 wasMusicPlaying = true;
                 currentSource.Stop();
-                Debug.Log($"Music saved at time: {savedMusicTime}");
+                //Debug.Log($"Music saved at time: {savedMusicTime}");
             }
             else
             {
@@ -603,7 +603,7 @@ public float GetSoundLength(SoundType soundType)
                 currentSource.time = savedMusicTime;
                 currentSource.Play();
                 currentMusicCoroutine = StartCoroutine(WaitForMusicToEnd(currentSource, playlist, isGameMusicPlaying));
-                Debug.Log($"Music resumed from time: {savedMusicTime}");
+                //Debug.Log($"Music resumed from time: {savedMusicTime}");
             }
             isRestoringMusic = false;
         }
