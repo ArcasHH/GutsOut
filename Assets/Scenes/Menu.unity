@@ -1473,36 +1473,30 @@ MonoBehaviour:
   sfxMixerGroup: {fileID: 6117710261231542319, guid: 082023e11d9c4d541b236a0d2bac5a30, type: 2}
   uiMixerGroup: {fileID: 8318107517936638578, guid: 082023e11d9c4d541b236a0d2bac5a30, type: 2}
   gameMixerGroup: {fileID: 6117710261231542319, guid: 082023e11d9c4d541b236a0d2bac5a30, type: 2}
+  menuMusicPlaylist: {fileID: 11400000, guid: aa92baf75847a1346a2755660ac15754, type: 2}
+  gameMusicPlaylist: {fileID: 11400000, guid: 3c84bcf7e6365024f85fc3a762965adc, type: 2}
   sounds:
-  - type: 6
+  - type: 4
     clip: {fileID: 8300000, guid: c98d30922ffa66943b5c8bfb728386f4, type: 3}
     volume: 1
     source: {fileID: 0}
-  - type: 7
+  - type: 5
     clip: {fileID: 8300000, guid: 75b113445573b114880015626bda15df, type: 3}
     volume: 0.5
     source: {fileID: 0}
-  - type: 1
-    clip: {fileID: 8300000, guid: d95c0b4eb767d8c479755b98e5e9aab2, type: 3}
-    volume: 1
-    source: {fileID: 0}
-  - type: 0
-    clip: {fileID: 8300000, guid: 47a282d9d3065b2428933169fdbdd8c0, type: 3}
-    volume: 1
-    source: {fileID: 0}
-  - type: 12
+  - type: 10
     clip: {fileID: 8300000, guid: 75b113445573b114880015626bda15df, type: 3}
     volume: 1
     source: {fileID: 0}
-  - type: 13
+  - type: 11
     clip: {fileID: 8300000, guid: 8490c5a823efd8b4d8b6edafdbcec40e, type: 3}
     volume: 1
     source: {fileID: 0}
-  - type: 14
+  - type: 12
     clip: {fileID: 8300000, guid: 08999584180115c44af608e6bacdc79e, type: 3}
     volume: 1
     source: {fileID: 0}
-  - type: 11
+  - type: 9
     clip: {fileID: 8300000, guid: 57064143c7dd54b43bc1a7397beea1f4, type: 3}
     volume: 1
     source: {fileID: 0}

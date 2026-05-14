@@ -18,7 +18,6 @@ public class GameStateManager : MonoBehaviour, IGameState
     }
     private void Start()
     {
-        EventBus.TriggerGameOpen();
         StartGame();
     }
 
@@ -58,10 +57,7 @@ public class GameStateManager : MonoBehaviour, IGameState
     public void RestartGame()
     {
         SetPause(false);
-        EventBus.TriggerGameOpen();
-
         GameSceneManager.Instance.StartGame();
-
     }
 
     public void SetPause(bool paused)

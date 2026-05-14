@@ -116,9 +116,9 @@ public class DataManager : MonoBehaviour
 
         OnRequirementsChanged?.Invoke(currentReqStats, currentDownReqStats);
 
-#if UNITY_EDITOR
-        Debug.Log($"Day {currentDay}: Requirements updated - {currentReqStats} / {currentDownReqStats}");
-#endif
+//#if UNITY_EDITOR
+//        Debug.Log($"Day {currentDay}: Requirements updated - {currentReqStats} / {currentDownReqStats}");
+//#endif
     }
 
     private void LoadBalancesFromResources()

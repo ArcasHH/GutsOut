@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e9e5aca0de11d84fa7f7380414bc4c7, type: 3}
+  m_Name: MenuMusicPlaylist
+  m_EditorClassIdentifier: Assembly-CSharp::MusicPlaylist
+  trackSourceMode: 1
+  manualTracks: []
+  resourcesFolderPath: Audio/Music/Menu
+  mode: 0
+  startFromRandomTrack: 1
+  loopPlaylist: 1
+  targetMixerGroup: {fileID: -3745041336114442020, guid: 082023e11d9c4d541b236a0d2bac5a30, type: 2}

@@ -18,6 +18,15 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixerGroup uiMixerGroup;
     [SerializeField] private AudioMixerGroup gameMixerGroup;
 
+    [Header("Music Playlists")]
+    [SerializeField] private MusicPlaylist menuMusicPlaylist;
+    [SerializeField] private MusicPlaylist gameMusicPlaylist;
+
+    private AudioSource menuMusicSource;
+    private AudioSource gameMusicSource;
+    private Coroutine currentMusicCoroutine = null;
+    private bool isGameMusicPlaying = false;
+
     private const string MASTER_VOLUME_PARAM = "MasterVolume";
     private const string MUSIC_VOLUME_PARAM = "MusicVolume";
     private const string SFX_VOLUME_PARAM = "SFXVolume";
@@ -37,9 +46,6 @@ public class AudioManager : MonoBehaviour
 
     public enum SoundType
     {
-        // Music
-        GameMusic,
-        MenuMusic,
 
         // Player
         PlayerDeath,
@@ -80,9 +86,10 @@ public class AudioManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-
+            InitializeMusicPlaylists();
             InitializeSoundTypeMapping();
             InitializeAudioSources();
+            
         }
         else
         {
@@ -94,6 +101,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+
         UpdateAllVolumes();
         LoadAudioSettings();
     }
@@ -112,9 +120,6 @@ public class AudioManager : MonoBehaviour
 
     private void InitializeSoundTypeMapping()
     {
-        // Music
-        soundTypeToMixerGroup[SoundType.GameMusic] = musicMixerGroup;
-        soundTypeToMixerGroup[SoundType.MenuMusic] = musicMixerGroup;
 
         // SFX
         soundTypeToMixerGroup[SoundType.PlayerDeath] = sfxMixerGroup;
@@ -142,6 +147,21 @@ public class AudioManager : MonoBehaviour
 
     private void InitializeAudioSources()
     {
+        Debug.Log("=== InitializeAudioSources START ===");
+        var existingChildren = GetComponentsInChildren<AudioSource>(true);
+        foreach (var child in existingChildren)
+        {
+            if (child.gameObject != gameObject)
+            {
+                Debug.Log($"Destroying old AudioSource: {child.gameObject.name}");
+                DestroyImmediate(child.gameObject);
+            }
+        }
+        foreach (Sound sound in sounds)
+        {
+            sound.source = null;
+        }
+
         foreach (Sound sound in sounds)
         {
             GameObject soundObject = new GameObject(sound.type.ToString());
@@ -167,6 +187,49 @@ public class AudioManager : MonoBehaviour
                 audioSource.loop = true;
             }
             sound.source = audioSource;
+        }
+
+        if (menuMusicSource != null)
+        {
+            Debug.Log("  Destroying old menuMusicSource");
+            DestroyImmediate(menuMusicSource.gameObject);
+        }
+        if (gameMusicSource != null)
+        {
+            Debug.Log("  Destroying old gameMusicSource");
+            DestroyImmediate(gameMusicSource.gameObject);
+        }
+
+        menuMusicSource = CreateMusicSource("MenuMusicSource", menuMusicPlaylist);
+        gameMusicSource = CreateMusicSource("GameMusicSource", gameMusicPlaylist);
+
+        Debug.Log("=== InitializeAudioSources END ===");
+    }
+ 
+    private AudioSource CreateMusicSource(string name, MusicPlaylist playlist)
+    {
+        GameObject musicObj = new GameObject(name);
+        musicObj.transform.SetParent(transform);
+
+        AudioSource source = musicObj.AddComponent<AudioSource>();
+        source.outputAudioMixerGroup = playlist != null ? playlist.targetMixerGroup : musicMixerGroup;
+        source.loop = false;
+        source.playOnAwake = false;
+
+        return source;
+    }
+    public void InitializeMusicPlaylists()
+    {
+        if (menuMusicPlaylist != null)
+        {
+            menuMusicPlaylist.Initialize();
+            Debug.Log($"Menu playlist initialized with {menuMusicPlaylist.TrackCount} tracks");
+        }
+
+        if (gameMusicPlaylist != null)
+        {
+            gameMusicPlaylist.Initialize();
+            Debug.Log($"Game playlist initialized with {gameMusicPlaylist.TrackCount} tracks");
         }
     }
 
@@ -327,23 +390,26 @@ public class AudioManager : MonoBehaviour
 
     #region Music Management
 
-    public void PlayMusic(SoundType musicType)
-    {
-        if (IsPlaying(musicType)) return;
-
-        StopAllMusic();
-        PlaySound(musicType);
-    }
-
     public void StopAllMusic()
     {
-        foreach (Sound sound in sounds)
+        if (currentMusicCoroutine != null)
         {
-            if (sound.source != null && sound.source.isPlaying &&
-                soundTypeToMixerGroup[sound.type] == musicMixerGroup)
-            {
-                sound.source.Stop();
-            }
+            StopCoroutine(currentMusicCoroutine);
+            currentMusicCoroutine = null;
+        }
+
+        Debug.Log("StopAllMusic called");
+
+        if (menuMusicSource != null && menuMusicSource.isPlaying)
+        {
+            Debug.Log("Stopping menuMusicSource");
+            menuMusicSource.Stop();
+        }
+
+        if (gameMusicSource != null && gameMusicSource.isPlaying)
+        {
+            Debug.Log("Stopping gameMusicSource");
+            gameMusicSource.Stop();
         }
     }
 
@@ -457,18 +523,215 @@ public float GetSoundLength(SoundType soundType)
 
     #endregion
 
+    #region playlist music
+    private enum MusicType { Menu, Game }
+
+    private void PlayMusic(MusicType type)
+    {
+        if (isRestoringMusic)
+        {
+            Debug.Log("PlayMusic skipped - restoring music after focus");
+            return;
+        }
+
+        if (currentMusicCoroutine != null)
+        {
+            StopCoroutine(currentMusicCoroutine);
+            currentMusicCoroutine = null;
+        }
+
+        StopAllMusic();
+
+        MusicPlaylist playlist = type == MusicType.Menu ? menuMusicPlaylist : gameMusicPlaylist;
+        AudioSource source = type == MusicType.Menu ? menuMusicSource : gameMusicSource;
+
+        if (playlist == null || playlist.TrackCount == 0)
+        {
+            Debug.LogWarning($"No {(type == MusicType.Menu ? "menu" : "game")} music playlist or tracks!");
+            return;
+        }
+
+        AudioClip nextTrack = playlist.GetNextTrack();
+        if (nextTrack != null && source != null)
+        {
+            source.clip = nextTrack;
+            source.Play();
+            isGameMusicPlaying = (type == MusicType.Game);
+            currentMusicCoroutine = StartCoroutine(WaitForMusicToEnd(source, playlist, type == MusicType.Game));
+        }
+    }
+
+    public void PlayMenuMusic() => PlayMusic(MusicType.Menu);
+    public void PlayGameMusic() => PlayMusic(MusicType.Game);
+
+    private IEnumerator WaitForMusicToEnd(AudioSource source, MusicPlaylist playlist, bool isGame)
+    {
+        while (source != null && source.isPlaying)
+        {
+            yield return null;
+        }
+
+        if (currentMusicCoroutine == null) yield break;
+
+        if (playlist != null && playlist.TrackCount > 0)
+        {
+            AudioClip nextTrack = playlist.GetNextTrack();
+            if (nextTrack != null && source != null)
+            {
+                source.clip = nextTrack;
+                source.Play();
+                currentMusicCoroutine = StartCoroutine(WaitForMusicToEnd(source, playlist, isGame));
+            }
+        }
+    }
+
+    //public void SkipToNextMusicTrack()
+    //{
+    //    if (isGameMusicPlaying && gameMusicPlaylist != null)
+    //    {
+    //        gameMusicPlaylist.SkipToNextTrack();
+    //        PlayGameMusic();
+    //    }
+    //    else if (!isGameMusicPlaying && menuMusicPlaylist != null)
+    //    {
+    //        menuMusicPlaylist.SkipToNextTrack();
+    //        PlayMenuMusic();
+    //    }
+    //}
+
+    //public void PlayNextGameMusicTrack()
+    //{
+    //    if (gameMusicPlaylist != null)
+    //    {
+    //        gameMusicPlaylist.SkipToNextTrack();
+    //        PlayGameMusic();
+    //    }
+    //}
+
+    //public void PlayNextMenuMusicTrack()
+    //{
+    //    if (menuMusicPlaylist != null)
+    //    {
+    //        menuMusicPlaylist.SkipToNextTrack();
+    //        PlayMenuMusic();
+    //    }
+    //}
+
+
+    #endregion
+
+    #region Focus Handling
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            PauseMusic();
+        }
+        else
+        {
+            ResumeMusic();
+        }
+    }
+    private float savedMusicTime = 0f;
+    private bool wasMusicPlaying = false;
+    private bool isRestoringMusic = false;
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            if (gameMusicSource != null && gameMusicSource.isPlaying)
+            {
+                savedMusicTime = gameMusicSource.time;
+                wasMusicPlaying = true;
+                gameMusicSource.Stop();
+                Debug.Log($"Game music saved at time: {savedMusicTime}");
+            }
+            else if (menuMusicSource != null && menuMusicSource.isPlaying)
+            {
+                savedMusicTime = menuMusicSource.time;
+                wasMusicPlaying = true;
+                menuMusicSource.Stop();
+                Debug.Log($"Menu music saved at time: {savedMusicTime}");
+            }
+            else
+            {
+                wasMusicPlaying = false;
+            }
+
+            if (currentMusicCoroutine != null)
+            {
+                StopCoroutine(currentMusicCoroutine);
+                currentMusicCoroutine = null;
+            }
+        }
+        else
+        {
+            if (wasMusicPlaying)
+            {
+                isRestoringMusic = true;
+
+                if (isGameMusicPlaying && gameMusicSource != null)
+                {
+                    gameMusicSource.time = savedMusicTime;
+                    gameMusicSource.Play();
+                    currentMusicCoroutine = StartCoroutine(WaitForMusicToEnd(gameMusicSource, gameMusicPlaylist, true));
+                    Debug.Log($"Game music resumed from time: {savedMusicTime}");
+                }
+                else if (!isGameMusicPlaying && menuMusicSource != null)
+                {
+                    menuMusicSource.time = savedMusicTime;
+                    menuMusicSource.Play();
+                    currentMusicCoroutine = StartCoroutine(WaitForMusicToEnd(menuMusicSource, menuMusicPlaylist, false));
+                    Debug.Log($"Menu music resumed from time: {savedMusicTime}");
+                }
+
+                isRestoringMusic = false;
+            }
+        }
+    }
+    private void PauseMusic()
+    {
+        if (isGameMusicPlaying && gameMusicSource != null && gameMusicSource.isPlaying)
+        {
+            gameMusicSource.Pause();
+            Debug.Log("Game music paused (focus lost)");
+        }
+        else if (!isGameMusicPlaying && menuMusicSource != null && menuMusicSource.isPlaying)
+        {
+            menuMusicSource.Pause();
+            Debug.Log("Menu music paused (focus lost)");
+        }
+    }
+
+    private void ResumeMusic()
+    {
+        if (isGameMusicPlaying && gameMusicSource != null && !gameMusicSource.isPlaying)
+        {
+            gameMusicSource.UnPause();
+            Debug.Log("Game music resumed (focus regained)");
+        }
+        else if (!isGameMusicPlaying && menuMusicSource != null && !menuMusicSource.isPlaying)
+        {
+            menuMusicSource.UnPause();
+            Debug.Log("Menu music resumed (focus regained)");
+        }
+    }
+
+    #endregion
+
     #region Dependecies
     private void HandleGameStart()
     {
-        PlayMusic(SoundType.GameMusic);
+        PlayGameMusic();
     }
 
     private void HandleMenuOpen(bool isMenuOpen)
     {
         if (isMenuOpen)
-            PlayMusic(SoundType.MenuMusic);
+            PlayMenuMusic();
         else
-            PlayMusic(SoundType.GameMusic);
+            PlayGameMusic();
     }
     #endregion
 

@@ -20,7 +20,7 @@ public static class EventBus
 
     //Common
 
-    public static void TriggerGameOpen() => OnGameStart?.Invoke();
+    public static void TriggerGameStart() => OnGameStart?.Invoke();
     public static void TriggerGameEnd() => OnGameEnd?.Invoke();
 
 

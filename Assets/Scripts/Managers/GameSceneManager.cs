@@ -18,13 +18,14 @@ public class GameSceneManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        EventBus.TriggerMenuOpen(true);
+        
         //GetSceneName();
     }
 
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+        EventBus.TriggerMenuOpen(true);
         //GetSceneName();
     }
 
@@ -61,7 +62,7 @@ public class GameSceneManager : MonoBehaviour
         //GetSceneName();
         Time.timeScale = 1;
         LoadScene("Game");
-        EventBus.TriggerGameOpen();
+        EventBus.TriggerGameStart();
         EventBus.TriggerMenuOpen(false);
     }
 
