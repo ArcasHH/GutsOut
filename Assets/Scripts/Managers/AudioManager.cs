@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using static AudioManager;
 
 public class AudioManager : MonoBehaviour
 {
@@ -46,7 +45,6 @@ public class AudioManager : MonoBehaviour
 
     public enum SoundType
     {
-
         // Player
         PlayerDeath,
         PlayerHit,
@@ -67,7 +65,6 @@ public class AudioManager : MonoBehaviour
         EndDragging,
 
         EndDay,
-
     }
 
     [SerializeField] private List<Sound> sounds = new List<Sound>();
@@ -118,6 +115,7 @@ public class AudioManager : MonoBehaviour
         EventBus.OnMenuOpen -= HandleMenuOpen;
     }
 
+    #region Initialization
     private void InitializeSoundTypeMapping()
     {
 
@@ -147,13 +145,13 @@ public class AudioManager : MonoBehaviour
 
     private void InitializeAudioSources()
     {
-        Debug.Log("=== InitializeAudioSources START ===");
+        //Debug.Log("=== InitializeAudioSources START ===");
         var existingChildren = GetComponentsInChildren<AudioSource>(true);
         foreach (var child in existingChildren)
         {
             if (child.gameObject != gameObject)
             {
-                Debug.Log($"Destroying old AudioSource: {child.gameObject.name}");
+                //Debug.Log($"Destroying old AudioSource: {child.gameObject.name}");
                 DestroyImmediate(child.gameObject);
             }
         }
@@ -191,19 +189,18 @@ public class AudioManager : MonoBehaviour
 
         if (menuMusicSource != null)
         {
-            Debug.Log("  Destroying old menuMusicSource");
+            //Debug.Log("  Destroying old menuMusicSource");
             DestroyImmediate(menuMusicSource.gameObject);
         }
         if (gameMusicSource != null)
         {
-            Debug.Log("  Destroying old gameMusicSource");
+            //Debug.Log("  Destroying old gameMusicSource");
             DestroyImmediate(gameMusicSource.gameObject);
         }
 
         menuMusicSource = CreateMusicSource("MenuMusicSource", menuMusicPlaylist);
         gameMusicSource = CreateMusicSource("GameMusicSource", gameMusicPlaylist);
-
-        Debug.Log("=== InitializeAudioSources END ===");
+       // Debug.Log("=== InitializeAudioSources END ===");
     }
  
     private AudioSource CreateMusicSource(string name, MusicPlaylist playlist)
@@ -232,6 +229,7 @@ public class AudioManager : MonoBehaviour
             Debug.Log($"Game playlist initialized with {gameMusicPlaylist.TrackCount} tracks");
         }
     }
+    #endregion
 
     #region Volume Control Methods
 
@@ -320,28 +318,24 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void StopAllSounds()
+    public void StopAllSounds(bool includeSFX = true, bool includeUI = true, bool includeGame = true)
     {
         foreach (Sound sound in sounds)
         {
             if (sound.source != null && sound.source.isPlaying)
             {
-                sound.source.Stop();
-            }
-        }
-    }
+                bool shouldStop = false;
+                var group = soundTypeToMixerGroup[sound.type];
 
-    public void StopAllSFX()
-    {
-        foreach (Sound sound in sounds)
-        {
-            if (sound.source != null && sound.source.isPlaying &&
-                soundTypeToMixerGroup[sound.type] == sfxMixerGroup)
-            {
-                sound.source.Stop();
+                if (group == sfxMixerGroup && includeSFX) shouldStop = true;
+                else if (group == uiMixerGroup && includeUI) shouldStop = true;
+                else if (group == gameMixerGroup && includeGame) shouldStop = true;
+
+                if (shouldStop) sound.source.Stop();
             }
         }
     }
+    public void StopAllSFX() => StopAllSounds(true, false, false);
 
     public void PauseAllSounds()
     {
@@ -410,57 +404,6 @@ public class AudioManager : MonoBehaviour
         {
             Debug.Log("Stopping gameMusicSource");
             gameMusicSource.Stop();
-        }
-    }
-
-    public void CrossFadeMusic(SoundType newMusicType, float fadeDuration = 1f)
-    {
-        StartCoroutine(CrossFadeMusicCoroutine(newMusicType, fadeDuration));
-    }
-
-    private System.Collections.IEnumerator CrossFadeMusicCoroutine(SoundType newMusicType, float fadeDuration)
-    {
-        // FadeOut of current
-        List<AudioSource> currentMusicSources = new List<AudioSource>();
-        foreach (Sound sound in sounds)
-        {
-            if (sound.source != null && sound.source.isPlaying &&
-                soundTypeToMixerGroup[sound.type] == musicMixerGroup)
-            {
-                currentMusicSources.Add(sound.source);
-            }
-        }
-
-        // FadeIn of new
-        Sound newMusic = sounds.Find(s => s.type == newMusicType);
-        if (newMusic != null && newMusic.source != null)
-        {
-            newMusic.source.volume = 0f;
-            newMusic.source.Play();
-
-            float timer = 0f;
-            while (timer < fadeDuration)
-            {
-                timer += Time.deltaTime;
-                float progress = timer / fadeDuration;
-
-                foreach (AudioSource source in currentMusicSources)
-                {
-                    source.volume = Mathf.Lerp(source.volume, 0f, progress);
-                }
-                newMusic.source.volume = Mathf.Lerp(0f, newMusic.volume, progress);
-
-                yield return null;
-            }
-
-            // Stop old
-            foreach (AudioSource source in currentMusicSources)
-            {
-                source.Stop();
-                source.volume = 1f;
-            }
-
-            newMusic.source.volume = newMusic.volume;
         }
     }
 
@@ -621,17 +564,7 @@ public float GetSoundLength(SoundType soundType)
     #endregion
 
     #region Focus Handling
-    private void OnApplicationPause(bool pauseStatus)
-    {
-        if (pauseStatus)
-        {
-            PauseMusic();
-        }
-        else
-        {
-            ResumeMusic();
-        }
-    }
+
     private float savedMusicTime = 0f;
     private bool wasMusicPlaying = false;
     private bool isRestoringMusic = false;
@@ -640,19 +573,13 @@ public float GetSoundLength(SoundType soundType)
     {
         if (!hasFocus)
         {
-            if (gameMusicSource != null && gameMusicSource.isPlaying)
+            AudioSource currentSource = isGameMusicPlaying ? gameMusicSource : menuMusicSource;
+            if (currentSource != null && currentSource.isPlaying)
             {
-                savedMusicTime = gameMusicSource.time;
+                savedMusicTime = currentSource.time;
                 wasMusicPlaying = true;
-                gameMusicSource.Stop();
-                Debug.Log($"Game music saved at time: {savedMusicTime}");
-            }
-            else if (menuMusicSource != null && menuMusicSource.isPlaying)
-            {
-                savedMusicTime = menuMusicSource.time;
-                wasMusicPlaying = true;
-                menuMusicSource.Stop();
-                Debug.Log($"Menu music saved at time: {savedMusicTime}");
+                currentSource.Stop();
+                Debug.Log($"Music saved at time: {savedMusicTime}");
             }
             else
             {
@@ -665,56 +592,20 @@ public float GetSoundLength(SoundType soundType)
                 currentMusicCoroutine = null;
             }
         }
-        else
+        else if (wasMusicPlaying)
         {
-            if (wasMusicPlaying)
+            isRestoringMusic = true;
+            AudioSource currentSource = isGameMusicPlaying ? gameMusicSource : menuMusicSource;
+            MusicPlaylist playlist = isGameMusicPlaying ? gameMusicPlaylist : menuMusicPlaylist;
+
+            if (currentSource != null)
             {
-                isRestoringMusic = true;
-
-                if (isGameMusicPlaying && gameMusicSource != null)
-                {
-                    gameMusicSource.time = savedMusicTime;
-                    gameMusicSource.Play();
-                    currentMusicCoroutine = StartCoroutine(WaitForMusicToEnd(gameMusicSource, gameMusicPlaylist, true));
-                    Debug.Log($"Game music resumed from time: {savedMusicTime}");
-                }
-                else if (!isGameMusicPlaying && menuMusicSource != null)
-                {
-                    menuMusicSource.time = savedMusicTime;
-                    menuMusicSource.Play();
-                    currentMusicCoroutine = StartCoroutine(WaitForMusicToEnd(menuMusicSource, menuMusicPlaylist, false));
-                    Debug.Log($"Menu music resumed from time: {savedMusicTime}");
-                }
-
-                isRestoringMusic = false;
+                currentSource.time = savedMusicTime;
+                currentSource.Play();
+                currentMusicCoroutine = StartCoroutine(WaitForMusicToEnd(currentSource, playlist, isGameMusicPlaying));
+                Debug.Log($"Music resumed from time: {savedMusicTime}");
             }
-        }
-    }
-    private void PauseMusic()
-    {
-        if (isGameMusicPlaying && gameMusicSource != null && gameMusicSource.isPlaying)
-        {
-            gameMusicSource.Pause();
-            Debug.Log("Game music paused (focus lost)");
-        }
-        else if (!isGameMusicPlaying && menuMusicSource != null && menuMusicSource.isPlaying)
-        {
-            menuMusicSource.Pause();
-            Debug.Log("Menu music paused (focus lost)");
-        }
-    }
-
-    private void ResumeMusic()
-    {
-        if (isGameMusicPlaying && gameMusicSource != null && !gameMusicSource.isPlaying)
-        {
-            gameMusicSource.UnPause();
-            Debug.Log("Game music resumed (focus regained)");
-        }
-        else if (!isGameMusicPlaying && menuMusicSource != null && !menuMusicSource.isPlaying)
-        {
-            menuMusicSource.UnPause();
-            Debug.Log("Menu music resumed (focus regained)");
+            isRestoringMusic = false;
         }
     }
 
