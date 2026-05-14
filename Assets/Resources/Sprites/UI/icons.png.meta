@@ -289,9 +289,9 @@ TextureImporter:
       name: icons_2
       rect:
         serializedVersion: 2
-        x: 256
+        x: 258
         y: 384
-        width: 128
+        width: 126
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

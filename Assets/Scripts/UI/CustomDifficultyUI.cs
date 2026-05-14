@@ -162,7 +162,7 @@ public class CustomDifficultyUI : MonoBehaviour
     {
         int intValue = Mathf.RoundToInt(value);
         customBalance.knifeBaseCost = intValue;
-        knifeBaseCostText.text = $"base cost: {intValue}";
+        knifeBaseCostText.text = $"{intValue}";
 
         UpdatePreview();
     }
@@ -171,7 +171,7 @@ public class CustomDifficultyUI : MonoBehaviour
     {
         int intValue = Mathf.RoundToInt(value);
         customBalance.knifeCostIncrease = intValue;
-        knifeCostIncreaseText.text = $"up cost: {intValue}";
+        knifeCostIncreaseText.text = $"{intValue}";
 
         UpdatePreview();
     }
@@ -181,7 +181,7 @@ public class CustomDifficultyUI : MonoBehaviour
     {
         int intValue = Mathf.RoundToInt(value);
         customBalance.startRec = intValue;
-        startNeedText.text = $"start need: {intValue}";
+        startNeedText.text = $"{intValue}";
         UpdatePreview();
     }
     private void OnDurationChanged(float value)
@@ -201,7 +201,7 @@ public class CustomDifficultyUI : MonoBehaviour
         int intValue = Mathf.RoundToInt(value);
         customBalance.baseReqRelease = intValue;
         customBalance.typeReqRelease = intValue * 2;
-        collectionNeedText.text = $"requires: {intValue}-{intValue * 2} ";
+        collectionNeedText.text = $"{intValue}-{intValue * 2} ";
         UpdatePreview();
     }
 
@@ -220,7 +220,7 @@ public class CustomDifficultyUI : MonoBehaviour
         customBalance.rewardForOne = 2*intValue;
         customBalance.rewardForOne = 6*intValue;
         customBalance.rewardForOne = 10*intValue;
-        karmaRewardText.text = $"min reward: {intValue}";
+        karmaRewardText.text = $"{intValue}";
 
         UpdatePreview();
     }
