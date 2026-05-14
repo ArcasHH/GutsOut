@@ -20,6 +20,10 @@ public class AudioButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     [Tooltip("Override default translation key. Leave empty to use auto-generated from action")]
     public string customTranslationKey = "";
 
+    private float russianSpacing = -42f;
+    private float russianWordSpacing = 42f;
+    private float defaultSpacing = 0f;
+    private float defaultWordSpacing = 0f;
     public enum ButtonAction
     {
         None,
@@ -123,11 +127,14 @@ public class AudioButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
         if (currentLanguage == "ru")
         {
-            tmpText.characterSpacing = -48f;
+            tmpText.characterSpacing = russianSpacing;
+            tmpText.wordSpacing = russianWordSpacing;
         }
         else
         {
-            tmpText.characterSpacing = 0f;
+            tmpText.characterSpacing = defaultSpacing;
+            tmpText.wordSpacing = defaultWordSpacing;
+
         }
     }
 

@@ -40,15 +40,15 @@ public class StatsDisplayUI : MonoBehaviour
         if (summarizer == null) return;
 
         summarizer.CalculateStats();
-        UpdateStat(MindStatsText, "mind", summarizer.TotalMind, summarizer.GetRequiredMind());
-        UpdateStat(SoulStatsText, "soul", summarizer.TotalSoul, summarizer.GetRequiredSoul());
-        UpdateStat(BodyStatsText, "body", summarizer.TotalBody, summarizer.GetRequiredBody());
+        UpdateStat(MindStatsText, summarizer.TotalMind, summarizer.GetRequiredMind());
+        UpdateStat(SoulStatsText, summarizer.TotalSoul, summarizer.GetRequiredSoul());
+        UpdateStat(BodyStatsText, summarizer.TotalBody, summarizer.GetRequiredBody());
     }
 
-    private void UpdateStat(TMP_Text text, string name, int current, int required)
+    private void UpdateStat(TMP_Text text, int current, int required)
     {
         if (text == null) return;
-        text.text = $"{name}: {current}/{required}";
+        text.text = $" : {current}/{required}";
         text.color = current < required ? wrongStatsColor : Color.white;
     }
 
