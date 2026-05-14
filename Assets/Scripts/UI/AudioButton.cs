@@ -16,6 +16,8 @@ public class AudioButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         ExitGame,
         PauseGame,
         ContinueGame,
+
+        NextTrack,
     }
 
     public ButtonAction action = ButtonAction.None;
@@ -62,6 +64,9 @@ public class AudioButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
                 break;
             case ButtonAction.ContinueGame:
                 EventBus.TriggerGamePaused(false);
+                break;
+            case ButtonAction.NextTrack:
+                EventBus.TriggerNextMusicTrack();
                 break;
 
             case ButtonAction.None:

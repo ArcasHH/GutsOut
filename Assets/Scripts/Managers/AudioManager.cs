@@ -107,12 +107,14 @@ public class AudioManager : MonoBehaviour
     {
         EventBus.OnGameStart += HandleGameStart;
         EventBus.OnMenuOpen += HandleMenuOpen;
+        EventBus.OnNextMusicTrack += SkipToNextMusicTrack;
     }
 
     void UnsubscribeDependencies()
     {
         EventBus.OnGameStart -= HandleGameStart;
         EventBus.OnMenuOpen -= HandleMenuOpen;
+        EventBus.OnNextMusicTrack -= SkipToNextMusicTrack;
     }
 
     #region Initialization
@@ -528,19 +530,19 @@ public float GetSoundLength(SoundType soundType)
         }
     }
 
-    //public void SkipToNextMusicTrack()
-    //{
-    //    if (isGameMusicPlaying && gameMusicPlaylist != null)
-    //    {
-    //        gameMusicPlaylist.SkipToNextTrack();
-    //        PlayGameMusic();
-    //    }
-    //    else if (!isGameMusicPlaying && menuMusicPlaylist != null)
-    //    {
-    //        menuMusicPlaylist.SkipToNextTrack();
-    //        PlayMenuMusic();
-    //    }
-    //}
+    private void SkipToNextMusicTrack()
+    {
+        if (isGameMusicPlaying && gameMusicPlaylist != null)
+        {
+            gameMusicPlaylist.SkipToNextTrack();
+            PlayGameMusic();
+        }
+        else if (!isGameMusicPlaying && menuMusicPlaylist != null)
+        {
+            menuMusicPlaylist.SkipToNextTrack();
+            PlayMenuMusic();
+        }
+    }
 
     //public void PlayNextGameMusicTrack()
     //{

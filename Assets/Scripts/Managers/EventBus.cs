@@ -17,6 +17,9 @@ public static class EventBus
 
     public static Action OnDayEnd;
 
+    public static Action OnNextMusicTrack;
+
+
 
     //Common
 
@@ -32,6 +35,8 @@ public static class EventBus
     public static void TriggerSacrificedButtonPressed() => OnSacrificedButtonPressed?.Invoke();
     public static void TriggerDayEnd() => OnDayEnd?.Invoke();
 
+    public static void TriggerNextMusicTrack() => OnNextMusicTrack?.Invoke();
+
 
     public static void ClearAllSubscriptions()
     {
@@ -46,5 +51,6 @@ public static class EventBus
         OnCollectionHumanReady = null;
         OnSacrificedButtonPressed = null;
         OnDayEnd = null;
+        OnNextMusicTrack = null;
     }
 }
