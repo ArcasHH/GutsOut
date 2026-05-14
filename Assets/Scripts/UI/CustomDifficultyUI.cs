@@ -12,8 +12,10 @@ public class CustomDifficultyUI : MonoBehaviour
     [SerializeField] private TMP_Text knifeCostIncreaseText;
 
     [Header("Patient Needs")]
-    [SerializeField] private Slider needGrowthSlider;
-    [SerializeField] private Slider linearGrowthSlider;
+    [SerializeField] private Slider startNeedSlider;
+    [SerializeField] private TMP_Text startNeedText;
+
+    [SerializeField] private Slider durationSlider;
     [SerializeField] private Slider randomGrowthSlider;
 
     [Header("Collection Needs")]
@@ -21,9 +23,7 @@ public class CustomDifficultyUI : MonoBehaviour
     [SerializeField] private TMP_Text collectionNeedText;
 
     [Header("OrganProgression")]
-    [SerializeField] private Slider organInitSlider;
-    [SerializeField] private Slider organGrowthSlider;
-    [SerializeField] private Slider organRiskSlider;
+    [SerializeField] private Slider organSlider;
 
     [Header("Karma Reward")]
     [SerializeField] private Slider karmaRewardSlider;
@@ -58,13 +58,13 @@ public class CustomDifficultyUI : MonoBehaviour
                 knifeCostIncreaseSlider.wholeNumbers = true;
             }
 
-            if (needGrowthSlider != null)
+            if (startNeedSlider != null)
             {
-                needGrowthSlider.onValueChanged.AddListener(OnNeedGrowthChanged);
+                startNeedSlider.onValueChanged.AddListener(OnStartNeedChanged);
             }
-            if (linearGrowthSlider != null)
+            if (durationSlider != null)
             {
-                linearGrowthSlider.onValueChanged.AddListener(OnLinearGrowthChanged);
+                durationSlider.onValueChanged.AddListener(OnDurationChanged);
             }
             if (randomGrowthSlider != null)
             {
@@ -75,17 +75,9 @@ public class CustomDifficultyUI : MonoBehaviour
                 collectionNeedSlider.onValueChanged.AddListener(OnCollectionNeedChanged);
             }
 
-            if (organInitSlider != null)
+            if (organSlider != null)
             {
-                organInitSlider.onValueChanged.AddListener(OnOrganInitChanged);
-            }
-            if (organGrowthSlider != null)
-            {
-                organGrowthSlider.onValueChanged.AddListener(OnOrganGrowthChanged);
-            }
-            if (organRiskSlider != null)
-            {
-                organRiskSlider.onValueChanged.AddListener(OnOrganRiskChanged);
+                organSlider.onValueChanged.AddListener(OnOrganChanged);
             }
 
             if (karmaRewardSlider != null)
@@ -132,14 +124,14 @@ public class CustomDifficultyUI : MonoBehaviour
         }
 
         //Needs
-        if (needGrowthSlider != null)
+        if (startNeedSlider != null)
         {
-            needGrowthSlider.value = customBalance.mulDay;
+            startNeedSlider.value = customBalance.startRec;
         }
 
-        if (linearGrowthSlider != null)
+        if (durationSlider != null)
         {
-            linearGrowthSlider.value = customBalance.pow;
+            durationSlider.value = Mathf.Sqrt(customBalance.mulDay) * 10f;
         }
 
         if (randomGrowthSlider != null)
@@ -153,19 +145,9 @@ public class CustomDifficultyUI : MonoBehaviour
         }
 
         //Organ settings
-        if (organInitSlider != null)
+        if (organSlider != null)
         {
-            organInitSlider.value = customBalance.initialWealth*5f;
-        }
-
-        if (organGrowthSlider != null)
-        {
-            organGrowthSlider.value = customBalance.progressionSpeed;
-        }
-
-        if (organRiskSlider != null)
-        {
-            organRiskSlider.value = customBalance.riskRewardBalance;
+            organSlider.value = 0;
         }
 
         if (karmaRewardSlider != null)
@@ -195,14 +177,17 @@ public class CustomDifficultyUI : MonoBehaviour
     }
 
     //Patients
-    private void OnNeedGrowthChanged(float value)
+    private void OnStartNeedChanged(float value)
     {
-        customBalance.mulDay = value;
+        int intValue = Mathf.RoundToInt(value);
+        customBalance.startRec = intValue;
+        startNeedText.text = $"start need: {intValue}";
         UpdatePreview();
     }
-    private void OnLinearGrowthChanged(float value)
+    private void OnDurationChanged(float value)
     {
-        customBalance.pow = value;
+        customBalance.mulDay = (float)(value * value * 0.01f);
+        customBalance.pow = (float)(value * value * 0.025f - 0.5 * value + 3);
         UpdatePreview();
     }
     private void OnrandomGrowthChanged(float value)
@@ -220,21 +205,13 @@ public class CustomDifficultyUI : MonoBehaviour
     }
 
     //Organs
-    private void OnOrganInitChanged(float value)
+    private void OnOrganChanged(float value)
     {
-        customBalance.initialWealth = value/5f;
+        int intValue = Mathf.RoundToInt(value);
+        customBalance.SetOrganMul(intValue);
         UpdatePreview();
     }
-    private void OnOrganGrowthChanged(float value)
-    {
-        customBalance.progressionSpeed = value;
-        UpdatePreview();
-    }
-    private void OnOrganRiskChanged(float value)
-    {
-        customBalance.riskRewardBalance = value;
-        UpdatePreview();
-    }
+
     //Karma
     private void OnKarmaRewardChanged(float value)
     {

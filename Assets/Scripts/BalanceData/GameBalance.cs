@@ -54,14 +54,6 @@ public class GameBalance : ScriptableObject
     [Tooltip("Ожидаемый процент побед при нормальной игре (0..1)")]
     public float predictedWinRate = 0f;
 
-    [Header("Player-Friendly Difficulty Settings")]
-    [Range(0f, 2f)]
-    public float initialWealth = 1f;      // Initial wealth (0 = poor, 1 = normal, 2 = rich)
-    [Range(-1f, 1f)]
-    public float progressionSpeed = 0f;   // Rate of progress (-1 = degradation, 0 = stable, 1 = fast)
-    [Range(-1f, 1f)]
-    public float riskRewardBalance = 0f;  // Risk vs Reward (-1 = safe, 0 = balance, 1 = risky)
-
 #region MainMethods
     public int GetBaseReq()
     {
@@ -421,96 +413,16 @@ public class GameBalance : ScriptableObject
         return 0f;
     }
 
-    public void RecalculateDropRatesFromSettings()
+    public void SetOrganMul(int risk)
     {
-        // 1. Получаем значения ползунков
-        float wealth = Mathf.Clamp(initialWealth, 0f, 2f);
-        float progress = Mathf.Clamp(progressionSpeed, -1f, 1.5f);
-        float risk = Mathf.Clamp(riskRewardBalance, -1f, 1f);
+        ordinaryMul = 0f;
 
-        // 2. Фактор прогресса (влияет на Mul)
-        // progress = -1 → 0.3 (деградация: плохие растут, редкие падают)
-        // progress =  0 → 1.0 (стабильно)
-        // progress =  1 → 3.0 (прогресс: редкие растут, плохие падают)
-        float progressFactor = Mathf.Pow(3f, progress);
-
-        // 3. Факторы риска
-        // risk = -1 → cursed растут, legendary падают, middle растут
-        // risk =  0 → всё сбалансировано
-        // risk =  1 → cursed падают, legendary растут, middle падают
-
-        float cursedRiskFactor = Mathf.Pow(2f, -risk);      // risk=-1 → 2.0, risk=0 → 1.0, risk=1 → 0.5
-        float legendaryRiskFactor = Mathf.Pow(2f, risk);    // risk=-1 → 0.5, risk=0 → 1.0, risk=1 → 2.0
-        float middleRiskFactor = 1f - risk * 0.4f;          // risk=-1 → 1.4, risk=0 → 1.0, risk=1 → 0.6
-
-        // 4. Базовые веса (Base) с учётом wealth и risk
-        // wealth = 0 → бедный (много cursed/bad, мало rare)
-        // wealth = 2 → богатый (мало cursed/bad, много rare)
-
-        float cursedBaseRaw = 0.2f * (2f - wealth);
-        float badBaseRaw = 0.5f * (2f - wealth);
-        float ordinaryBaseRaw = 1f * wealth;
-        float goodBaseRaw = 0.5f * wealth;
-        float rareBaseRaw = 0.2f * wealth;
-        float epicBaseRaw = 0.08f * wealth;
-        float legendaryBaseRaw = 0.01f * wealth;
-
-        // Применяем risk факторы
-        cursedBase = Mathf.Max(0.01f, cursedBaseRaw * cursedRiskFactor);
-        legendaryBase = Mathf.Max(0.001f, legendaryBaseRaw * legendaryRiskFactor);
-
-        badBase = Mathf.Max(0.01f, badBaseRaw * middleRiskFactor);
-        ordinaryBase = Mathf.Max(0.05f, ordinaryBaseRaw * middleRiskFactor);
-        goodBase = Mathf.Max(0.01f, goodBaseRaw * middleRiskFactor);
-        rareBase = Mathf.Max(0.01f, rareBaseRaw * middleRiskFactor);
-        epicBase = Mathf.Max(0.005f, epicBaseRaw * middleRiskFactor);
-
-        // 5. Mul коэффициенты (скорость изменения со временем)
-        // progress > 0 → плохие падают быстрее, редкие растут быстрее
-        // progress < 0 → плохие растут быстрее, редкие падают быстрее
-
-        float negativeProgressFactor = 1f / progressFactor; // для cursed/bad/ordinary
-        float positiveProgressFactor = progressFactor;       // для good/rare/epic/legendary
-
-        // Базовые Mul
-        float cursedMulRaw = 0.02f;
-        float badMulRaw = 0.01f;
-        float ordinaryMulRaw = 0.005f;
-        float goodMulRaw = 0.01f;
-        float rareMulRaw = 0.02f;
-        float epicMulRaw = 0.025f;
-        float legendaryMulRaw = 0.03f;
-
-        // Применяем progress факторы
-        cursedMul = cursedMulRaw * negativeProgressFactor;
-        badMul = badMulRaw * negativeProgressFactor;
-        ordinaryMul = ordinaryMulRaw * negativeProgressFactor;
-        goodMul = goodMulRaw * positiveProgressFactor;
-        rareMul = rareMulRaw * positiveProgressFactor;
-        epicMul = epicMulRaw * positiveProgressFactor;
-        legendaryMul = legendaryMulRaw * positiveProgressFactor;
-
-        // Применяем risk факторы к Mul (аналогично Base)
-        cursedMul *= cursedRiskFactor;
-        legendaryMul *= legendaryRiskFactor;
-
-        badMul *= middleRiskFactor;
-        ordinaryMul *= middleRiskFactor;
-        goodMul *= middleRiskFactor;
-        rareMul *= middleRiskFactor;
-        epicMul *= middleRiskFactor;
-
-        // 6. Гарантируем, что Mul не отрицательные
-        cursedMul = Mathf.Max(0.001f, cursedMul);
-        badMul = Mathf.Max(0.001f, badMul);
-        ordinaryMul = Mathf.Max(0.001f, ordinaryMul);
-        goodMul = Mathf.Max(0.001f, goodMul);
-        rareMul = Mathf.Max(0.001f, rareMul);
-        epicMul = Mathf.Max(0.001f, epicMul);
-        legendaryMul = Mathf.Max(0.001f, legendaryMul);
-
-        // 7. Нормализация (чтобы вероятности были в разумных пределах)
-        NormalizeDropRates();
+        (cursedMul, badMul, goodMul, rareMul, epicMul, legendaryMul) = risk switch
+        {
+            -1 => (0.1f, 0.02f, 0f, 0.02f, 0.06f, 0.08f),
+            1 => (0f, 0f, 0.01f, 0.04f, 0.08f, 0.1f),
+            _ => (0.05f, 0.01f, 0.05f, 0.03f, 0.07f, 0.09f)
+        };
     }
 
     private void NormalizeDropRates()
@@ -580,7 +492,6 @@ public class GameBalance : ScriptableObject
     [ContextMenu("Recalculate Balance Predictions")]
     public void RecalculatePredictions()
     {
-        RecalculateDropRatesFromSettings();
         CalculateDaysToWin();
         CalculateDifficulty();
         CalculateWinRate();
