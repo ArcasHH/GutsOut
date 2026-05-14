@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5391465496224038221}
   - component: {fileID: 7795932922176426378}
   - component: {fileID: 520890211685266582}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: HumanDeleter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,3 +109,4 @@ MonoBehaviour:
   rectTransform: {fileID: 0}
   canvasGroup: {fileID: 0}
   canvas: {fileID: 0}
+  parentController: {fileID: 0}

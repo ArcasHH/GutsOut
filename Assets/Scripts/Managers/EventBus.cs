@@ -19,7 +19,9 @@ public static class EventBus
 
     public static Action OnNextMusicTrack;
 
+    public static Action<bool> OnShowCustomDifficulty;
 
+    public static Action<bool> OnDragOrgan;
 
     //Common
 
@@ -36,7 +38,9 @@ public static class EventBus
     public static void TriggerDayEnd() => OnDayEnd?.Invoke();
 
     public static void TriggerNextMusicTrack() => OnNextMusicTrack?.Invoke();
+    public static void TriggerShowCustomDifficulty(bool is_custom) => OnShowCustomDifficulty?.Invoke(is_custom);
 
+    public static void TriggerDragOrgan(bool is_dragging) => OnDragOrgan?.Invoke(is_dragging);
 
     public static void ClearAllSubscriptions()
     {
@@ -52,5 +56,8 @@ public static class EventBus
         OnSacrificedButtonPressed = null;
         OnDayEnd = null;
         OnNextMusicTrack = null;
+
+        OnShowCustomDifficulty = null;
+        OnDragOrgan = null;
     }
 }

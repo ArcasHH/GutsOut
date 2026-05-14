@@ -41,10 +41,14 @@ public class AudioButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         if (button == null)
         {
             enabled = false;
-            //Debug.LogError($"AudioButton: Button component not found on {gameObject.name}", gameObject);
             return;
         }
+        SetupLocalization();
+        setColors();
+    }
 
+    private void setColors()
+    {
         if (ColorPaletteManager.Instance != null)
         {
             ColorBlock colors = button.colors;
@@ -52,8 +56,6 @@ public class AudioButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
             colors.pressedColor = ColorPaletteManager.Instance.CurrentPalette.ButtonClickColor;
             button.colors = colors;
         }
-
-        SetupLocalization();
     }
 
     private void SetupLocalization()
@@ -69,7 +71,6 @@ public class AudioButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
         if (string.IsNullOrEmpty(translationKey))
         {
-            //Debug.LogWarning($"[AudioButton] No translation key for action '{action}' on {gameObject.name}", gameObject);
             return;
         }
 
@@ -88,8 +89,6 @@ public class AudioButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         localizeEvent.OnUpdateString.AddListener(OnTextUpdated);
 
         localizeEvent.RefreshString();
-
-        //Debug.Log($"[AudioButton] Localized '{action}' → '{translationKey}' on {gameObject.name}", gameObject);
     }
 
     private string GetTranslationKey()
@@ -116,7 +115,6 @@ public class AudioButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         {
             tmpText.text = localizedText;
             AdjustCharacterSpacing();
-            //Debug.Log($"[AudioButton] '{action}' localized to: {localizedText}", gameObject);
         }
     }
     private void AdjustCharacterSpacing()

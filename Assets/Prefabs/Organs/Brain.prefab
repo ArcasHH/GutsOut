@@ -100,7 +100,19 @@ PrefabInstance:
       propertyPath: organType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4341952176094059358, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 172
+      objectReference: {fileID: 0}
+    - target: {fileID: 4341952176094059358, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 168
+      objectReference: {fileID: 0}
     - target: {fileID: 6978871441027045319, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8031273221110208615, guid: f465aca5e4be76b44865a9c3babca19f, type: 3}
+    - target: {fileID: 7599710736040343482, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 8031273221110208615, guid: f465aca5e4be76b44865a9c3babca19f, type: 3}

@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -45,13 +45,40 @@ public class KnifeItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
     {
         if (dropTarget == null) return false;
 
-        bool is_kill = GameManager.Instance.KillTargetHuman(dropTarget, currentKnifeCost);
+        GameObject human = FindHumanRoot(dropTarget);
+
+        if (human == null)
+        {
+            return false;
+        }
+
+        if (DataManager.Instance.totalKarma < currentKnifeCost)
+        {
+            return false;
+        }
+        bool is_kill = GameManager.Instance.KillTargetHuman(human, currentKnifeCost);
+
         if (is_kill)
             UpdateKnifeCost();
+
         return is_kill;
     }
 
-    
+    private GameObject FindHumanRoot(GameObject obj)
+    {
+        Transform current = obj.transform;
+        while (current != null)
+        {
+            if (current.GetComponent<OrganStatsSummarizer>() != null)
+            {
+                return current.gameObject;
+            }
+            current = current.parent;
+        }
+        return null;
+    }
+
+
     private void UpdateKnifeCost()
     {
         currentKnifeCost += knifeCostIncrease;

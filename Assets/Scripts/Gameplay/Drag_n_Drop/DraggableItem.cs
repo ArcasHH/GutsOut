@@ -74,6 +74,7 @@ public abstract class DraggableItem : MonoBehaviour, IPointerDownHandler, IDragH
 
         canvasGroup.blocksRaycasts = false;
         canvasGroup.alpha = 0.85f;
+
         EventBus.TriggerInventoryChanged();
     }
 

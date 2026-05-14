@@ -14,6 +14,7 @@ public class ColorPaletteManager : MonoBehaviour
         public Color buttonHoverColor;
         public Color ButtonClickColor;
         public Color outlineColor;
+        public Color toggleHoverColor;
 
         [Header("Gameplay")]
         public Color cursedOrganColor;
