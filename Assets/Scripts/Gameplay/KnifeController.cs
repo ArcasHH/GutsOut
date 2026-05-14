@@ -17,7 +17,7 @@ public class KnifeController : MonoBehaviour
     public void UpdateKnifeUI(int knife_cost)
     {
         if (knifeCostText != null)
-            knifeCostText.text = $"Cost: {knife_cost} karma";
+            knifeCostText.text = knife_cost.ToString();
     }
     private void SpawnKnife()
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -14,7 +15,9 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text karmaText;
-    
+    private string karma_text;
+
+
 
     [SerializeField] private GameObject[] HumansContainers;
     public static GameManager Instance { get; private set; }
@@ -78,7 +81,7 @@ public class GameManager : MonoBehaviour
 
         if (karmaText != null)
         {
-            karmaText.text = $"karma gain: {Balance.GetRewardByKarmaCount(toReplace)}";
+            karmaText.text = $" +{Balance.GetRewardByKarmaCount(toReplace)}";
         }
         return toReplace > 0;
     }
@@ -164,7 +167,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateUI()
     {
-        if (scoreText != null) scoreText.text = $"Karma: {DataManager.Instance.totalKarma}";
+        if (scoreText != null) scoreText.text = DataManager.Instance.totalKarma.ToString();
     }
 
     private void OnDestroy()

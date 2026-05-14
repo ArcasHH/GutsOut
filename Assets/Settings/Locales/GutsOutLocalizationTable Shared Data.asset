@@ -115,6 +115,30 @@ MonoBehaviour:
     m_Key: reward
     m_Metadata:
       m_Items: []
+  - m_Id: 39450516389888
+    m_Key: ritual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39579810004992
+    m_Key: end_day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46604136742912
+    m_Key: back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46803722698752
+    m_Key: tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47009851768832
+    m_Key: play_again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48054241853440
+    m_Key: win_text
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

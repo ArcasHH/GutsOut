@@ -107,7 +107,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25773834764288
-    m_Localized: 'base cost:'
+    m_Localized: 'cost:'
     m_Metadata:
       m_Items: []
   - m_Id: 25775600566272
@@ -115,7 +115,33 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25777429282816
-    m_Localized: 'reward:'
+    m_Localized: 'karma:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39450516389888
+    m_Localized: ritual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39579810004992
+    m_Localized: 'day '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46604136742912
+    m_Localized: back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46803722698752
+    m_Localized: "The goal is to perform a RITUAL. \n\nCertain types of organs are
+      needed \n(a robot is waiting for mechanical organs)\n\nThere will be more valuable
+      organs over time.\n\nGood Luck !!!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47009851768832
+    m_Localized: play again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48054241853440
+    m_Localized: No guts no glory!
     m_Metadata:
       m_Items: []
   references:

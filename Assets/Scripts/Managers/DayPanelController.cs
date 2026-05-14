@@ -16,7 +16,7 @@ public class DayPanelController : MonoBehaviour
             dayButton.onClick.AddListener(ClickDayButton);
 
         UpdateDayCounter();
-        dayButton.interactable = false;//the first animations will give a signal when
+        dayButton.interactable = false;
     }
 
     private void SubscribeDependencies()
@@ -32,7 +32,7 @@ public class DayPanelController : MonoBehaviour
     {
         if (dayCounterText != null)
         {
-            dayCounterText.text = $"Day {DataManager.Instance.currentDay}";
+            dayCounterText.text = DataManager.Instance.currentDay.ToString();
         }
     }
 
@@ -47,7 +47,7 @@ public class DayPanelController : MonoBehaviour
     }
     private void RequestStatsUpdate()
     {
-        dayButton.interactable = GameManager.Instance.GetStatsUpdate(); // return true if any reward karmma gain > 0, else false
+        dayButton.interactable = GameManager.Instance.GetStatsUpdate();
     }
 
     private void OnDestroy()
