@@ -197,18 +197,6 @@ public class GameBalance : ScriptableObject
         return perSpecial * 3f;
     }
 
-  
-
-    public float CalculateDifficulty()
-    {
-        return 0f;
-    }
-
-    public float CalculateDaysToWin()
-    {
-        return 0f;
-    }
-
     public void SetOrganMul(int risk)
     {
         ordinaryMul = 0f;
@@ -220,39 +208,5 @@ public class GameBalance : ScriptableObject
             _ => (0.05f, 0.01f, 0.05f, 0.03f, 0.07f, 0.09f)
         };
     }
-
-    public string GetBalanceWarning()
-    {
-        float days = CalculateDaysToWin();
-
-        if (days <= 0f)
-            return "НЕПРОХОДИМО! Слишком высокие требования пациентов";
-        else if (days < 10f)
-            return "Очень легко, пройдёте быстро";
-        else if (days < 20f)
-            return "Нормальная сложность";
-        else if (days < 40f)
-            return "Сложно, потребуется стратегия";
-        else
-            return "Экстрим, только для опытных";
-    }
-
-    // --------------------------------------------------------------
-    // Обновить все (вызывать в Editor или при старте)
-    // --------------------------------------------------------------
-    [ContextMenu("Recalculate Balance Predictions")]
-    public void RecalculatePredictions()
-    {
-        CalculateDaysToWin();
-        CalculateDifficulty();
-    }
-
-#if UNITY_EDITOR
-    private void OnValidate()
-    {
-        RecalculatePredictions();
-    }
-#endif
-
 
 }

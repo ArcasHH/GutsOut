@@ -201,6 +201,7 @@ public class CustomDifficultyUI : MonoBehaviour
         int intValue = Mathf.RoundToInt(value);
         customBalance.baseReqRelease = intValue;
         customBalance.typeReqRelease = intValue * 2;
+        collectionNeedText.text = $"requires: {intValue}-{intValue * 2} ";
         UpdatePreview();
     }
 
@@ -229,13 +230,13 @@ public class CustomDifficultyUI : MonoBehaviour
         DataManager.Instance.SaveCustomBalance();
         if (previewText != null && customBalance != null)
         {
-            previewText.text = customBalance.GetBalanceWarning();
+            //previewText.text = customBalance.GetBalanceWarning();
             dayText.text = $"game length: {customBalance.predictedDaysToWin} days";
             
-            difficultySlider.value = customBalance.predictedDifficulty;
-            if (customBalance.predictedDaysToWin == 0) difficultySlider.value = 10;
+            difficultySlider.value = CalculateDifficulty();
+            //if (customBalance.predictedDaysToWin == 0) difficultySlider.value = 10;
         }
-        customBalance.RecalculatePredictions();
+        //customBalance.RecalculatePredictions();
     }
 
     public void ResetToDefault()
@@ -250,6 +251,42 @@ public class CustomDifficultyUI : MonoBehaviour
         DataManager.Instance.SaveCustomBalance();
 
         Debug.Log("Custom balance reset to default");
+    }
+
+    private float CalculateDifficulty()
+    {
+     
+        float duration = durationSlider.value + 1f ;
+        float startNeed = startNeedSlider.value;
+        float r = randomGrowthSlider.value;
+        float requires = collectionNeedSlider.value;
+        float risk = organSlider.value;
+        float knife = knifeCostIncreaseSlider.value;
+        float reward = karmaRewardSlider.value;
+
+        float timePressure = 0f;
+
+        timePressure = (requires / duration);
+        timePressure = Mathf.Clamp(timePressure, 0.1f, 100f);
+
+        float startFactor = (startNeed - 1f) / 9f;
+
+        float knifeRisk = (knife) * (1f / (reward + 1f));
+
+        float riskMultiplier = 1f;
+        if (risk == -1) riskMultiplier = 1.5f;
+        else if (risk == 1) riskMultiplier = 0.5f;
+
+        float knifeFactor = (knifeRisk * riskMultiplier * 2f);
+
+        float smooth = (1f + r) / (2f * r);
+
+        float rawDifficulty = timePressure * startFactor * knifeFactor;
+        float adjusted = rawDifficulty * smooth;
+
+        float finalDifficulty = Mathf.Clamp(adjusted * 2.5f, 0f, 100f);
+
+        return finalDifficulty;
     }
 
     private void OnDestroy()
