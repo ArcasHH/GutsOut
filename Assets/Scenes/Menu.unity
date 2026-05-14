@@ -1475,39 +1475,35 @@ MonoBehaviour:
   gameMixerGroup: {fileID: 6117710261231542319, guid: 082023e11d9c4d541b236a0d2bac5a30, type: 2}
   sounds:
   - type: 6
-    clip: {fileID: 8300000, guid: 8fe0a1e8bbf10324a936466723f69bf2, type: 3}
+    clip: {fileID: 8300000, guid: c98d30922ffa66943b5c8bfb728386f4, type: 3}
     volume: 1
     source: {fileID: 0}
   - type: 7
-    clip: {fileID: 8300000, guid: b14b02513cd6b6c439cec07dfb8ae879, type: 3}
+    clip: {fileID: 8300000, guid: 75b113445573b114880015626bda15df, type: 3}
     volume: 0.5
     source: {fileID: 0}
   - type: 1
-    clip: {fileID: 8300000, guid: d7eb85ad21c227a4386e8af0b195e75c, type: 3}
+    clip: {fileID: 8300000, guid: d95c0b4eb767d8c479755b98e5e9aab2, type: 3}
     volume: 1
     source: {fileID: 0}
   - type: 0
-    clip: {fileID: 8300000, guid: cbbafbf670d38d3429a7666a5f40277c, type: 3}
-    volume: 1
-    source: {fileID: 0}
-  - type: 0
-    clip: {fileID: 8300000, guid: cbbafbf670d38d3429a7666a5f40277c, type: 3}
+    clip: {fileID: 8300000, guid: 47a282d9d3065b2428933169fdbdd8c0, type: 3}
     volume: 1
     source: {fileID: 0}
   - type: 12
-    clip: {fileID: 8300000, guid: b14b02513cd6b6c439cec07dfb8ae879, type: 3}
+    clip: {fileID: 8300000, guid: 75b113445573b114880015626bda15df, type: 3}
     volume: 1
     source: {fileID: 0}
   - type: 13
-    clip: {fileID: 8300000, guid: 14e5436d15184f745a6d03bdc3eccc5a, type: 3}
+    clip: {fileID: 8300000, guid: 8490c5a823efd8b4d8b6edafdbcec40e, type: 3}
     volume: 1
     source: {fileID: 0}
   - type: 14
-    clip: {fileID: 8300000, guid: 41f3a5df872bef948b2a084fb2a37311, type: 3}
+    clip: {fileID: 8300000, guid: 08999584180115c44af608e6bacdc79e, type: 3}
     volume: 1
     source: {fileID: 0}
   - type: 11
-    clip: {fileID: 8300000, guid: d4dcd9c8569e2b54abb5a08cd4ea3e9d, type: 3}
+    clip: {fileID: 8300000, guid: 57064143c7dd54b43bc1a7397beea1f4, type: 3}
     volume: 1
     source: {fileID: 0}
   masterVolume: 1
