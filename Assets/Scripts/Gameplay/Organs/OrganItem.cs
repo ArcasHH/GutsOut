@@ -146,7 +146,13 @@ public class OrganItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
     private void SetText()
     {
         if (statsText == null) return;
-        statsText.text = $"{GetStat(StatType.Mind)}\n{GetStat(StatType.Soul)}\n{GetStat(StatType.Body)}";
+        string mind = "";
+        if (GetStat(StatType.Mind) > 0) mind = "+";
+        string soul = "";
+        if (GetStat(StatType.Soul) > 0) soul = "+";
+        string body = "";
+        if (GetStat(StatType.Body) > 0) body = "+";
+        statsText.text = $"{mind}{GetStat(StatType.Mind)}\n{soul}{GetStat(StatType.Soul)}\n{body}{GetStat(StatType.Body)}";
     }
 
     private void SetOutline()
