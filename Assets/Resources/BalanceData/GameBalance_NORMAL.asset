@@ -17,26 +17,32 @@ MonoBehaviour:
   badBase: 0.5
   ordinaryBase: 1
   goodBase: 0.5
-  rareBase: 0.2
-  epicBase: 0.08
-  legendaryBase: 0.02
-  cursedMul: 0.02
-  badMul: 0.01
+  rareBase: 0.1
+  epicBase: 0.02
+  legendaryBase: 0.01
+  cursedMul: 0.05
+  badMul: 0.04
   ordinaryMul: 0
-  goodMul: 0.01
-  rareMul: 0.02
-  epicMul: 0.025
-  legendaryMul: 0.03
-  rewardForOne: 10
-  rewardForTwo: 30
-  rewardForThree: 50
+  goodMul: 0.02
+  rareMul: 0.03
+  epicMul: 0.04
+  legendaryMul: 0.05
+  rewardForOne: 8
+  rewardForTwo: 25
+  rewardForThree: 40
   knifeBaseCost: 5
   knifeCostIncrease: 2
   startRec: 4
-  mulDay: 0.08
+  mulDay: 0.1
   pow: 1.4
   divLowReq: 4
   baseReqEditor: 1
   typeReqEditor: 2
-  baseReqRelease: 10
-  typeReqRelease: 20
+  baseReqRelease: 15
+  typeReqRelease: 30
+  predictedDaysToWin: 0
+  predictedDifficulty: 0
+  predictedWinRate: 0
+  initialWealth: 1
+  progressionSpeed: 0
+  riskRewardBalance: 0

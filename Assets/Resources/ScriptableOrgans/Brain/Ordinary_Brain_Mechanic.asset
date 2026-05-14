@@ -16,5 +16,5 @@ MonoBehaviour:
   category_type: 1
   quality_type: 2
   mind: 3
-  soul: 0
-  body: -1
+  soul: 1
+  body: -2

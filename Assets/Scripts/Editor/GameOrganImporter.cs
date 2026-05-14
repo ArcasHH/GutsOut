@@ -43,7 +43,7 @@ public class GameOrganImporter : EditorWindow
             string line = lines[i].Trim();
             if (string.IsNullOrEmpty(line)) continue;
 
-            string[] fields = line.Split(';');
+            string[] fields = line.Split(',');
 
             if (fields.Length < 6)
             {

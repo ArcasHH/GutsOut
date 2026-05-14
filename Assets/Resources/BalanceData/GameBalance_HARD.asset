@@ -13,30 +13,36 @@ MonoBehaviour:
   m_Name: GameBalance_HARD
   m_EditorClassIdentifier: Assembly-CSharp::GameBalance
   difficultyName: HARD
-  cursedBase: 0.3
-  badBase: 0.5
+  cursedBase: 0.4
+  badBase: 0.8
   ordinaryBase: 1
-  goodBase: 0.6
-  rareBase: 0.12
-  epicBase: 0.05
-  legendaryBase: 0.01
-  cursedMul: 0.05
+  goodBase: 0.4
+  rareBase: 0.1
+  epicBase: 0.04
+  legendaryBase: 0.02
+  cursedMul: 0.04
   badMul: 0.02
   ordinaryMul: 0
   goodMul: 0
   rareMul: 0.01
   epicMul: 0.03
   legendaryMul: 0.04
-  rewardForOne: 10
-  rewardForTwo: 30
-  rewardForThree: 50
+  rewardForOne: 5
+  rewardForTwo: 15
+  rewardForThree: 30
   knifeBaseCost: 5
   knifeCostIncrease: 3
-  startRec: 4
-  mulDay: 0.04
-  pow: 1.6
+  startRec: 5
+  mulDay: 0.3
+  pow: 1.1
   divLowReq: 3
   baseReqEditor: 1
   typeReqEditor: 2
-  baseReqRelease: 15
-  typeReqRelease: 25
+  baseReqRelease: 20
+  typeReqRelease: 40
+  predictedDaysToWin: 0
+  predictedDifficulty: 0
+  predictedWinRate: 0
+  initialWealth: 1
+  progressionSpeed: 0
+  riskRewardBalance: 0
