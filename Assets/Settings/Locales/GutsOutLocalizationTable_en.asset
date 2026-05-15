@@ -127,13 +127,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 46604136742912
-    m_Localized: back
+    m_Localized: let's play!
     m_Metadata:
       m_Items: []
   - m_Id: 46803722698752
     m_Localized: "The goal is to perform a RITUAL. \n\nCertain types of organs are
-      needed \n(a robot is waiting for mechanical organs)\n\nThere will be more valuable
-      organs over time.\n\nGood Luck !!!"
+      needed \nThere will be more valuable organs over time.\n\nGood Luck !!!"
     m_Metadata:
       m_Items: []
   - m_Id: 47009851768832

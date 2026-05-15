@@ -104,6 +104,14 @@ PrefabInstance:
       propertyPath: m_UseGraphicAlpha
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4341952176094059358, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 278
+      objectReference: {fileID: 0}
+    - target: {fileID: 4341952176094059358, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 360
+      objectReference: {fileID: 0}
     - target: {fileID: 4920909718357398157, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
       propertyPath: m_Size.y
       value: 419.8639
@@ -113,6 +121,10 @@ PrefabInstance:
       value: -17.614494
       objectReference: {fileID: 0}
     - target: {fileID: 6978871441027045319, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1178249896726043547, guid: f465aca5e4be76b44865a9c3babca19f, type: 3}
+    - target: {fileID: 7599710736040343482, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 1178249896726043547, guid: f465aca5e4be76b44865a9c3babca19f, type: 3}

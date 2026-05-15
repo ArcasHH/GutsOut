@@ -17,6 +17,8 @@ public class LanguageSwitcher : MonoBehaviour
 
         toggleEnglish.onValueChanged.AddListener(OnEnglishToggled);
         toggleRussian.onValueChanged.AddListener(OnRussianToggled);
+
+        SetColors();
     }
 
     IEnumerator InitializeAfterLocalization()
@@ -26,6 +28,18 @@ public class LanguageSwitcher : MonoBehaviour
         isInitialized = true;
 
         UpdateToggleState();
+    }
+
+    private void SetColors()
+    {
+        if (ColorPaletteManager.Instance != null)
+        {
+            ColorBlock colors = toggleEnglish.colors;
+            colors.highlightedColor = ColorPaletteManager.Instance.CurrentPalette.toggleHoverColor;
+            colors.pressedColor = ColorPaletteManager.Instance.CurrentPalette.ButtonClickColor;
+            toggleEnglish.colors = colors;
+            toggleRussian.colors = colors;
+        }
     }
 
     void UpdateToggleState()

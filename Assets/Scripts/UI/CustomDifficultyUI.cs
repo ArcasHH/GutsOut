@@ -29,8 +29,8 @@ public class CustomDifficultyUI : MonoBehaviour
     [SerializeField] private Slider karmaRewardSlider;
     [SerializeField] private TMP_Text karmaRewardText;
 
-    [Header("UI References")]
-    [SerializeField] private GameObject customSettingsPanel;
+    //[Header("UI References")]
+    //[SerializeField] private GameObject customSettingsPanel;
 
     [Header("Preview")]
     [SerializeField] private TMP_Text previewText;
@@ -84,28 +84,91 @@ public class CustomDifficultyUI : MonoBehaviour
             {
                 karmaRewardSlider.onValueChanged.AddListener(OnKarmaRewardChanged);
             }
-
+            SetParamsActive(false);
             UpdateUI();
         }
 
-        if (customSettingsPanel != null)
+        //if (customSettingsPanel != null)
+        //{
+        //    customSettingsPanel.SetActive(false);
+        //}
+
+        SubscribeDependencies();
+    }
+
+    private void SubscribeDependencies()
+    {
+        EventBus.OnShowCustomDifficulty += SetParamsActive;
+    }
+    private void UnsubscribeDependencies()
+    {
+        EventBus.OnShowCustomDifficulty -= SetParamsActive;
+    }
+
+    private void SetParamsActive(bool is_active)
+    {
+        if (knifeBaseCostSlider != null)
         {
-            customSettingsPanel.SetActive(false);
+            knifeBaseCostSlider.interactable = is_active;
+        }
+
+        if (knifeCostIncreaseSlider != null)
+        {
+            knifeCostIncreaseSlider.interactable = is_active;
+        }
+
+        if (startNeedSlider != null)
+        {
+            startNeedSlider.interactable = is_active;
+        }
+        if (durationSlider != null)
+        {
+            durationSlider.interactable = is_active;
+        }
+        if (randomGrowthSlider != null)
+        {
+            randomGrowthSlider.interactable = is_active;
+        }
+        if (collectionNeedSlider != null)
+        {
+            collectionNeedSlider.interactable = is_active;
+        }
+
+        if (organSlider != null)
+        {
+            organSlider.interactable = is_active;
+        }
+
+        if (karmaRewardSlider != null)
+        {
+            karmaRewardSlider.interactable = is_active;
         }
     }
 
     private void OnDifficultyChanged(Difficulty newDifficulty)
     {
-        if (customSettingsPanel != null)
-        {
-            customSettingsPanel.SetActive(newDifficulty == Difficulty.Custom);
-        }
+        //if (customSettingsPanel != null)
+        //{
+        //    customSettingsPanel.SetActive(newDifficulty == Difficulty.Custom);
+        //}
 
+        if (newDifficulty == Difficulty.Easy)
+        {
+            customBalance = DataManager.Instance.GetEasyBalance();
+        }
+        if (newDifficulty == Difficulty.Normal)
+        {
+            customBalance = DataManager.Instance.GetNormalBalance();
+        }
+        if (newDifficulty == Difficulty.Hard)
+        {
+            customBalance = DataManager.Instance.GetHardBalance();
+        }
         if (newDifficulty == Difficulty.Custom)
         {
             customBalance = DataManager.Instance.GetCustomBalance();
-            UpdateUI();
         }
+        UpdateUI();
     }
 
     private void UpdateUI()
@@ -218,8 +281,8 @@ public class CustomDifficultyUI : MonoBehaviour
     {
         int intValue = Mathf.RoundToInt(value);
         customBalance.rewardForOne = 2*intValue;
-        customBalance.rewardForOne = 6*intValue;
-        customBalance.rewardForOne = 10*intValue;
+        customBalance.rewardForTwo = 6*intValue;
+        customBalance.rewardForThree = 10*intValue;
         karmaRewardText.text = $"{intValue}";
 
         UpdatePreview();
@@ -295,5 +358,6 @@ public class CustomDifficultyUI : MonoBehaviour
         {
             DataManager.Instance.OnDifficultyChanged -= OnDifficultyChanged;
         }
+        UnsubscribeDependencies();
     }
 }

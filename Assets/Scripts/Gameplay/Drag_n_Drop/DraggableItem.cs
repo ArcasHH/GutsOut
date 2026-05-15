@@ -73,7 +73,8 @@ public abstract class DraggableItem : MonoBehaviour, IPointerDownHandler, IDragH
         rectTransform.anchoredPosition = mouseInCanvas;
 
         canvasGroup.blocksRaycasts = false;
-        canvasGroup.alpha = 0.85f;
+        canvasGroup.alpha = 0.95f;
+
         EventBus.TriggerInventoryChanged();
     }
 

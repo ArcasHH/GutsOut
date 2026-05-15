@@ -155,6 +155,19 @@ public class DataManager : MonoBehaviour
 #endif
     }
 
+    
+    public GameBalance GetEasyBalance()
+    {
+        return easyBalance;
+    }
+    public GameBalance GetNormalBalance()
+    {
+        return normalBalance;
+    }
+    public GameBalance GetHardBalance()
+    {
+        return hardBalance;
+    }
     public GameBalance GetCustomBalance()
     {
         return customBalance;

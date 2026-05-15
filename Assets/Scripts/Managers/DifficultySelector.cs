@@ -17,7 +17,40 @@ public class DifficultySelector : MonoBehaviour
         hardToggle.onValueChanged.AddListener((isOn) => OnDifficultySelected(Difficulty.Hard, isOn));
         customToggle.onValueChanged.AddListener((isOn) => OnDifficultySelected(Difficulty.Custom, isOn));
 
+        easyToggle.onValueChanged.AddListener((isOn) => changeDifficultSettingsEnable(false, isOn));
+        normalToggle.onValueChanged.AddListener((isOn) => changeDifficultSettingsEnable(false, isOn));
+        hardToggle.onValueChanged.AddListener((isOn) => changeDifficultSettingsEnable(false, isOn));
+        customToggle.onValueChanged.AddListener((isOn) => changeDifficultSettingsEnable(true, isOn));
+
         LoadSavedDifficulty();
+        SetColors();
+    }
+
+    private void SetColors()
+    {
+        if (ColorPaletteManager.Instance != null)
+        {
+            ColorBlock colors = easyToggle.colors;
+            colors.highlightedColor = ColorPaletteManager.Instance.CurrentPalette.toggleHoverColor;
+            colors.pressedColor = ColorPaletteManager.Instance.CurrentPalette.ButtonClickColor;
+            easyToggle.colors = colors;
+            normalToggle.colors = colors;
+            hardToggle.colors = colors;
+            customToggle.colors = colors;
+        }
+    }
+
+    private void changeDifficultSettingsEnable(bool is_custom, bool isOn)
+    {
+        if (!isOn) return;
+        if (is_custom)
+        {
+            EventBus.TriggerShowCustomDifficulty(true);
+        }
+        else
+        {
+            EventBus.TriggerShowCustomDifficulty(false);
+        }
     }
 
     private void OnDifficultySelected(Difficulty difficulty, bool isOn)

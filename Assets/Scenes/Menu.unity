@@ -572,19 +572,7 @@ MonoBehaviour:
   m_Group: {fileID: 153913078}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1492439962}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_IsOn: 1
 --- !u!1 &87799334
 GameObject:
@@ -787,6 +775,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 90486036}
   m_CullTransparentMesh: 1
+--- !u!1 &124337780 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+  m_PrefabInstance: {fileID: 246298129}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &125780514
 GameObject:
   m_ObjectHideFlags: 0
@@ -1611,6 +1604,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 654761584}
     - targetCorrespondingSourceObject: {fileID: 5270943497740382647, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1688816853}
@@ -2833,7 +2829,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4564803704417802939, guid: e710b31da43a1254d8683306fe82a952, type: 3}
   m_PrefabInstance: {fileID: 1752629495}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 980785074}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
@@ -3272,31 +3268,32 @@ MonoBehaviour:
   m_Group: {fileID: 153913078}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1492439962}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_IsOn: 0
 --- !u!114 &654761582 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4564803704417802939, guid: e710b31da43a1254d8683306fe82a952, type: 3}
   m_PrefabInstance: {fileID: 246298129}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 124337780}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+--- !u!114 &654761584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 124337780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004ab3ea107a1fc4ab61d5cd51d1a3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MySlider
+  bgImage: {fileID: 0}
 --- !u!1 &683625953
 GameObject:
   m_ObjectHideFlags: 0
@@ -3552,6 +3549,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1465282270}
     - targetCorrespondingSourceObject: {fileID: 5270943497740382647, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       insertIndex: -1
       addedObject: {fileID: 29817561}
@@ -4230,11 +4230,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 95117860246212558, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 95117860246212558, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 95117860246212558, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4254,7 +4254,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 95117860246212558, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 500
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 95117860246212558, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
       propertyPath: m_SizeDelta.y
@@ -4290,11 +4290,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 95117860246212558, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -300
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 95117860246212558, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 150
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 95117860246212558, guid: 109639aa2693d61479a1e87ae0767c18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4626,6 +4626,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1476839978}
     - targetCorrespondingSourceObject: {fileID: 5270943497740382647, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       insertIndex: -1
       addedObject: {fileID: 198657846}
@@ -4640,7 +4643,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4564803704417802939, guid: e710b31da43a1254d8683306fe82a952, type: 3}
   m_PrefabInstance: {fileID: 894014374}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1476839976}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
@@ -4772,7 +4775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3760140239375411260, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.6
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 3760140239375411260, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4780,7 +4783,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3760140239375411260, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.6
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 4564803704417802939, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       propertyPath: m_Value
@@ -4788,11 +4791,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4564803704417802939, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       propertyPath: m_MaxValue
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4564803704417802939, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       propertyPath: m_MinValue
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4564803704417802939, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       propertyPath: m_WholeNumbers
@@ -4829,6 +4832,9 @@ PrefabInstance:
       insertIndex: 1
       addedObject: {fileID: 2102136371}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1488080624}
     - targetCorrespondingSourceObject: {fileID: 5270943497740382647, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1857013591}
@@ -4843,7 +4849,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4564803704417802939, guid: e710b31da43a1254d8683306fe82a952, type: 3}
   m_PrefabInstance: {fileID: 901998221}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1488080622}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
@@ -5153,6 +5159,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 940949994}
   m_CullTransparentMesh: 1
+--- !u!1 &962776405 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+  m_PrefabInstance: {fileID: 3591455612847981048}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &980785074 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+  m_PrefabInstance: {fileID: 1752629495}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &980785076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980785074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004ab3ea107a1fc4ab61d5cd51d1a3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MySlider
+  bgImage: {fileID: 0}
 --- !u!1 &989487436
 GameObject:
   m_ObjectHideFlags: 0
@@ -5623,6 +5652,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1441640087}
     - targetCorrespondingSourceObject: {fileID: 5270943497740382647, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1656763909}
@@ -5637,7 +5669,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4564803704417802939, guid: e710b31da43a1254d8683306fe82a952, type: 3}
   m_PrefabInstance: {fileID: 1072351822}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1441640085}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
@@ -6336,6 +6368,9 @@ PrefabInstance:
       insertIndex: 1
       addedObject: {fileID: 1946222007}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2145499486}
     - targetCorrespondingSourceObject: {fileID: 5270943497740382647, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1201261166}
@@ -6350,7 +6385,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4564803704417802939, guid: e710b31da43a1254d8683306fe82a952, type: 3}
   m_PrefabInstance: {fileID: 1201261160}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2145499484}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
@@ -6370,6 +6405,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LocalizedTMP
   translationKey: requires
   autoAdjustSpacing: 1
+--- !u!1 &1208699197 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+  m_PrefabInstance: {fileID: 701194167}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1229720240
 GameObject:
   m_ObjectHideFlags: 0
@@ -6616,22 +6656,58 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1254177654 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+  m_PrefabInstance: {fileID: 1809890274}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1255550134 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5270943497740382647, guid: e710b31da43a1254d8683306fe82a952, type: 3}
   m_PrefabInstance: {fileID: 1752629495}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1441640085 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+  m_PrefabInstance: {fileID: 1072351822}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1441640087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441640085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004ab3ea107a1fc4ab61d5cd51d1a3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MySlider
+  bgImage: {fileID: 0}
 --- !u!114 &1465282268 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4564803704417802939, guid: e710b31da43a1254d8683306fe82a952, type: 3}
   m_PrefabInstance: {fileID: 701194167}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1208699197}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+--- !u!114 &1465282270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208699197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004ab3ea107a1fc4ab61d5cd51d1a3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MySlider
+  bgImage: {fileID: 0}
 --- !u!1 &1471972934
 GameObject:
   m_ObjectHideFlags: 0
@@ -6784,6 +6860,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LocalizedTMP
   translationKey: need_settings
   autoAdjustSpacing: 1
+--- !u!1 &1476839976 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+  m_PrefabInstance: {fileID: 894014374}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1476839978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476839976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004ab3ea107a1fc4ab61d5cd51d1a3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MySlider
+  bgImage: {fileID: 0}
+--- !u!1 &1488080622 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+  m_PrefabInstance: {fileID: 901998221}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1488080624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488080622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004ab3ea107a1fc4ab61d5cd51d1a3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MySlider
+  bgImage: {fileID: 0}
 --- !u!1 &1492439962
 GameObject:
   m_ObjectHideFlags: 0
@@ -6848,7 +6960,6 @@ MonoBehaviour:
   organSlider: {fileID: 1465282268}
   karmaRewardSlider: {fileID: 1809890277}
   karmaRewardText: {fileID: 788846655}
-  customSettingsPanel: {fileID: 1492439962}
   previewText: {fileID: 61520658}
   dayText: {fileID: 494829987}
   difficultySlider: {fileID: 654761582}
@@ -7831,7 +7942,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3760140239375411260, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 3760140239375411260, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       propertyPath: m_AnchorMax.y
@@ -7839,11 +7950,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3760140239375411260, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4564803704417802939, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       propertyPath: m_Value
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8058421474909683745, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       propertyPath: m_AnchorMax.x
@@ -7876,6 +7987,9 @@ PrefabInstance:
       insertIndex: 1
       addedObject: {fileID: 42357753}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 980785076}
     - targetCorrespondingSourceObject: {fileID: 5270943497740382647, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1511417390}
@@ -7965,19 +8079,7 @@ MonoBehaviour:
   m_Group: {fileID: 153913078}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1492439962}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 1
+      m_Calls: []
   m_IsOn: 0
 --- !u!224 &1765765355 stripped
 RectTransform:
@@ -8242,6 +8344,9 @@ PrefabInstance:
       insertIndex: 1
       addedObject: {fileID: 788846653}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1809890279}
     - targetCorrespondingSourceObject: {fileID: 5270943497740382647, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1809890280}
@@ -8256,12 +8361,25 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4564803704417802939, guid: e710b31da43a1254d8683306fe82a952, type: 3}
   m_PrefabInstance: {fileID: 1809890274}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1254177654}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+--- !u!114 &1809890279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254177654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004ab3ea107a1fc4ab61d5cd51d1a3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MySlider
+  bgImage: {fileID: 0}
 --- !u!114 &1809890280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8537,19 +8655,7 @@ MonoBehaviour:
   m_Group: {fileID: 153913078}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1492439962}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_IsOn: 0
 --- !u!1 &1865485709
 GameObject:
@@ -9259,6 +9365,7 @@ MonoBehaviour:
   - buttonHoverColor: {r: 0.5849056, g: 0.2896938, b: 0.2896938, a: 1}
     ButtonClickColor: {r: 0.25943398, g: 0.25943398, b: 0.25943398, a: 1}
     outlineColor: {r: 1, g: 0.6938923, b: 0, a: 1}
+    toggleHoverColor: {r: 1, g: 0.4584905, b: 0.4584905, a: 1}
     cursedOrganColor: {r: 0.3679245, g: 0.10586506, b: 0.10586506, a: 1}
     badOrganColor: {r: 0.6792453, g: 0.46457815, b: 0.46457815, a: 1}
     ordinaryOrganColor: {r: 1, g: 1, b: 1, a: 1}
@@ -9347,6 +9454,24 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &2145499484 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+  m_PrefabInstance: {fileID: 1201261160}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2145499486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2145499484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004ab3ea107a1fc4ab61d5cd51d1a3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MySlider
+  bgImage: {fileID: 0}
 --- !u!224 &95117861114845757 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2040659428161924386, guid: ba608ad76cdf4064998ec1379f4b39ee, type: 3}
@@ -9554,12 +9679,25 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4564803704417802939, guid: e710b31da43a1254d8683306fe82a952, type: 3}
   m_PrefabInstance: {fileID: 3591455612847981048}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 962776405}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+--- !u!114 &2180251125950908483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962776405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004ab3ea107a1fc4ab61d5cd51d1a3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MySlider
+  bgImage: {fileID: 0}
 --- !u!1001 &3591455612847981048
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9731,6 +9869,9 @@ PrefabInstance:
       insertIndex: 1
       addedObject: {fileID: 761658641}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1644425021906112961, guid: e710b31da43a1254d8683306fe82a952, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2180251125950908483}
     - targetCorrespondingSourceObject: {fileID: 5270943497740382647, guid: e710b31da43a1254d8683306fe82a952, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2057215865}

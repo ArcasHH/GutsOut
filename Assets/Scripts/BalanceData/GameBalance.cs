@@ -203,9 +203,9 @@ public class GameBalance : ScriptableObject
 
         (cursedMul, badMul, goodMul, rareMul, epicMul, legendaryMul) = risk switch
         {
-            -1 => (0.1f, 0.02f, 0f, 0.02f, 0.06f, 0.08f),
-            1 => (0f, 0f, 0.01f, 0.04f, 0.08f, 0.1f),
-            _ => (0.05f, 0.01f, 0.05f, 0.03f, 0.07f, 0.09f)
+            -1 => (0.1f, 0.02f, 0f, 0.01f, 0.04f, 0.06f),
+            1 => (0f, 0f, 0.02f, 0.04f, 0.08f, 0.1f),
+            _ => (0.05f, 0.01f, 0.01f, 0.02f, 0.06f, 0.08f)
         };
     }
 

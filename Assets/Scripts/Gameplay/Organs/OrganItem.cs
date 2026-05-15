@@ -11,8 +11,12 @@ public class OrganItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
     [SerializeField] private TMP_Text statsText;
 
     private GameOrgan data;
-    private Image organImage;
-    private Outline outline;
+    [SerializeField] private Image organImage;
+    [SerializeField] private Outline organOutline;
+    //private Outline outline;
+    [Header("Animation Parameters")]
+    [SerializeField] private string isDraggingParam = "isDragging";
+    [SerializeField] private Animator animator;
 
     public override ItemType Type => ConvertToItemType(organType);
     public override CategoryType CategoryType => data?.category_type ?? CategoryType.None;
@@ -33,8 +37,8 @@ public class OrganItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
             return;
         }
 
-        organImage = GetComponent<Image>();
-        outline = GetComponent<Outline>();
+        //organImage = GetComponent<Image>();
+        //organOutline = GetComponent<Outline>();
 
         SetColor();
         SetText();
@@ -51,13 +55,13 @@ public class OrganItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
     private void ShowStatsPanel()
     {
         if (statsPanel != null) statsPanel.SetActive(true);
-        if (outline != null) outline.enabled = true;
+        if (organOutline != null) organOutline.enabled = true;
     }
 
     private void HideStatsPanel()
     {
         if (statsPanel != null) statsPanel.SetActive(false);
-        if (outline != null) outline.enabled = false;
+        if (organOutline != null) organOutline.enabled = false;
     }
 
     protected override void HandleDrop(PointerEventData eventData)
@@ -90,6 +94,20 @@ public class OrganItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
         }
 
         if (!IsAnimating) ReturnToSource();
+    }
+
+    protected override void StartDragging(PointerEventData eventData)
+    {
+        base.StartDragging(eventData);
+        EventBus.TriggerDragOrgan(true);
+        SetDraggingAnim(true);
+    }
+
+    public override void OnEndDrag(PointerEventData eventData)
+    {
+        base.OnEndDrag(eventData);
+        EventBus.TriggerDragOrgan(false);
+        SetDraggingAnim(false);
     }
 
     private ItemType ConvertToItemType(ObjectType objectType)
@@ -157,7 +175,15 @@ public class OrganItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
 
     private void SetOutline()
     {
-        if (outline != null && ColorPaletteManager.Instance != null)
-            outline.effectColor = ColorPaletteManager.Instance.CurrentPalette.outlineColor;
+        if (organOutline != null && ColorPaletteManager.Instance != null)
+            organOutline.effectColor = ColorPaletteManager.Instance.CurrentPalette.outlineColor;
+    }
+
+    private void SetDraggingAnim(bool isDragging)
+    {
+        if (animator != null)
+        {
+            animator.SetBool(isDraggingParam, isDragging);
+        }
     }
 }
