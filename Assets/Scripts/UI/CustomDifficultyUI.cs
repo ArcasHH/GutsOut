@@ -205,7 +205,14 @@ public class CustomDifficultyUI : MonoBehaviour
         //Organ settings
         if (organSlider != null)
         {
-            organSlider.value = 0;
+            //organSlider.value = 0;
+            Difficulty diif = DataManager.Instance.GetCurrentDifficulty();
+            if (diif == Difficulty.Easy)
+                organSlider.value = 1;
+            if (diif == Difficulty.Normal)
+                organSlider.value = 0;
+            if (diif == Difficulty.Hard)
+                organSlider.value = -1;
         }
 
         if (karmaRewardSlider != null)
@@ -295,6 +302,7 @@ public class CustomDifficultyUI : MonoBehaviour
             AdjustCharacterSpacing();
         }
     }
+    
     private string GetDifficultyKey()
     {
         float value = difficultySlider.value;

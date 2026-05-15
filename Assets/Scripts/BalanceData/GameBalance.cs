@@ -147,65 +147,27 @@ public class GameBalance : ScriptableObject
     }
     #endregion
 
-    // --------------------------------------------------------------
-    // The average price of organs on a particular day
-    // --------------------------------------------------------------
-    private float GetAverageOrganPower(int day)
-    {
-        float totalWeight = 0f;
-        float weightedSum = 0f;
-
-        foreach (QualityType q in System.Enum.GetValues(typeof(QualityType)))
-        {
-            float weight = GetWeightWithDayCoef(q, day);
-            totalWeight += weight;
-            weightedSum += weight * GetOrganSumByRarity(q);
-        }
-
-        if (totalWeight <= 0f) return 0f;
-        return weightedSum / totalWeight;
-    }
-
-    // Total parameters of the organ (mind+soul+body) by rarity .. For simplicity, you can extend it via ScriptableObject or dictionary.
-    private float GetOrganSumByRarity(QualityType q)
-    {
-        switch (q)
-        {
-            case QualityType.Cursed: return 8f;
-            case QualityType.Bad: return 2f;
-            case QualityType.Ordinary: return 2f;
-            case QualityType.Good: return 4f;
-            case QualityType.Rare: return 8f;
-            case QualityType.Epic: return 14f;
-            case QualityType.Legendary: return 24f;
-            default: return 2f;
-        }
-    }
-
-
-    private float GetAveragePatientRequirementSum(int day)
-    {
-        var (maxReq, minReq) = CalculateRequirements(day);
-        return  3f * (minReq + maxReq) / 2f;
-    }
-
-    private float GetSpecialPatientsTotalRequirement()
-    {
-        int baseReq = GetBaseReq();
-        int typeReq = GetTypeReq();
-        float perSpecial = baseReq + baseReq + typeReq;
-        return perSpecial * 3f;
-    }
-
     public void SetOrganMul(int risk)
     {
         ordinaryMul = 0f;
 
+        //(cursedMul, badMul, goodMul, rareMul, epicMul, legendaryMul) = risk switch
+        //{
+        //    -1 => (0.1f, 0.02f, 0f, 0.01f, 0.04f, 0.06f),
+        //    1 => (0f, 0f, 0.02f, 0.04f, 0.08f, 0.1f),
+        //    _ => (0.05f, 0.01f, 0.01f, 0.02f, 0.06f, 0.08f)
+        //};
         (cursedMul, badMul, goodMul, rareMul, epicMul, legendaryMul) = risk switch
         {
-            -1 => (0.1f, 0.02f, 0f, 0.01f, 0.04f, 0.06f),
-            1 => (0f, 0f, 0.02f, 0.04f, 0.08f, 0.1f),
-            _ => (0.05f, 0.01f, 0.01f, 0.02f, 0.06f, 0.08f)
+            -1 => (0.04f, 0.01f, 0f, 0.01f, 0.03f, 0.04f),
+            1 => (0.02f, 0.01f, 0.03f, 0.05f, 0.05f, 0.05f),
+            _ => (0.03f, 0.02f, 0.02f, 0.03f, 0.04f, 0.05f)
+        };
+        (cursedBase, badBase, ordinaryBase, goodBase, rareBase, epicBase, legendaryBase) = risk switch
+        {
+            -1 => (0.4f, 0.8f, 0.8f, 0.3f, 0.1f, 0.01f, 0f),
+            1 => (0.1f, 0.2f, 1f, 0.6f, 0.1f, 0.01f, 0f),
+            _ => (0.2f, 0.5f, 1f, 0.5f, 0.1f, 0.02f, 0.01f)
         };
     }
 
