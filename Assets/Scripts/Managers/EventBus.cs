@@ -22,6 +22,7 @@ public static class EventBus
     public static Action<bool> OnShowCustomDifficulty;
 
     public static Action<bool> OnDragOrgan;
+    public static Action<int, int, int> OnDragOrganStats;
 
     //Common
 
@@ -41,6 +42,7 @@ public static class EventBus
     public static void TriggerShowCustomDifficulty(bool is_custom) => OnShowCustomDifficulty?.Invoke(is_custom);
 
     public static void TriggerDragOrgan(bool is_dragging) => OnDragOrgan?.Invoke(is_dragging);
+    public static void TriggerDragOrganStats(int mind, int soul, int body) => OnDragOrganStats?.Invoke(mind, soul, body);
 
     public static void ClearAllSubscriptions()
     {
@@ -59,5 +61,6 @@ public static class EventBus
 
         OnShowCustomDifficulty = null;
         OnDragOrgan = null;
+        OnDragOrganStats = null;
     }
 }

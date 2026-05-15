@@ -1,6 +1,9 @@
-using UnityEngine;
-using UnityEngine.UI;
+using System.Xml;
 using TMPro;
+using UnityEngine;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Settings;
+using UnityEngine.UI;
 
 public class CustomDifficultyUI : MonoBehaviour
 {
@@ -29,15 +32,16 @@ public class CustomDifficultyUI : MonoBehaviour
     [SerializeField] private Slider karmaRewardSlider;
     [SerializeField] private TMP_Text karmaRewardText;
 
-    //[Header("UI References")]
-    //[SerializeField] private GameObject customSettingsPanel;
-
     [Header("Preview")]
     [SerializeField] private TMP_Text previewText;
-    [SerializeField] private TMP_Text dayText;
     [SerializeField] private Slider difficultySlider;
 
     private GameBalance customBalance;
+
+    private float russianSpacing = -42f;
+    private float russianWordSpacing = 42f;
+    private float defaultSpacing = 0f;
+    private float defaultWordSpacing = 0f;
 
     private void Start()
     {
@@ -87,11 +91,6 @@ public class CustomDifficultyUI : MonoBehaviour
             SetParamsActive(false);
             UpdateUI();
         }
-
-        //if (customSettingsPanel != null)
-        //{
-        //    customSettingsPanel.SetActive(false);
-        //}
 
         SubscribeDependencies();
     }
@@ -147,10 +146,6 @@ public class CustomDifficultyUI : MonoBehaviour
 
     private void OnDifficultyChanged(Difficulty newDifficulty)
     {
-        //if (customSettingsPanel != null)
-        //{
-        //    customSettingsPanel.SetActive(newDifficulty == Difficulty.Custom);
-        //}
 
         if (newDifficulty == Difficulty.Easy)
         {
@@ -215,7 +210,7 @@ public class CustomDifficultyUI : MonoBehaviour
 
         if (karmaRewardSlider != null)
         {
-            karmaRewardSlider.value = customBalance.rewardForOne * 2;
+            karmaRewardSlider.value = customBalance.rewardForOne;
         }
 
         UpdatePreview();
@@ -280,9 +275,9 @@ public class CustomDifficultyUI : MonoBehaviour
     private void OnKarmaRewardChanged(float value)
     {
         int intValue = Mathf.RoundToInt(value);
-        customBalance.rewardForOne = 2*intValue;
-        customBalance.rewardForTwo = 6*intValue;
-        customBalance.rewardForThree = 10*intValue;
+        customBalance.rewardForOne = intValue;
+        customBalance.rewardForTwo = 3*intValue;
+        customBalance.rewardForThree = 5*intValue;
         karmaRewardText.text = $"{intValue}";
 
         UpdatePreview();
@@ -293,13 +288,60 @@ public class CustomDifficultyUI : MonoBehaviour
         DataManager.Instance.SaveCustomBalance();
         if (previewText != null && customBalance != null)
         {
-            //previewText.text = customBalance.GetBalanceWarning();
-            dayText.text = $"game length: {customBalance.predictedDaysToWin} days";
-            
             difficultySlider.value = CalculateDifficulty();
-            //if (customBalance.predictedDaysToWin == 0) difficultySlider.value = 10;
+            string difficultyKey = GetDifficultyKey();
+            string localizedText = GetLocalizedString(difficultyKey);
+            previewText.text = localizedText;
+            AdjustCharacterSpacing();
         }
-        //customBalance.RecalculatePredictions();
+    }
+    private string GetDifficultyKey()
+    {
+        float value = difficultySlider.value;
+
+        if (value <= 2f)
+            return "isEasy";
+        else if (value <= 8f)
+            return "isNorm";
+        else
+            return "isHard";
+    }
+    private string GetLocalizedString(string key)
+    {
+        var table = LocalizationSettings.StringDatabase.GetTable("GutsOutLocalizationTable");
+        if (table != null)
+        {
+            var entry = table.GetEntry(key);
+            if (entry != null)
+            {
+                return entry.GetLocalizedString();
+            }
+        }
+
+        return key switch
+        {
+            "isEasy" => "Easy",
+            "isNorm" => "Normal",
+            "isHard" => "Hard",
+            _ => "Unknown"
+        };
+    }
+    private void AdjustCharacterSpacing()
+    {
+        if (previewText == null) return;
+
+        string currentLanguage = LocalizationSettings.SelectedLocale.Identifier.Code;
+
+        if (currentLanguage == "ru")
+        {
+            previewText.characterSpacing = russianSpacing;
+            previewText.wordSpacing = russianWordSpacing;
+        }
+        else
+        {
+            previewText.characterSpacing = defaultSpacing;
+            previewText.wordSpacing = defaultWordSpacing;
+        }
     }
 
     public void ResetToDefault()
@@ -332,7 +374,7 @@ public class CustomDifficultyUI : MonoBehaviour
         timePressure = (requires / duration);
         timePressure = Mathf.Clamp(timePressure, 0.1f, 100f);
 
-        float startFactor = (startNeed - 1f) / 9f;
+        float startFactor = (startNeed - 1f) / 4f;
 
         float knifeRisk = (knife) * (1f / (reward + 1f));
 
@@ -340,9 +382,9 @@ public class CustomDifficultyUI : MonoBehaviour
         if (risk == -1) riskMultiplier = 1.5f;
         else if (risk == 1) riskMultiplier = 0.5f;
 
-        float knifeFactor = (knifeRisk * riskMultiplier * 2f);
+        float knifeFactor = (knifeRisk * riskMultiplier * 4f);
 
-        float smooth = (1f + r) / (2f * r);
+        float smooth = (1f + r) / (4f*r);
 
         float rawDifficulty = timePressure * startFactor * knifeFactor;
         float adjusted = rawDifficulty * smooth;

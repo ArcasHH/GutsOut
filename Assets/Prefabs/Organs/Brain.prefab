@@ -108,6 +108,22 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 168
       objectReference: {fileID: 0}
+    - target: {fileID: 4341952176094059358, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4341952176094059358, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4341952176094059358, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432151627716481804, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6978871441027045319, guid: b3c6591c0564bb345a5c38c2b02e5801, type: 3}
       propertyPath: m_Sprite
       value: 

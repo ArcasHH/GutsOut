@@ -99,7 +99,10 @@ public class OrganItem : DraggableItem, IPointerEnterHandler, IPointerExitHandle
     protected override void StartDragging(PointerEventData eventData)
     {
         base.StartDragging(eventData);
+
         EventBus.TriggerDragOrgan(true);
+        EventBus.TriggerDragOrganStats(GetStat(StatType.Mind), GetStat(StatType.Soul), GetStat(StatType.Body));
+
         SetDraggingAnim(true);
     }
 

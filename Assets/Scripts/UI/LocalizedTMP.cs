@@ -19,12 +19,12 @@ public class LocalizedTMP : MonoBehaviour
     private float defaultSpacing = 0f;
     private float defaultWordSpacing = 0f;
 
-    private TextMeshProUGUI tmpText;
+    private TMP_Text tmpText;
     private LocalizeStringEvent localizeEvent;
 
     private void Awake()
     {
-        tmpText = GetComponent<TextMeshProUGUI>();
+        tmpText = GetComponent<TMP_Text>();
 
         SetupLocalization();
     }

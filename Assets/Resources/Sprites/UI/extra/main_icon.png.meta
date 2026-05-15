@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2aa1761ea5089404f882f7b5ca15d545
+guid: 77d88e38a8c9e6948b149ee677de9bdc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4714666543671338
-    second: human3_0
+      213: -7336791923659283425
+    second: main_icon_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -152,13 +152,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: human3_0
+      name: main_icon_0
       rect:
         serializedVersion: 2
-        x: 36
-        y: 41
-        width: 417
-        height: 455
+        x: 8
+        y: 55
+        width: 489
+        height: 393
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,8 +167,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a28e198d6ffb01000800000000000000
-      internalID: 4714666543671338
+      spriteID: f14655f0e9a7e2a90800000000000000
+      internalID: -7336791923659283425
       vertices: []
       indices: 
       edges: []
@@ -187,7 +187,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      human3_0: 4714666543671338
+      main_icon_0: -7336791923659283425
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

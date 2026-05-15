@@ -139,6 +139,18 @@ MonoBehaviour:
     m_Key: win_text
     m_Metadata:
       m_Items: []
+  - m_Id: 306685340286976
+    m_Key: isEasy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 306898943606784
+    m_Key: isNorm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 307043898753024
+    m_Key: isHard
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

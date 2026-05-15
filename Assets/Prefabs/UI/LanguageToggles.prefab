@@ -222,6 +222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5447125340678501638}
   - component: {fileID: 7208290304882782041}
+  - component: {fileID: 619218749582585933}
   m_Layer: 5
   m_Name: EnglishToggle
   m_TagString: Untagged
@@ -299,6 +300,21 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &619218749582585933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2660573210215882775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d266ad2bf492e19418ca2addabb94691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioToggle
+  action: 1
+  customTranslationKey: 
+  customDifficultyPanel: {fileID: 0}
 --- !u!1 &4420122768535162461
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,6 +689,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4914850243691176899}
   - component: {fileID: 6584697432660560527}
+  - component: {fileID: 3435520205900013675}
   m_Layer: 5
   m_Name: RussianToggle
   m_TagString: Untagged
@@ -750,6 +767,21 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &3435520205900013675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8080332682963940181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d266ad2bf492e19418ca2addabb94691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioToggle
+  action: 2
+  customTranslationKey: 
+  customDifficultyPanel: {fileID: 0}
 --- !u!1 &8575895445815844596
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,7 +793,6 @@ GameObject:
   - component: {fileID: 5459339886399088922}
   - component: {fileID: 5080789971048540245}
   - component: {fileID: 7665629389517149631}
-  - component: {fileID: 1700703012574231367}
   m_Layer: 5
   m_Name: LanguageToggles
   m_TagString: Untagged
@@ -829,17 +860,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ToggleGroup
   m_AllowSwitchOff: 0
---- !u!114 &1700703012574231367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8575895445815844596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7d862b411d6af9458d7c1d3f7fd1110, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LanguageSwitcher
-  toggleEnglish: {fileID: 7208290304882782041}
-  toggleRussian: {fileID: 6584697432660560527}

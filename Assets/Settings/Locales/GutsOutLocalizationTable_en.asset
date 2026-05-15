@@ -143,6 +143,19 @@ MonoBehaviour:
     m_Localized: No guts no glory!
     m_Metadata:
       m_Items: []
+  - m_Id: 306685340286976
+    m_Localized: "You won't even have to think about it. \nThe game will pass itself"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 306898943606784
+    m_Localized: Perhaps that 's what the developer intended
+    m_Metadata:
+      m_Items: []
+  - m_Id: 307043898753024
+    m_Localized: The developer is not responsible for the passability of the game
+      with these settings
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
