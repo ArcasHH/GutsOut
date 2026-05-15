@@ -15,7 +15,7 @@ MonoBehaviour:
   difficultyName: HARD
   cursedBase: 0.2
   badBase: 0.5
-  ordinaryBase: 1
+  ordinaryBase: 0.7
   goodBase: 0.5
   rareBase: 0.2
   epicBase: 0.08
@@ -43,6 +43,3 @@ MonoBehaviour:
   predictedDaysToWin: 10
   predictedDifficulty: 4.179935
   predictedWinRate: 0.8662734
-  initialWealth: 1
-  progressionSpeed: 0
-  riskRewardBalance: 0
