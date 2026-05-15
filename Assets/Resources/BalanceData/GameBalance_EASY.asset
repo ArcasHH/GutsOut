@@ -20,10 +20,10 @@ MonoBehaviour:
   rareBase: 0.1
   epicBase: 0.01
   legendaryBase: 0
-  cursedMul: 0.04
-  badMul: 0.05
+  cursedMul: 0.02
+  badMul: 0.01
   ordinaryMul: 0
-  goodMul: 0.05
+  goodMul: 0.03
   rareMul: 0.05
   epicMul: 0.05
   legendaryMul: 0.05
@@ -43,6 +43,3 @@ MonoBehaviour:
   predictedDaysToWin: 0
   predictedDifficulty: 0
   predictedWinRate: 0
-  initialWealth: 1
-  progressionSpeed: 0
-  riskRewardBalance: 0
