@@ -84,7 +84,7 @@ public class GameBalance : ScriptableObject
         int reqStats = (int)(startRec + mulDay * dayFactor);
         int downReqStats = (int)(reqStats / divLowReq);
 
-        return (reqStats, downReqStats);
+        return (Mathf.Min(reqStats, 40), Mathf.Min(downReqStats, 25));
     }
 
     public float GetDropChanceBase(QualityType rarity)

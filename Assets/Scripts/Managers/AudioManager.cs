@@ -534,12 +534,14 @@ public float GetSoundLength(SoundType soundType)
     {
         if (isGameMusicPlaying && gameMusicPlaylist != null)
         {
-            gameMusicPlaylist.SkipToNextTrack();
+            //gameMusicPlaylist.SkipToNextTrack();
+            //PlayGameMusic();
             PlayGameMusic();
         }
         else if (!isGameMusicPlaying && menuMusicPlaylist != null)
         {
-            menuMusicPlaylist.SkipToNextTrack();
+            //menuMusicPlaylist.SkipToNextTrack();
+            //PlayMenuMusic();
             PlayMenuMusic();
         }
     }
