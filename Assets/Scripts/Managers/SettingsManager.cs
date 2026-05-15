@@ -71,7 +71,11 @@ public class SettingsManager : MonoBehaviour
             musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
 
         if (sfxVolumeSlider != null)
+        {
+            sfxVolumeSlider.onValueChanged.AddListener(OnUIVolumeChanged);
             sfxVolumeSlider.onValueChanged.AddListener(OnSFXVolumeChanged);
+        }
+            
     }
 
     private void UnsubscribeFromSliders()
@@ -122,10 +126,6 @@ public class SettingsManager : MonoBehaviour
 
     #endregion
 
-    #region Text Display Methods
-
-
-    #endregion
 
     #region Test Sound Methods
 
